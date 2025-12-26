@@ -1,51 +1,17 @@
-FROM php:8.2-fpm
+FROM serversideup/php:8.2-fpm-nginx
 
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
+WORKDIR /var/www/html
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    libicu-dev
+# 1. Copia os arquivos
+COPY . .
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# 2. Instala dependências (COM A CORREÇÃO --no-scripts)
+# Isso impede que o Laravel tente conectar no banco durante a construção
+USER root
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl zip
+# 3. Ajusta permissões
+RUN chown -R webuser:webgroup /var/www/html \
+    && chmod -R 755 /var/www/html/storage
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Set working directory
-WORKDIR /var/www
-
-# Copy existing application directory contents
-COPY . /var/www
-
-# Install dependencies (production optimized)
-# Note: We are skipping "npm install" and "npm run build" because 
-# we already included the public/build directory in the repo
-RUN composer install --optimize-autoloader --no-dev
-
-# Set permissions
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 /var/www/storage \
-    && chmod -R 775 /var/www/bootstrap/cache
-
-# Create system user to run Composer and Artisan Commands (optional but good practice)
-# RUN useradd -G www-data,root -u $uid -d /home/$user $user
-# RUN mkdir -p /home/$user/.composer && \
-#    chown -R $user:$user /home/$user
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+USER webuser
