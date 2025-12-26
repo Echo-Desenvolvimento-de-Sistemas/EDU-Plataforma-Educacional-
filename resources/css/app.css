@@ -170,23 +170,27 @@
 
     /* Ensure Dialogs print correctly */
     [role="dialog"] {
-        position: relative !important;
+        position: static !important;
         transform: none !important;
+        top: 0 !important;
+        left: 0 !important;
         width: 100% !important;
         max-width: none !important;
         height: auto !important;
         border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
+        margin: 0 !important;
     }
 
     /* Hide Overlays */
-    [data-state="open"] [data-aria-hidden="true"] {
+    [data-state="open"] [data-aria-hidden="true"],
+    [data-radix-portal]>div[data-aria-hidden="true"] {
         display: none !important;
     }
 
     @page {
-        margin: 1cm;
+        margin: 10mm;
         size: auto;
     }
 

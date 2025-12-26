@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Dialog,
     DialogContent,
@@ -51,6 +52,7 @@ interface SchoolEvent {
     end_date?: string;
     type: 'academic' | 'holiday' | 'event' | 'meeting';
     created_by: number;
+    target_audience?: string[]; // 'professor', 'aluno', 'responsavel'
 }
 
 interface Props {
@@ -72,7 +74,9 @@ export default function CalendarIndex({ can_edit }: Props) {
         start_time: '08:00',
         end_date: '',
         end_time: '09:00',
+
         type: 'event',
+        target_audience: ['professor', 'aluno', 'responsavel'] as string[],
     });
 
     const fetchEvents = async () => {
@@ -126,7 +130,8 @@ export default function CalendarIndex({ can_edit }: Props) {
             start_time: format(parseISO(event.start_date), 'HH:mm'),
             end_date: event.end_date ? format(parseISO(event.end_date), 'yyyy-MM-dd') : format(parseISO(event.start_date), 'yyyy-MM-dd'),
             end_time: event.end_date ? format(parseISO(event.end_date), 'HH:mm') : '09:00',
-            type: event.type
+            type: event.type,
+            target_audience: event.target_audience || ['professor', 'aluno', 'responsavel']
         });
         setIsModalOpen(true);
     };
@@ -142,11 +147,12 @@ export default function CalendarIndex({ can_edit }: Props) {
             description: formData.description,
             start_date: startDateTime,
             end_date: endDateTime,
-            type: formData.type
+            type: formData.type,
+            target_audience: formData.target_audience
         };
 
         if (editingEvent) {
-            router.put(route('events.update', editingEvent.id), payload, {
+            router.put(`/events/${editingEvent.id}`, payload, {
                 onSuccess: () => {
                     setIsModalOpen(false);
                     fetchEvents();
@@ -154,7 +160,7 @@ export default function CalendarIndex({ can_edit }: Props) {
                 }
             });
         } else {
-            router.post(route('events.store'), payload, {
+            router.post('/events', payload, {
                 onSuccess: () => {
                     setIsModalOpen(false);
                     fetchEvents();
@@ -167,7 +173,7 @@ export default function CalendarIndex({ can_edit }: Props) {
     const handleDelete = () => {
         if (!editingEvent) return;
         if (confirm('Tem certeza que deseja excluir este evento?')) {
-            router.delete(route('events.destroy', editingEvent.id), {
+            router.delete(`/events/${editingEvent.id}`, {
                 onSuccess: () => {
                     setIsModalOpen(false);
                     fetchEvents();
@@ -214,7 +220,8 @@ export default function CalendarIndex({ can_edit }: Props) {
                                 title: '', description: '',
                                 start_date: format(new Date(), 'yyyy-MM-dd'), start_time: '08:00',
                                 end_date: format(new Date(), 'yyyy-MM-dd'), end_time: '09:00',
-                                type: 'event'
+                                type: 'event',
+                                target_audience: ['professor', 'aluno', 'responsavel']
                             });
                             setIsModalOpen(true);
                         }}>
@@ -351,6 +358,63 @@ export default function CalendarIndex({ can_edit }: Props) {
                                         <SelectItem value="event">Evento</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+
+                            <div className="space-y-3">
+                                <Label>Visibilidade (Quem pode ver?)</Label>
+                                <div className="flex flex-wrap gap-4">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="vis-prof"
+                                            checked={formData.target_audience?.includes('professor')}
+                                            onCheckedChange={(checked) => {
+                                                const current = formData.target_audience || [];
+                                                if (checked) {
+                                                    setFormData({ ...formData, target_audience: [...current, 'professor'] });
+                                                } else {
+                                                    setFormData({ ...formData, target_audience: current.filter(r => r !== 'professor') });
+                                                }
+                                            }}
+                                        />
+                                        <label htmlFor="vis-prof" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                            Professores
+                                        </label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="vis-student"
+                                            checked={formData.target_audience?.includes('aluno')}
+                                            onCheckedChange={(checked) => {
+                                                const current = formData.target_audience || [];
+                                                if (checked) {
+                                                    setFormData({ ...formData, target_audience: [...current, 'aluno'] });
+                                                } else {
+                                                    setFormData({ ...formData, target_audience: current.filter(r => r !== 'aluno') });
+                                                }
+                                            }}
+                                        />
+                                        <label htmlFor="vis-student" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                            Alunos
+                                        </label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="vis-guardian"
+                                            checked={formData.target_audience?.includes('responsavel')}
+                                            onCheckedChange={(checked) => {
+                                                const current = formData.target_audience || [];
+                                                if (checked) {
+                                                    setFormData({ ...formData, target_audience: [...current, 'responsavel'] });
+                                                } else {
+                                                    setFormData({ ...formData, target_audience: current.filter(r => r !== 'responsavel') });
+                                                }
+                                            }}
+                                        />
+                                        <label htmlFor="vis-guardian" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                            Responsáveis
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             <div>

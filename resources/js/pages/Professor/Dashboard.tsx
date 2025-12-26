@@ -168,22 +168,22 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                         {processedSchedule.map((slot) => (
                                             <div key={slot.id} className="mb-6 relative pl-6 last:mb-0 group">
                                                 <div className={`absolute -left-[21px] top-1 h-3 w-3 rounded-full border-2 border-background ${slot.status === 'done' ? 'bg-muted-foreground' :
-                                                        slot.status === 'current' ? 'bg-blue-600 ring-4 ring-blue-600/20 scale-125' : 'bg-muted'
+                                                    slot.status === 'current' ? 'bg-blue-600 ring-4 ring-blue-600/20 scale-125' : 'bg-muted'
                                                     }`} />
 
                                                 <div className={`flex flex-col p-4 rounded-lg border transition-all hover:shadow-md ${slot.status === 'current' ? 'bg-background border-blue-600 shadow-sm' :
-                                                        slot.status === 'done' ? 'bg-zinc-50 border-transparent opacity-75' : 'bg-card'
+                                                    slot.status === 'done' ? 'bg-zinc-50 border-transparent opacity-75' : 'bg-card'
                                                     }`}>
                                                     <div className="flex justify-between items-center mb-2">
-                                                        <span className="text-sm font-mono font-bold text-black">
+                                                        <span className="text-sm font-mono font-bold text-gray-900 dark:text-gray-100">
                                                             {slot.time}
                                                         </span>
                                                         {slot.status === 'current' && <Badge className="bg-blue-600">Agora</Badge>}
                                                         {slot.status === 'done' && <Badge variant="secondary">Concluída</Badge>}
                                                     </div>
 
-                                                    <h3 className="font-bold text-lg text-black">{slot.class}</h3>
-                                                    <p className="text-sm text-black/80 font-medium">{slot.subject}</p>
+                                                    <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">{slot.class}</h3>
+                                                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">{slot.subject}</p>
 
                                                     <div className="mt-3 flex justify-end">
                                                         <Link
@@ -216,7 +216,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                         <Users className="h-5 w-5" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-black">Minhas Turmas</h3>
+                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Minhas Turmas</h3>
                                         <p className="text-xs text-muted-foreground">Lançar notas e faltas</p>
                                     </div>
                                 </Link>
@@ -226,7 +226,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                         <Calendar className="h-5 w-5" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-black">Calendário</h3>
+                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Calendário</h3>
                                         <p className="text-xs text-muted-foreground">Ver eventos escolares</p>
                                     </div>
                                 </Link>
@@ -236,7 +236,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                         <FileText className="h-5 w-5" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-black">Relatórios</h3>
+                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Relatórios</h3>
                                         <p className="text-xs text-muted-foreground">Desempenho dos alunos</p>
                                     </div>
                                 </Link>

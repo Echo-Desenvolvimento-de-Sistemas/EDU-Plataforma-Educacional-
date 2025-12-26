@@ -18,10 +18,12 @@ interface Props {
         };
     };
     attendancePercentage: number;
+
     pendingCount: number;
+    notices: any[];
 }
 
-export default function Dashboard({ activities = [], student, attendancePercentage, pendingCount }: Props) {
+export default function Dashboard({ activities = [], student, attendancePercentage, pendingCount, notices = [] }: Props) {
     const getGreeting = () => {
         const hour = new Date().getHours();
         if (hour < 12) return 'Bom dia';
@@ -156,19 +158,29 @@ export default function Dashboard({ activities = [], student, attendancePercenta
                     <div className="space-y-6">
                         <div className="rounded-2xl border bg-white dark:bg-gray-900 p-6">
                             <h3 className="font-bold text-lg mb-4">Avisos e Lembretes</h3>
-                            <div className="space-y-4">
-                                <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30">
-                                    <h4 className="font-bold text-amber-800 dark:text-amber-300 text-sm mb-1">Reunião de Pais</h4>
-                                    <p className="text-xs text-amber-700 dark:text-amber-400">Dia 25/12 as 19h no auditório principal.</p>
+
+                            {notices.length > 0 ? (
+                                <div className="space-y-4">
+                                    {notices.map((notice: any) => (
+                                        <div key={notice.id} className="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30">
+                                            <h4 className="font-bold text-amber-800 dark:text-amber-300 text-sm mb-1">{notice.title}</h4>
+                                            <p className="text-xs text-amber-700 dark:text-amber-400">
+                                                {new Date(notice.start_date).toLocaleDateString('pt-BR')} - {notice.description?.substring(0, 80)}...
+                                            </p>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30">
-                                    <h4 className="font-bold text-blue-800 dark:text-blue-300 text-sm mb-1">Feira de Ciências</h4>
-                                    <p className="text-xs text-blue-700 dark:text-blue-400">Inscrições abertas até o final da semana.</p>
+                            ) : (
+                                <div className="text-center py-6 text-muted-foreground text-sm">
+                                    Nenhum aviso importante no momento.
                                 </div>
-                            </div>
-                            <Button variant="outline" className="w-full mt-4 text-xs font-bold" disabled>
-                                Ver todos os avisos
-                            </Button>
+                            )}
+
+                            <Link href="/events" className="w-full mt-4">
+                                <Button variant="outline" className="w-full text-xs font-bold">
+                                    Ver calendário completo
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

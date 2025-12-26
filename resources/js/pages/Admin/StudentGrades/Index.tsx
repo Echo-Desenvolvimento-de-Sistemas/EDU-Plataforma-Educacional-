@@ -66,12 +66,18 @@ export default function Index({ classRooms, academicYears, filters }: Props) {
                         <h1 className="text-2xl font-bold tracking-tight">Notas e Boletins</h1>
                         <p className="text-muted-foreground">Selecione uma turma para visualizar as notas e gerar boletins.</p>
                     </div>
+                    <Button asChild variant="outline">
+                        <Link href="/admin/subject-performance">
+                            <ArrowRight className="mr-2 h-4 w-4" />
+                            Métricas por Disciplina
+                        </Link>
+                    </Button>
                 </div>
 
                 <div className="flex items-center gap-4">
                     <div className="w-[200px]">
                         <Select defaultValue={filters.academic_year_id} onValueChange={handleYearChange}>
-                            <SelectTrigger>
+                            <SelectTrigger className="text-foreground dark:text-gray-100">
                                 <SelectValue placeholder="Ano Letivo" />
                             </SelectTrigger>
                             <SelectContent>

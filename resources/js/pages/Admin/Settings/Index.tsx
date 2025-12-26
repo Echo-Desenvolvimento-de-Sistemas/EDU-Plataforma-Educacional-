@@ -36,6 +36,15 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
         logo: null as File | null,
         logo_light: null as File | null,
         logo_dark: null as File | null,
+        // Mail
+        mail_mailer: settings.mail_mailer || 'smtp',
+        mail_host: settings.mail_host || '',
+        mail_port: settings.mail_port || '',
+        mail_username: settings.mail_username || '',
+        mail_password: settings.mail_password || '',
+        mail_encryption: settings.mail_encryption || 'tls',
+        mail_from_address: settings.mail_from_address || '',
+        mail_from_name: settings.mail_from_name || '',
     });
 
     const [logoPreview, setLogoPreview] = useState<string | null>(settings.logo_url || null);
@@ -257,6 +266,87 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
                                     placeholder="contato@escola.com"
                                 />
                                 {errors.school_email && <p className="text-sm text-red-500">{errors.school_email}</p>}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Configurações de E-mail (SMTP)</CardTitle>
+                        <CardDescription>Configure o servidor de envio de emails do sistema.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_host">Servidor SMTP (Host)</Label>
+                                <Input
+                                    id="mail_host"
+                                    value={data.mail_host}
+                                    onChange={(e) => setData('mail_host', e.target.value)}
+                                    placeholder="smtp.exemplo.com"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_port">Porta</Label>
+                                <Input
+                                    id="mail_port"
+                                    value={data.mail_port}
+                                    onChange={(e) => setData('mail_port', e.target.value)}
+                                    placeholder="587"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_username">Usuário SMTP</Label>
+                                <Input
+                                    id="mail_username"
+                                    value={data.mail_username}
+                                    onChange={(e) => setData('mail_username', e.target.value)}
+                                    placeholder="email@dominio.com"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_password">Senha SMTP</Label>
+                                <Input
+                                    id="mail_password"
+                                    type="password"
+                                    value={data.mail_password}
+                                    onChange={(e) => setData('mail_password', e.target.value)}
+                                    placeholder="••••••••"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_encryption">Criptografia</Label>
+                                <Input
+                                    id="mail_encryption"
+                                    value={data.mail_encryption}
+                                    onChange={(e) => setData('mail_encryption', e.target.value)}
+                                    placeholder="tls"
+                                />
+                                <p className="text-[0.8rem] text-muted-foreground">Geralmente tls ou ssl.</p>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_from_address">E-mail de Remetente</Label>
+                                <Input
+                                    id="mail_from_address"
+                                    value={data.mail_from_address}
+                                    onChange={(e) => setData('mail_from_address', e.target.value)}
+                                    placeholder="naoresponda@dominio.com"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="mail_from_name">Nome do Remetente</Label>
+                                <Input
+                                    id="mail_from_name"
+                                    value={data.mail_from_name}
+                                    onChange={(e) => setData('mail_from_name', e.target.value)}
+                                    placeholder="Sistema Escolar"
+                                />
                             </div>
                         </div>
                     </CardContent>

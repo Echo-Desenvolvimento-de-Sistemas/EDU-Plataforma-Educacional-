@@ -1,6 +1,7 @@
 import StudentRegistrationCard from '@/components/student-registration-card';
+import AppLogo from '@/components/app-logo';
 import AppLayout from '@/layouts/app-layout';
-import { Head, useForm, router } from '@inertiajs/react';
+import { Head, useForm, router, usePage } from '@inertiajs/react';
 import secretaria from '@/routes/secretaria';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -156,6 +157,8 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
     const handlePrint = () => {
         window.print();
     };
+
+    const { settings } = usePage().props as any;
 
     return (
         <AppLayout
@@ -335,7 +338,7 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
 
                 {/* View Modal */}
                 <Dialog open={!!viewingItem} onOpenChange={() => setViewingItem(null)}>
-                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto print:max-w-none print:max-h-none print:overflow-visible print:border-none print:shadow-none dark:bg-gray-900 dark:text-gray-100">
+                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto print:hidden dark:bg-gray-900 dark:text-gray-100">
                         <DialogHeader className="print:hidden flex flex-row items-center justify-between">
                             <DialogTitle>Ficha Cadastral do Aluno</DialogTitle>
                             <DialogDescription className="sr-only">Detalhamento completo dos dados da pré-matrícula</DialogDescription>
@@ -345,28 +348,21 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
                             </Button>
                         </DialogHeader>
 
-                        {/* Print Header - FPDF Style */}
-                        <div className="hidden print:block mb-6">
-                            <h1 className="text-2xl font-bold text-center uppercase mb-1">Ficha Cadastral do Aluno</h1>
-                            <h2 className="text-xl text-center text-gray-600 mb-4">Sistema de Gestão Escolar</h2>
-                            <div className="border-b-2 border-black mb-6"></div>
-                        </div>
-
                         {viewingItem && (
-                            <div className="space-y-6 print:space-y-4">
-                                {/* Header Info */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border dark:border-gray-700 print:bg-white print:border-gray-200 print:grid-cols-4">
+                            <div className="space-y-6 print:hidden">
+                                {/* Header Info - Display Only */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border dark:border-gray-700">
                                     <div>
                                         <Label className="text-xs text-gray-500 uppercase">Tipo</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100 print:text-black">{viewingItem.type === 'new' ? 'Novo Aluno' : 'Rematrícula'}</div>
+                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.type === 'new' ? 'Novo Aluno' : 'Rematrícula'}</div>
                                     </div>
                                     <div>
                                         <Label className="text-xs text-gray-500 uppercase">Status</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100 print:text-black">{viewingItem.status === 'completed' ? 'Concluído' : 'Pendente'}</div>
+                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.status === 'completed' ? 'Concluído' : 'Pendente'}</div>
                                     </div>
                                     <div>
                                         <Label className="text-xs text-gray-500 uppercase">Turma Destino</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100 print:text-black">{viewingItem.target_class ? viewingItem.target_class.name : 'Não definida'}</div>
+                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.target_class ? viewingItem.target_class.name : 'Não definida'}</div>
                                     </div>
                                     <div>
                                         <Label className="text-xs text-gray-500 uppercase">Criado Por</Label>
@@ -386,7 +382,7 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
                                 )}
 
                                 {viewingItem.status === 'pending' && (
-                                    <div className="pt-6 border-t bg-gray-50 dark:bg-gray-800 p-4 -mx-6 -mb-6 mt-6 print:hidden">
+                                    <div className="pt-6 border-t bg-gray-50 dark:bg-gray-800 p-4 -mx-6 -mb-6 mt-6">
                                         <Label className="text-xs text-gray-500 dark:text-gray-400">Link de Acesso para o Responsável</Label>
                                         <div className="flex items-center gap-2 mt-2">
                                             <Input readOnly value={`${window.location.origin}/pre-matricula/${viewingItem.token}`} className="bg-white dark:bg-gray-900" />
@@ -396,11 +392,6 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
                                         </div>
                                     </div>
                                 )}
-
-                                <div className="hidden print:flex justify-between mt-12 text-xs text-gray-500 px-2 page-break-after-avoid">
-                                    <span>Pagina 1/1</span>
-                                    <span>Gerado em: {new Date().toLocaleString('pt-BR')}</span>
-                                </div>
                             </div>
                         )}
                         <DialogFooter className="sm:justify-between print:hidden">
@@ -424,7 +415,101 @@ export default function Index({ preRegistrations, classRooms, students }: Props)
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
-            </div >
+            </div>
+
+            {/* DEDICATED PRINT VIEW - Completely separate from main layout */}
+            {viewingItem && (
+                <div className="hidden print:block print:fixed print:inset-0 print:bg-white print:z-[9999] print:h-screen print:w-screen print:overflow-visible">
+                    <div className="print:p-8">
+                        {/* Print Header - With Logo and School Info */}
+                        <div className="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                            <div className="w-24 h-24 flex items-center justify-center shrink-0">
+                                <AppLogo className="w-full h-full text-black" />
+                            </div>
+                            <div className="flex-1 text-center">
+                                <h1 className="text-2xl font-bold uppercase">{settings?.school_name || settings?.app_name || 'Centro Educacional Rosa de Sharon'}</h1>
+                                <p className="text-sm text-gray-600">Educação Infantil e Ensino Fundamental</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                    {settings?.school_address || 'Endereço não configurado'}
+                                    {(settings?.school_city || settings?.school_state) && ` - ${settings?.school_city || ''}/${settings?.school_state || ''}`}
+                                    {settings?.school_cep && ` - CEP: ${settings?.school_cep}`}
+                                    {settings?.school_phone && ` - Tel: ${settings?.school_phone}`}
+                                </p>
+                            </div>
+                            <div className="w-24 shrink-0 text-right">
+                                <div className="border border-black p-2 text-center">
+                                    <p className="text-[10px] uppercase font-bold">Ficha Nº</p>
+                                    <p className="text-lg font-bold">{viewingItem.id.toString().padStart(4, '0')}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="text-center mb-4">
+                            <h2 className="text-xl font-bold uppercase bg-gray-200 py-1 print:bg-gray-200 print:text-black">Ficha Cadastral do Aluno</h2>
+                        </div>
+
+                        {/* Summary Grid */}
+                        <div className="grid grid-cols-4 gap-4 mb-4 text-xs border border-gray-300 p-2">
+                            <div>
+                                <span className="font-bold block uppercase">Tipo de Matrícula:</span>
+                                <span>{viewingItem.type === 'new' ? 'Novo Aluno' : 'Rematrícula'}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">Turma Indicada:</span>
+                                <span>{viewingItem.target_class ? viewingItem.target_class.name : 'A definir'}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">Status:</span>
+                                <span>{viewingItem.status === 'completed' ? 'Concluído' : 'Pendente'}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">Data Registro:</span>
+                                <span>{formatDate(viewingItem.created_at)}</span>
+                            </div>
+                        </div>
+
+                        {viewingItem.student ? (
+                            <StudentRegistrationCard student={viewingItem.student} />
+                        ) : (
+                            <div className="text-center py-12 text-gray-500 border border-dashed">
+                                <p>Nenhum dado de aluno vinculado.</p>
+                            </div>
+                        )}
+
+                        {/* Missing Documents Checklist */}
+                        <div className="mt-6 print:break-inside-avoid">
+                            <h3 className="text-sm font-bold uppercase border-b border-black mb-2">Conferência de Documentos (Uso da Secretaria)</h3>
+                            <div className="grid grid-cols-3 gap-2 text-xs">
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Certidão de Nascimento</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Histórico Escolar / Transferência</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> 2 Fotos 3x4</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Cartão de Vacina Atualizado</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Comprovante de Residência</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> RG e CPF do Responsável</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Cartão do SUS</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Tipo Sanguíneo (Laudo)</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Declaração de Quitação</div>
+                            </div>
+                        </div>
+
+                        {/* Signatures */}
+                        <div className="mt-12 grid grid-cols-2 gap-16 print:break-inside-avoid">
+                            <div className="text-center pt-8 border-t border-black">
+                                <p className="text-xs uppercase font-bold">Assinatura do Responsável</p>
+                            </div>
+                            <div className="text-center pt-8 border-t border-black">
+                                <p className="text-xs uppercase font-bold">Secretaria / Direção</p>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between mt-4 text-[10px] text-gray-400">
+                            <span>Sistema de Gestão Escolar - Rosa de Sharon</span>
+                            <span>Impresso em: {new Date().toLocaleString('pt-BR')}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </AppLayout >
     );
 }

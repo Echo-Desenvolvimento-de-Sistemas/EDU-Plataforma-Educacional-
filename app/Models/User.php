@@ -54,6 +54,13 @@ class User extends Authenticatable
         return $this->hasMany(QuestionBank::class);
     }
 
+    public function kanbanBoards()
+    {
+        return $this->belongsToMany(\App\Models\Kanban\KanbanBoard::class, 'kanban_board_user', 'user_id', 'board_id')
+            ->withPivot('permission')
+            ->withTimestamps();
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -24,6 +24,23 @@ class SchoolEventController extends Controller
                 });
             }
 
+            // Filter by Target Audience (based on User Role)
+            $user = auth()->user();
+            if ($user && !in_array($user->role, ['admin', 'secretaria'])) {
+                // Determine user's generic group for filtering
+                $role = $user->role; // 'professor', 'aluno', 'responsavel'
+
+                // Logic: 
+                // If target_audience is null, assume public/all? Or only admin sees? 
+                // Let's assume null = visible to all or implement migration to default to all.
+                // Or better: filter where target_audience contains user role OR target_audience is null.
+
+                $query->where(function ($q) use ($role) {
+                    $q->whereJsonContains('target_audience', $role)
+                        ->orWhereNull('target_audience'); // Legacy/Public support
+                });
+            }
+
             return response()->json($query->get());
         }
 
@@ -49,7 +66,9 @@ class SchoolEventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'type' => 'required|in:academic,holiday,event,meeting',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'target_audience' => 'nullable|array',
+            'target_audience.*' => 'string|in:professor,aluno,responsavel'
         ]);
 
         $event = SchoolEvent::create([
@@ -75,7 +94,9 @@ class SchoolEventController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'type' => 'required|in:academic,holiday,event,meeting',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'target_audience' => 'nullable|array',
+            'target_audience.*' => 'string|in:professor,aluno,responsavel'
         ]);
 
         $schoolEvent->update($validated);

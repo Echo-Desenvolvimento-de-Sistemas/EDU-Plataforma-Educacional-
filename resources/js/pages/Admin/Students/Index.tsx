@@ -1,7 +1,8 @@
 import admin from '@/routes/admin';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/react'; // Added router
+import AppLogo from '@/components/app-logo';
+import { Head, Link, router, usePage } from '@inertiajs/react'; // Added router
 import { Edit, Trash2, Plus, Eye, Printer, Search, Filter, Power, Calendar as CalendarIcon } from 'lucide-react'; // Added Search, Filter, Power
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -96,10 +97,12 @@ export default function Index({ students, classRooms, filters }: Props) {
         window.print();
     };
 
+    const { settings } = usePage().props as any;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Alunos" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-hidden rounded-xl p-4">
+            <div className="flex h-full flex-1 flex-col gap-4 overflow-hidden rounded-xl p-4 print:hidden">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Alunos</h1>
                     <Link
@@ -306,7 +309,7 @@ export default function Index({ students, classRooms, filters }: Props) {
 
                 {/* View Student Modal - No changes here but included for completeness if needed, though replacement is safer to cover everything */}
                 <Dialog open={!!viewingStudent} onOpenChange={(open) => !open && setViewingStudent(null)}>
-                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto print:max-w-none print:max-h-none print:overflow-visible print:border-none print:shadow-none dark:bg-gray-900 dark:text-gray-100">
+                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto print:hidden dark:bg-gray-900 dark:text-gray-100">
                         <DialogHeader className="print:hidden flex flex-row items-center justify-between">
                             <DialogTitle>Ficha do Aluno</DialogTitle>
                             <DialogDescription className="sr-only">Detalhes do Aluno</DialogDescription>
@@ -316,20 +319,11 @@ export default function Index({ students, classRooms, filters }: Props) {
                             </Button>
                         </DialogHeader>
 
-                        {/* Print Header */}
-                        <div className="hidden print:block mb-6">
-                            <h1 className="text-2xl font-bold text-center uppercase mb-1">Ficha Cadastral do Aluno</h1>
-                            <h2 className="text-xl text-center text-gray-600 mb-4">Sistema de Gestão Escolar</h2>
-                            <div className="border-b-2 border-black mb-6"></div>
-                        </div>
+                        {/* Print Header removed - using dedicated print view */}
 
                         {viewingStudent && (
                             <div className="space-y-6">
                                 <StudentRegistrationCard student={viewingStudent} />
-                                <div className="hidden print:flex justify-between mt-12 text-xs text-gray-500 px-2 page-break-after-avoid">
-                                    <span>Pagina 1/1</span>
-                                    <span>Gerado em: {new Date().toLocaleString('pt-BR')}</span>
-                                </div>
                             </div>
                         )}
                         <DialogFooter className="sm:justify-between print:hidden">
@@ -337,6 +331,93 @@ export default function Index({ students, classRooms, filters }: Props) {
                     </DialogContent>
                 </Dialog>
             </div>
+
+            {/* DEDICATED PRINT VIEW */}
+            {viewingStudent && (
+                <div className="hidden print:block print:fixed print:inset-0 print:bg-white print:z-[9999] print:h-screen print:w-screen print:overflow-visible">
+                    <div className="print:p-8">
+                        {/* Print Header - With Logo and School Info */}
+                        <div className="flex items-center gap-4 mb-6 border-b-2 border-black pb-4">
+                            <div className="w-24 h-24 flex items-center justify-center shrink-0">
+                                <AppLogo className="w-full h-full text-black" />
+                            </div>
+                            <div className="flex-1 text-center">
+                                <h1 className="text-2xl font-bold uppercase">{settings?.school_name || settings?.app_name || 'Centro Educacional Rosa de Sharon'}</h1>
+                                <p className="text-sm text-gray-600">Educação Infantil e Ensino Fundamental</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                    {settings?.school_address || 'Endereço não configurado'}
+                                    {(settings?.school_city || settings?.school_state) && ` - ${settings?.school_city || ''}/${settings?.school_state || ''}`}
+                                    {settings?.school_cep && ` - CEP: ${settings?.school_cep}`}
+                                    {settings?.school_phone && ` - Tel: ${settings?.school_phone}`}
+                                </p>
+                            </div>
+                            <div className="w-24 shrink-0 text-right">
+                                <div className="border border-black p-2 text-center">
+                                    <p className="text-[10px] uppercase font-bold">Matrícula Nº</p>
+                                    <p className="text-lg font-bold">{viewingStudent.id.toString().padStart(4, '0')}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="text-center mb-4">
+                            <h2 className="text-xl font-bold uppercase bg-gray-200 py-1 print:bg-gray-200 print:text-black">Ficha Cadastral do Aluno</h2>
+                        </div>
+
+                        {/* Summary Grid */}
+                        <div className="grid grid-cols-4 gap-4 mb-4 text-xs border border-gray-300 p-2">
+                            <div>
+                                <span className="font-bold block uppercase">Status da Matrícula:</span>
+                                <span>{viewingStudent.status === 'active' ? 'ATIVA' : 'CANCELADA'}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">Turma Atual:</span>
+                                <span>{viewingStudent.class_room?.name || 'Sem Turma'}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">Data Nascimento:</span>
+                                <span>{new Date(viewingStudent.birth_date).toLocaleDateString()}</span>
+                            </div>
+                            <div>
+                                <span className="font-bold block uppercase">CPF:</span>
+                                <span>{viewingStudent.cpf || '-'}</span>
+                            </div>
+                        </div>
+
+                        <StudentRegistrationCard student={viewingStudent} />
+
+                        {/* Missing Documents Checklist */}
+                        <div className="mt-6 print:break-inside-avoid">
+                            <h3 className="text-sm font-bold uppercase border-b border-black mb-2">Conferência de Documentos (Secretaria)</h3>
+                            <div className="grid grid-cols-3 gap-2 text-xs">
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Certidão de Nascimento</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Histórico Escolar / Transferência</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> 2 Fotos 3x4</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Cartão de Vacina Atualizado</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Comprovante de Residência</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> RG e CPF do Responsável</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Cartão do SUS</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Tipo Sanguíneo (Laudo)</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 border border-black"></div> Declaração de Quitação</div>
+                            </div>
+                        </div>
+
+                        {/* Signatures */}
+                        <div className="mt-12 grid grid-cols-2 gap-16 print:break-inside-avoid">
+                            <div className="text-center pt-8 border-t border-black">
+                                <p className="text-xs uppercase font-bold">Assinatura do Responsável</p>
+                            </div>
+                            <div className="text-center pt-8 border-t border-black">
+                                <p className="text-xs uppercase font-bold">Secretaria / Direção</p>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between mt-4 text-[10px] text-gray-400">
+                            <span>Sistema de Gestão Escolar - Rosa de Sharon</span>
+                            <span>Impresso em: {new Date().toLocaleString('pt-BR')}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </AppLayout>
     );
 }

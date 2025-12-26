@@ -11,7 +11,7 @@ export default function StudentRegistrationCard({ student }: StudentRegistration
     if (!student) return null;
 
     return (
-        <div className="space-y-8 print:space-y-6">
+        <div className="space-y-8 print:space-y-2 text-sm print:text-xs">
             {/* 1. Dados Pessoais */}
             <section className="print:break-inside-avoid relative">
                 <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-400 print:text-black print:bg-gray-200 print:p-1 print:uppercase print:text-sm print:mb-2 print:border print:border-gray-300">
@@ -20,63 +20,53 @@ export default function StudentRegistrationCard({ student }: StudentRegistration
                 </h3>
 
                 <div className="flex gap-4">
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 print:grid-cols-1 gap-y-2 gap-x-4">
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 print:grid-cols-2 gap-y-2 print:gap-y-0.5 gap-x-4">
                         {/* Row 1 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">Nome:</span>
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                            <span className="font-bold mr-2 print:w-20">Nome:</span>
                             <span className="uppercase">{student.name}</span>
                         </div>
                         {student.social_name && (
-                            <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                                <span className="font-bold mr-2 print:w-24">Nome Social:</span>
+                            <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                                <span className="font-bold mr-2 print:w-20">Nome Social:</span>
                                 <span className="uppercase">{student.social_name}</span>
                             </div>
                         )}
 
                         {/* Row 2 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">Data Nasc.:</span>
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                            <span className="font-bold mr-2 print:w-20">Data Nasc.:</span>
                             <span>{formatDate(student.birth_date)}</span>
                         </div>
-
-                        {/* Row 3 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">CPF:</span>
-                            <span>{student.cpf}</span>
-                        </div>
-
-                        {/* Row 4 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">RG:</span>
-                            <span>{student.rg || 'Não informado'}</span>
-                        </div>
-
-                        {/* Row 5 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">Sexo:</span>
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                            <span className="font-bold mr-2 print:w-20">Sexo:</span>
                             <span>{student.sex || 'Não informado'}</span>
                         </div>
 
-                        {/* Row 6 */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1 col-span-2">
-                            <span className="font-bold mr-2 print:w-24">Naturalidade:</span>
+                        {/* Row 3 */}
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5 col-span-2">
+                            <span className="font-bold mr-2 print:w-20">Naturalidade:</span>
                             <span>{student.place_of_birth} - {student.state_of_birth}</span>
                         </div>
 
-                        {/* Row 7 - New Fields */}
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">Cor/Raça:</span>
+                        {/* Row 4 */}
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                            <span className="font-bold mr-2 print:w-20">Cor/Raça:</span>
                             <span>{student.color_race || '-'}</span>
                         </div>
-                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                            <span className="font-bold mr-2 print:w-24">Nacionalidade:</span>
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                            <span className="font-bold mr-2 print:w-20">Nacionalidade:</span>
                             <span>{student.nationality || 'Brasileira'}</span>
+                        </div>
+                        <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5 col-span-2">
+                            <span className="font-bold mr-2 print:w-20">Escola Origem:</span>
+                            <span className="uppercase">{student.origin_school || 'Não informada'}</span>
                         </div>
                     </div>
 
                     {/* 3x4 Photo Placeholder */}
-                    <div className="hidden print:flex flex-col items-center justify-center w-32 h-40 border border-black shrink-0">
-                        <span className="text-xs text-center">FOTO 3x4</span>
+                    <div className="hidden print:flex flex-col items-center justify-center w-24 h-32 border border-black shrink-0">
+                        <span className="text-[10px] text-center">FOTO 3x4</span>
                     </div>
                 </div>
             </section>
@@ -89,26 +79,34 @@ export default function StudentRegistrationCard({ student }: StudentRegistration
                     <span className="w-1 h-6 bg-blue-600 dark:bg-blue-500 rounded-full print:hidden"></span>
                     Documentação
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 print:grid-cols-2 gap-4">
-                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                        <span className="font-bold mr-2 print:w-24">CPF:</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 print:grid-cols-3 gap-4 print:gap-2 text-xs">
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                        <span className="font-bold mr-2 print:w-16">CPF:</span>
                         <span>{student.cpf}</span>
                     </div>
-                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                        <span className="font-bold mr-2 print:w-24">RG:</span>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                        <span className="font-bold mr-2 print:w-16">RG:</span>
                         <span>{student.rg || '-'}</span>
                     </div>
-                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                        <span className="font-bold mr-2 print:w-24">Órgão/UF:</span>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                        <span className="font-bold mr-2 print:w-16">Órgão/UF:</span>
                         <span>{student.rg_issuer}/{student.rg_state}</span>
                     </div>
-                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                        <span className="font-bold mr-2 print:w-24">Emissão:</span>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                        <span className="font-bold mr-2 print:w-16">Emissão:</span>
                         <span>{formatDate(student.rg_date)}</span>
                     </div>
-                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
-                        <span className="font-bold mr-2 print:w-24">NIS:</span>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5">
+                        <span className="font-bold mr-2 print:w-16">NIS:</span>
                         <span>{student.nis || '-'}</span>
+                    </div>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-0.5 col-span-2">
+                        <span className="font-bold mr-2 print:w-20">Cert. Nasc.:</span>
+                        <span>
+                            {student.birth_cert_number ? `Matrícula: ${student.birth_cert_number}` : ''}
+                            {student.birth_cert_model ? ` (${student.birth_cert_model})` : ''}
+                            {!student.birth_cert_number && !student.birth_cert_model && '-'}
+                        </span>
                     </div>
                 </div>
             </section>
@@ -232,6 +230,32 @@ export default function StudentRegistrationCard({ student }: StudentRegistration
                                 'Não declarada'}
                         </span>
                     </div>
+                </div>
+            </section>
+
+            <Separator className="print:hidden" />
+
+            {/* 6. Transporte e Autorizações */}
+            <section className="print:break-inside-avoid">
+                <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-blue-700 dark:text-blue-400 print:text-black print:bg-gray-200 print:p-1 print:uppercase print:text-sm print:mb-2 print:border print:border-gray-300">
+                    <span className="w-1 h-6 bg-blue-600 dark:bg-blue-500 rounded-full print:hidden"></span>
+                    Transporte e Segurança
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-4">
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
+                        <span className="font-bold mr-2 print:w-24">Transporte:</span>
+                        <span>{student.transport_info || 'Não informado'}</span>
+                    </div>
+                    <div className="print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
+                        <span className="font-bold mr-2 print:w-24">Aut. Saída:</span>
+                        <span>{student.exit_authorization ? 'Sim - Autorizado(a) ir sozinho(a)' : 'Não - Apenas com responsáveis'}</span>
+                    </div>
+                    {student.authorized_pickups && student.authorized_pickups.length > 0 && (
+                        <div className="col-span-2 print:flex print:border-b print:border-dotted print:border-gray-300 print:pb-1">
+                            <span className="font-bold mr-2 print:w-32">Pessoas Autorizadas:</span>
+                            <span>{Array.isArray(student.authorized_pickups) ? student.authorized_pickups.join(', ') : student.authorized_pickups}</span>
+                        </div>
+                    )}
                 </div>
             </section>
 

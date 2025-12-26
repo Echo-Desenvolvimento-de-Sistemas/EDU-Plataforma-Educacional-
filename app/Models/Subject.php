@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     protected $fillable = ['name', 'code'];
-    //
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class);
+    }
 }

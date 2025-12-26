@@ -28,11 +28,25 @@ class PreRegistrationController extends Controller
         // Limit students to active ones for performance, or implement search later
         $students = \App\Models\Student::select('id', 'name', 'cpf')->orderBy('name')->get();
 
+        // Calculate Stats
+        $total = $preRegistrations->count();
+        $completed = $preRegistrations->where('status', 'completed')->count();
+        $pending = $total - $completed;
+        $completionRate = $total > 0 ? round(($completed / $total) * 100, 1) : 0;
+
+        $stats = [
+            'total' => $total,
+            'completed' => $completed,
+            'pending' => $pending,
+            'completion_rate' => $completionRate,
+        ];
+
         return Inertia::render('Admin/PreRegistrations/Index', [
             'preRegistrations' => $preRegistrations,
             'classRooms' => $classRooms,
             'academicYears' => $academicYears,
             'students' => $students,
+            'stats' => $stats,
         ]);
     }
 

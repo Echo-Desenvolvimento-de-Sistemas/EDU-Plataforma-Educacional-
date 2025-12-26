@@ -34,10 +34,17 @@ class AssessmentController extends Controller
             abort(403, 'Sem permissão para criar avaliações nesta disciplina.');
         }
 
-        Assessment::create([
+        $assessment = Assessment::create([
             ...$validated,
             'class_room_id' => $classRoom->id,
         ]);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Avaliação criada com sucesso.',
+                'assessment' => $assessment
+            ]);
+        }
 
         return back()->with('success', 'Avaliação criada com sucesso.');
     }

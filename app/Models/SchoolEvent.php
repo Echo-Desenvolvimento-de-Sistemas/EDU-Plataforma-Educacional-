@@ -12,12 +12,14 @@ class SchoolEvent extends Model
         'start_date',
         'end_date',
         'type',
+        'target_audience',
         'created_by',
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'target_audience' => 'array',
     ];
 
     public function creator()

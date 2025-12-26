@@ -70,11 +70,22 @@ class DashboardController extends Controller
             ? round((($totalClasses - $totalAbsences) / $totalClasses) * 100, 1)
             : 100;
 
+        // 3. Notices / Events
+        $notices = \App\Models\SchoolEvent::where('start_date', '>=', now()->startOfDay())
+            ->where(function ($q) {
+                $q->whereJsonContains('target_audience', 'aluno')
+                    ->orWhereNull('target_audience'); // Assume null is for everyone
+            })
+            ->orderBy('start_date')
+            ->take(3)
+            ->get();
+
         return Inertia::render('Aluno/Dashboard', [
             'activities' => $activities,
             'student' => $student->load('classRoom'),
             'attendancePercentage' => $attendancePercentage,
-            'pendingCount' => $pendingCount
+            'pendingCount' => $pendingCount,
+            'notices' => $notices
         ]);
     }
 }

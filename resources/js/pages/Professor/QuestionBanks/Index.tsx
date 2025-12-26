@@ -26,7 +26,7 @@ export default function Index({ banks }: Props) {
             <div className="py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center gap-2">
+                        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center gap-2">
                             <Layers className="w-6 h-6 text-indigo-600" />
                             Meus Bancos de Questões
                         </h2>
@@ -45,23 +45,23 @@ export default function Index({ banks }: Props) {
                                 <Link
                                     key={bank.id}
                                     href={`/professor/question-banks/${bank.id}`}
-                                    className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden"
+                                    className="block bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 overflow-hidden"
                                 >
                                     <div className="p-6">
                                         <div className="flex items-start justify-between">
-                                            <div className="bg-indigo-50 p-3 rounded-lg">
-                                                <Layers className="w-6 h-6 text-indigo-600" />
+                                            <div className="bg-indigo-50 dark:bg-indigo-900/50 p-3 rounded-lg">
+                                                <Layers className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                                             </div>
-                                            <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
                                                 {new Date(bank.created_at).toLocaleDateString()}
                                             </span>
                                         </div>
-                                        <h3 className="mt-4 text-lg font-bold text-gray-900 line-clamp-1">{bank.title}</h3>
-                                        <p className="mt-1 text-sm text-gray-500 line-clamp-2 min-h-[2.5rem]">
+                                        <h3 className="mt-4 text-lg font-bold text-gray-900 dark:text-gray-100 line-clamp-1">{bank.title}</h3>
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2 min-h-[2.5rem]">
                                             {bank.description || "Sem descrição"}
                                         </p>
 
-                                        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-600">
+                                        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                             <FileText className="w-4 h-4" />
                                             <span className="font-medium">{bank.questions_count}</span> questões
                                         </div>
@@ -70,10 +70,10 @@ export default function Index({ banks }: Props) {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
+                        <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
                             <Layers className="mx-auto h-12 w-12 text-gray-400" />
-                            <h3 className="mt-2 text-lg font-medium text-gray-900">Nenhum banco encontrado</h3>
-                            <p className="mt-1 text-sm text-gray-500">Crie seu primeiro banco de questões para começar.</p>
+                            <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-100">Nenhum banco encontrado</h3>
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Crie seu primeiro banco de questões para começar.</p>
                             <div className="mt-6">
                                 <Link
                                     href="/professor/question-banks/create"

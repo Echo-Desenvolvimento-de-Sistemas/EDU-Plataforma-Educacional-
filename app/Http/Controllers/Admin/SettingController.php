@@ -37,6 +37,15 @@ class SettingController extends Controller
             'school_state' => 'nullable|string|max:2',
             'school_cnpj' => 'nullable|string|max:20',
             'school_cep' => 'nullable|string|max:10',
+            // Mail Settings
+            'mail_mailer' => 'nullable|string|max:20',
+            'mail_host' => 'nullable|string|max:255',
+            'mail_port' => 'nullable|numeric',
+            'mail_username' => 'nullable|string|max:255',
+            'mail_password' => 'nullable|string|max:255',
+            'mail_encryption' => 'nullable|string|max:10',
+            'mail_from_address' => 'nullable|email|max:255',
+            'mail_from_name' => 'nullable|string|max:255',
         ]);
 
         $settings = $request->only([
@@ -50,7 +59,17 @@ class SettingController extends Controller
             'school_city',
             'school_state',
             'school_cnpj',
-            'school_cep'
+            'school_cnpj',
+            'school_cep',
+            // Mail
+            'mail_mailer',
+            'mail_host',
+            'mail_port',
+            'mail_username',
+            'mail_password',
+            'mail_encryption',
+            'mail_from_address',
+            'mail_from_name'
         ]);
 
         foreach ($settings as $key => $value) {

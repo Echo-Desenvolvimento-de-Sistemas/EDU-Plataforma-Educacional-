@@ -26,13 +26,7 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Documentação',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+
 
 import admin from '@/routes/admin';
 import secretaria from '@/routes/secretaria';
@@ -109,14 +103,7 @@ export function AppSidebar() {
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild tooltip="Calendário Escolar">
-                                    <Link href="/events">
-                                        <Calendar />
-                                        <span>Calendário Escolar</span>
-                                    </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
+
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild tooltip="Enturmação em Lote">
                                     <Link href="/secretaria/batch-enrollment">
@@ -276,41 +263,48 @@ export function AppSidebar() {
 
                 {user.role === 'admin' && (
                     <>
+
                         <SidebarGroup>
-                            <SidebarGroupLabel>Acadêmico</SidebarGroupLabel>
+                            <SidebarGroupLabel>Secretaria</SidebarGroupLabel>
                             <SidebarMenu>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Anos Letivos">
-                                        <Link href={admin.academicYears.index.url()}>
-                                            <Calendar />
-                                            <span>Anos Letivos</span>
+                                    <SidebarMenuButton asChild tooltip="Pré-Matrículas">
+                                        <Link href="/admin/pre-registrations">
+                                            <LinkIcon />
+                                            <span>Pré-Matrículas</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Níveis de Ensino">
-                                        <Link href={admin.educationLevels.index.url()}>
-                                            <BookOpen />
-                                            <span>Níveis de Ensino</span>
+                                    <SidebarMenuButton asChild tooltip="Alunos">
+                                        <Link href={admin.students.index.url()}>
+                                            <Users />
+                                            <span>Alunos</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Séries / Anos">
-                                        <Link href={admin.grades.index.url()}>
-                                            <Layers />
-                                            <span>Séries / Anos</span>
+                                    <SidebarMenuButton asChild tooltip="Responsáveis">
+                                        <Link href={admin.guardians.index.url()}>
+                                            <Users />
+                                            <span>Responsáveis</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Disciplinas">
-                                        <Link href={admin.subjects.index.url()}>
-                                            <Book />
-                                            <span>Disciplinas</span>
+                                    <SidebarMenuButton asChild tooltip="Emissão de Documentos">
+                                        <Link href="/admin/documents">
+                                            <Printer />
+                                            <span>Emissão de Documentos</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
+                            </SidebarMenu>
+                        </SidebarGroup>
+
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Acadêmico & Pedagógico</SidebarGroupLabel>
+                            <SidebarMenu>
                                 <SidebarMenuItem>
                                     <SidebarMenuButton asChild tooltip="Notas e Boletins">
                                         <Link href="/admin/student-grades">
@@ -351,39 +345,54 @@ export function AppSidebar() {
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton asChild tooltip="Calendário Escolar">
+                                        <Link href="/events">
+                                            <Calendar />
+                                            <span>Calendário Escolar</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
                             </SidebarMenu>
                         </SidebarGroup>
 
                         <SidebarGroup>
-                            <SidebarGroupLabel>Pessoas</SidebarGroupLabel>
+                            <SidebarGroupLabel>Estrutura Curricular</SidebarGroupLabel>
                             <SidebarMenu>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Responsáveis">
-                                        <Link href={admin.guardians.index.url()}>
-                                            <Users />
-                                            <span>Responsáveis</span>
+                                    <SidebarMenuButton asChild tooltip="Anos Letivos">
+                                        <Link href={admin.academicYears.index.url()}>
+                                            <Calendar />
+                                            <span>Anos Letivos</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Alunos">
-                                        <Link href={admin.students.index.url()}>
-                                            <Users />
-                                            <span>Alunos</span>
+                                    <SidebarMenuButton asChild tooltip="Níveis de Ensino">
+                                        <Link href={admin.educationLevels.index.url()}>
+                                            <BookOpen />
+                                            <span>Níveis de Ensino</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Pré-Matrículas">
-                                        <Link href="/admin/pre-registrations">
-                                            <LinkIcon />
-                                            <span>Pré-Matrículas</span>
+                                    <SidebarMenuButton asChild tooltip="Séries / Anos">
+                                        <Link href={admin.grades.index.url()}>
+                                            <Layers />
+                                            <span>Séries / Anos</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton asChild tooltip="Disciplinas">
+                                        <Link href={admin.subjects.index.url()}>
+                                            <Book />
+                                            <span>Disciplinas</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             </SidebarMenu>
                         </SidebarGroup>
-
 
                         <SidebarGroup>
                             <SidebarGroupLabel>Sistema</SidebarGroupLabel>
@@ -391,7 +400,7 @@ export function AppSidebar() {
                                 <SidebarMenuItem>
                                     <SidebarMenuButton asChild tooltip="Configurações">
                                         <Link href="/admin/settings">
-                                            <Layers />
+                                            <Settings2 />
                                             <span>Configurações</span>
                                         </Link>
                                     </SidebarMenuButton>
@@ -405,18 +414,18 @@ export function AppSidebar() {
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Modelos de Documento">
-                                        <Link href="/admin/document-templates">
-                                            <FileText />
-                                            <span>Modelos de Documento</span>
+                                    <SidebarMenuButton asChild tooltip="Gerenciar Quadros">
+                                        <Link href="/admin/kanban">
+                                            <LayoutGrid />
+                                            <span>Gerenciar Quadros</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                                 <SidebarMenuItem>
-                                    <SidebarMenuButton asChild tooltip="Emissão de Documentos">
-                                        <Link href="/admin/documents">
-                                            <Printer />
-                                            <span>Emissão de Documentos</span>
+                                    <SidebarMenuButton asChild tooltip="Modelos de Documento">
+                                        <Link href="/admin/document-templates">
+                                            <FileText />
+                                            <span>Modelos de Documento</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
@@ -433,7 +442,12 @@ export function AppSidebar() {
                         href: '/agenda/inbox',
                         icon: MessageCircle,
                     },
-                    ...footerNavItems
+                    {
+                        title: 'Projetos (Kanban)',
+                        href: '/kanban',
+                        icon: Layers,
+                    },
+
                 ]} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>

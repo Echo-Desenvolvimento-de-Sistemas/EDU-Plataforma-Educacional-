@@ -20,7 +20,7 @@ export default function Index({ activities }: Props) {
             <div className="py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                             Minhas Atividades
                         </h2>
                         <Link
@@ -43,9 +43,9 @@ export default function Index({ activities }: Props) {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-                            <h3 className="text-lg font-medium text-gray-900">Nenhuma atividade criada</h3>
-                            <p className="mt-1 text-sm text-gray-500">Comece criando sua primeira avaliação ou atividade.</p>
+                        <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Nenhuma atividade criada</h3>
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Comece criando sua primeira avaliação ou atividade.</p>
                             <div className="mt-6">
                                 <Link
                                     href="/professor/activities/create"

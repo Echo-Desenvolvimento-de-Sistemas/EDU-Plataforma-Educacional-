@@ -41,10 +41,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Global Calendar
     Route::resource('events', \App\Http\Controllers\SchoolEventController::class);
 
+    // User Kanban
+    Route::get('/kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
+    Route::get('/kanban/{kanbanBoard}', [\App\Http\Controllers\KanbanController::class, 'show'])->name('kanban.show');
+    Route::post('/kanban/cards', [\App\Http\Controllers\KanbanController::class, 'storeCard'])->name('kanban.cards.store');
+    Route::patch('/kanban/cards/{card}/move', [\App\Http\Controllers\KanbanController::class, 'moveCard'])->name('kanban.cards.move');
+    Route::put('/kanban/cards/{card}', [\App\Http\Controllers\KanbanController::class, 'updateCard'])->name('kanban.cards.update');
+
     Route::middleware('role:secretaria')->prefix('secretaria')->name('secretaria.')->group(function () {
-        Route::get('/dashboard', function () {
-            return Inertia::render('Secretaria/Dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [\App\Http\Controllers\Secretaria\DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', \App\Http\Controllers\Secretaria\UserController::class);
         Route::resource('pre-registrations', \App\Http\Controllers\Secretaria\PreRegistrationController::class)->only(['index', 'store', 'show', 'destroy']);
@@ -62,6 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Batch Enrollment
         Route::get('/batch-enrollment', [\App\Http\Controllers\Secretaria\BatchEnrollmentController::class, 'index'])->name('batch-enrollment.index');
         Route::post('/batch-enrollment', [\App\Http\Controllers\Secretaria\BatchEnrollmentController::class, 'store'])->name('batch-enrollment.store');
+
+        // Subject Performance Analytics for Secretaria
+        Route::get('/subject-performance', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'index'])->name('subject-performance.index');
+        Route::get('/subject-performance/{subject}', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'show'])->name('subject-performance.show');
     });
 
     Route::middleware('role:professor')->prefix('professor')->name('professor.')->group(function () {
@@ -78,6 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Assessments
         Route::post('/classes/{classRoom}/assessments', [\App\Http\Controllers\Professor\AssessmentController::class, 'store'])->name('assessments.store');
         Route::put('/classes/{classRoom}/assessments/{assessment}', [\App\Http\Controllers\Professor\AssessmentController::class, 'update'])->name('assessments.update');
+        Route::delete('/classes/{classRoom}/assessments/{assessment}', [\App\Http\Controllers\Professor\AssessmentController::class, 'destroy'])->name('assessments.destroy');
 
         // Grades Grid (New UI)
         Route::get('/grades', [\App\Http\Controllers\Professor\GradeController::class, 'entry'])->name('grades.entry');
@@ -130,6 +140,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
+        // Subject Performance Analytics
+        Route::get('/subject-performance', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'index'])->name('subject-performance.index');
+        Route::get('/subject-performance/{subject}', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'show'])->name('subject-performance.show');
+
+        // Resources
         Route::resource('academic-years', \App\Http\Controllers\Admin\AcademicYearController::class);
         Route::post('/academic-years/{academicYear}/grading-periods', [\App\Http\Controllers\Admin\GradingPeriodController::class, 'store'])->name('academic-years.grading-periods.store');
         Route::delete('/grading-periods/{gradingPeriod}', [\App\Http\Controllers\Admin\GradingPeriodController::class, 'destroy'])->name('grading-periods.destroy');
@@ -205,6 +220,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/class-schedules/{classRoom}', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'getByClass'])->name('class-schedules.by-class');
         Route::post('/class-schedules', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'store'])->name('class-schedules.store');
         Route::delete('/class-schedules/{schedule}', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'destroy'])->name('class-schedules.destroy');
+        // Kanban Boards
+        Route::resource('kanban', \App\Http\Controllers\Admin\KanbanBoardController::class);
+        Route::post('/kanban/{kanbanBoard}/users', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'storeUser'])->name('kanban.users.store');
+        Route::delete('/kanban/{kanbanBoard}/users/{user}', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'removeUser'])->name('kanban.users.destroy');
     });
 });
 
