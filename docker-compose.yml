@@ -21,7 +21,7 @@ services:
       
       # Database
       DB_CONNECTION: mysql
-      DB_HOST: db 
+      DB_HOST: "${DB_HOST:-db}" 
       DB_PORT: 3306
       DB_DATABASE: "${DB_DATABASE}"
       DB_USERNAME: "${DB_USERNAME}"
