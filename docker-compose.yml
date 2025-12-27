@@ -37,8 +37,7 @@ services:
     networks:
       - edu-network
       - echonet
-    depends_on:
-      - db
+
     # Deploy config for Swarm/Compose V3 compatibility
     deploy:
       replicas: 1
