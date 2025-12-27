@@ -26,6 +26,3 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
-
-# Switch back to www-data
-USER www-data
