@@ -5,40 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: edu-app:latest
-    restart: unless-stopped
-    tty: true
-    environment:
-      # ServersideUP Image Configuration
-      AUTORUN_ENABLED: "true"
-      PHP_OPCACHE_ENABLE: "1"
-      
-      # Laravel Configuration
-      APP_NAME: "${APP_NAME:-Edu}"
-      APP_ENV: "${APP_ENV:-production}"
-      APP_KEY: "${APP_KEY}"
-      APP_DEBUG: "${APP_DEBUG:-false}"
-      APP_URL: "${APP_URL}"
-      
-      # Database
-      DB_CONNECTION: mysql
-      DB_HOST: "${DB_HOST:-db}" 
-      DB_PORT: 3306
-      DB_DATABASE: "${DB_DATABASE}"
-      DB_USERNAME: "${DB_USERNAME}"
-      DB_PASSWORD: "${DB_PASSWORD}"
-
-    # Porta Removida (Uso via Traefik)
-    # ports:
-    #   - "8080:80"
-
-    
-    volumes:
-      - ./:/var/www/html
-    networks:
-      - edu-network
-      - echonet
-
-    # Deploy config for Swarm/Compose V3 compatibility
+    # Swarm specific configuration
     deploy:
       replicas: 1
       restart_policy:
@@ -51,10 +18,37 @@ services:
         - "traefik.http.services.edu-app.loadbalancer.server.port=80"
         - "traefik.docker.network=echonet"
 
+    environment:
+      # ServersideUP Image Configuration
+      AUTORUN_ENABLED: "true"
+      PHP_OPCACHE_ENABLE: "1"
+      
+      # Laravel Configuration
+      APP_NAME: "${APP_NAME:-Edu}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_KEY: "${APP_KEY}"
+      APP_DEBUG: "${APP_DEBUG:-false}"
+      APP_URL: "https://app.colegiorosadesharom.com.br"
+      
+      # Database
+      DB_CONNECTION: mysql
+      DB_HOST: "${DB_HOST:-db}" 
+      DB_PORT: 3306
+      DB_DATABASE: "${DB_DATABASE}"
+      DB_USERNAME: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+
+    networks:
+      - edu-network
+      - echonet
+
   # Database
   db:
     image: mariadb:10.6
-    restart: unless-stopped
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     environment:
       MYSQL_DATABASE: "${DB_DATABASE:-laravel}"
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-root}"
@@ -64,13 +58,10 @@ services:
       - dbdata:/var/lib/mysql
     networks:
       - edu-network
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
 
 networks:
   edu-network:
+    driver: overlay
     attachable: true
   echonet:
     external: true
