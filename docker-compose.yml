@@ -35,6 +35,7 @@ services:
       - ./:/var/www/html
     networks:
       - edu-network
+      - echonet
     depends_on:
       - db
     # Deploy config for Swarm/Compose V3 compatibility
@@ -42,6 +43,13 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.edu-app.rule=Host(`app.colegiorosadesharom.com.br`)"
+        - "traefik.http.routers.edu-app.entrypoints=websecure"
+        - "traefik.http.routers.edu-app.tls=true"
+        - "traefik.http.services.edu-app.loadbalancer.server.port=80"
+        - "traefik.docker.network=echonet"
 
   # Database
   db:
@@ -64,6 +72,8 @@ services:
 networks:
   edu-network:
     attachable: true
+  echonet:
+    external: true
 
 volumes:
   dbdata:
