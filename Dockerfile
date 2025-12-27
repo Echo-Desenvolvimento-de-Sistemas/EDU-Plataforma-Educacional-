@@ -11,7 +11,7 @@ USER root
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # 3. Ajusta permissões
-RUN chown -R webuser:webgroup /var/www/html \
+RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
 
-USER webuser
+USER www-data
