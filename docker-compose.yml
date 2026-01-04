@@ -1,71 +1,99 @@
+version: '3.8'
+
 services:
-  # PHP + Nginx (Bundled in serversideup image)
   app:
+    image: ghcr.io/seu-usuario/edu-app:latest # Mude para sua imagem
     build:
       context: .
       dockerfile: Dockerfile
-    image: edu-app:latest
-    # Swarm specific configuration
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.edu-app.rule=Host(`app.colegiorosadesharom.com.br`)"
-        - "traefik.http.routers.edu-app.entrypoints=websecure"
-        - "traefik.http.routers.edu-app.tls=true"
-        - "traefik.http.services.edu-app.loadbalancer.server.port=80"
-        - "traefik.docker.network=echonet"
-
     environment:
-      # ServersideUP Image Configuration
-      AUTORUN_ENABLED: "true"
-      PHP_OPCACHE_ENABLE: "1"
-      
-      # Laravel Configuration
-      APP_NAME: "${APP_NAME:-Edu}"
-      APP_ENV: "${APP_ENV:-production}"
+      APP_NAME: "${APP_NAME:-Laravel}"
+      APP_ENV: production
       APP_KEY: "${APP_KEY}"
       APP_DEBUG: "${APP_DEBUG:-false}"
-      APP_URL: "https://app.colegiorosadesharom.com.br"
-      
-      # Database
+      APP_URL: "https://${DOMAIN_NAME:-app.colegiorosadesharom.com.br}"
+
       DB_CONNECTION: mysql
-      DB_HOST: "${DB_HOST:-db}" 
+      DB_HOST: db
       DB_PORT: 3306
-      DB_DATABASE: "${DB_DATABASE}"
-      DB_USERNAME: "${DB_USERNAME}"
-      DB_PASSWORD: "${DB_PASSWORD}"
+      DB_DATABASE: "${DB_DATABASE:-app}"
+      DB_USERNAME: "${DB_USERNAME:-app}"
+      DB_PASSWORD: "${DB_PASSWORD:-secret}"
 
-    networks:
-      - edu-network
-      - echonet
+      REDIS_HOST: redis
+      REDIS_PASSWORD: null
+      REDIS_PORT: 6379
 
-  # Database
-  db:
-    image: mariadb:10.6
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    environment:
-      MYSQL_DATABASE: "${DB_DATABASE:-laravel}"
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-root}"
-      MYSQL_PASSWORD: "${DB_PASSWORD:-root}"
-      MYSQL_USER: "${DB_USERNAME:-laravel}"
+      BROADCAST_CONNECTION: reverb
+
+      REVERB_APP_ID: "${REVERB_APP_ID:-app-id}"
+      REVERB_APP_KEY: "${REVERB_APP_KEY:-app-key}"
+      REVERB_APP_SECRET: "${REVERB_APP_SECRET:-app-secret}"
+      REVERB_HOST: "0.0.0.0"
+      REVERB_PORT: 8080
+      REVERB_SCHEME: http
+
+      VITE_REVERB_APP_KEY: "${REVERB_APP_KEY:-app-key}"
+      VITE_REVERB_HOST: "${DOMAIN_NAME:-app.colegiorosadesharom.com.br}"
+      VITE_REVERB_PORT: 443
+      VITE_REVERB_SCHEME: https
+
     volumes:
-      - dbdata:/var/lib/mysql
+      - storage_data:/var/www/html/storage
+
     networks:
-      - edu-network
+      - traefik_net # Rede externa dinâmica
+      - internal
+
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        # Habilita Traefik
+        - "traefik.enable=true"
+        # Roteador HTTP (Porta 80 padrão)
+        - "traefik.http.routers.edu-app.rule=Host(`app.colegiorosadesharom.com.br`)"
+        - "traefik.http.routers.edu-app.entrypoints=websecure"
+        - "traefik.http.routers.edu-app.tls.certresolver=myresolver" # Ajuste conforme seu resolver no Traefik (ex: letsencrypt)
+        - "traefik.http.services.edu-app.loadbalancer.server.port=80"
+        - "traefik.docker.network=${TRAEFIK_NETWORK:-echonet}"
+
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+
+  db:
+    image: mariadb:10.11
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-secret}"
+      MYSQL_DATABASE: "${DB_DATABASE:-app}"
+      MYSQL_USER: "${DB_USERNAME:-app}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
+    networks:
+      - internal
+    deploy:
+      placement:
+        constraints: [ node.role == manager ] # Recomendado para DB por causa do volume
+
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal
 
 networks:
-  edu-network:
-    driver: overlay
-    attachable: true
-  echonet:
+  traefik_net:
+    name: ${TRAEFIK_NETWORK:-echonet}
     external: true
+  internal:
+    driver: overlay
 
 volumes:
-  dbdata:
-    driver: local
+  db_data:
+  redis_data:
+  storage_data:
