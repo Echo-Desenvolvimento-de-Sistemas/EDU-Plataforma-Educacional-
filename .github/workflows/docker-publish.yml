@@ -7,7 +7,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  # github.repository as default. logic below will ensure it's lowercase
+  # Hardcoding the name to avoid issues with trailing hyphens in the repo name
+  IMAGE_NAME: echo-desenvolvimento-de-sistemas/edu-plataforma-educacional
 
 jobs:
   build-and-push:

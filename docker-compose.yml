@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     # Use the image built by GitHub Actions
-    image: ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional-:latest
+    image: ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
     # build:  <-- Disable build in Portainer/Swarm, use the image above
     #   context: .
     #   dockerfile: Dockerfile
