@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   app:
-    image: ghcr.io/seu-usuario/edu-app:latest # Mude para sua imagem
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # Use the image built by GitHub Actions
+    image: ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional-:latest
+    # build:  <-- Disable build in Portainer/Swarm, use the image above
+    #   context: .
+    #   dockerfile: Dockerfile
     environment:
       APP_NAME: "${APP_NAME:-Laravel}"
       APP_ENV: production
