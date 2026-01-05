@@ -126,7 +126,7 @@ export default function Manual() {
                                         <AlertTriangle className="w-4 h-4" /> Dias Anteriores
                                     </h4>
                                     <p className="text-sm text-amber-900">
-                                        Esqueceu de lançar? Vá em <strong>Minhas Turmas</strong> -> Selecione a Turma -> Aba <strong>Frequência</strong>. Lá você verá o histórico de todas as aulas e poderá editar qualquer uma delas.
+                                        Esqueceu de lançar? Vá em <strong>Minhas Turmas</strong> -&gt; Selecione a Turma -&gt; Aba <strong>Frequência</strong>. Lá você verá o histórico de todas as aulas e poderá editar qualquer uma delas.
                                     </p>
                                 </div>
                             </CardContent>
