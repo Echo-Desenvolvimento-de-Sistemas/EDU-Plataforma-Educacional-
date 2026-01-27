@@ -6,6 +6,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# Install PHP and Composer for Wayfinder
+RUN apk add --no-cache php php-openssl php-mbstring php-phar php-json php-dom php-tokenizer php-xml php-session composer
+
+# Install Backend Deps (Required for artisan commands)
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --prefer-dist
+
 COPY . .
 RUN npm run build
 
