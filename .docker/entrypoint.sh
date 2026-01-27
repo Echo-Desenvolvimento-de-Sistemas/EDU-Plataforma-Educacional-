@@ -11,8 +11,8 @@ php artisan route:cache
 php artisan view:cache
 
 # Run migrations (Optional: be careful in production on auto-deploy)
-# echo "Running migrations..."
-# php artisan migrate --force
+echo "Running migrations..."
+php artisan migrate --force
 
 # Reset Reverb (if needed)
 # php artisan reverb:restart
