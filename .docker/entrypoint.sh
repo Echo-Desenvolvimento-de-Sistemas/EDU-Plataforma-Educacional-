@@ -14,6 +14,9 @@ php artisan view:cache
 echo "Running migrations..."
 php artisan migrate --force
 
+# Link storage directory
+php artisan storage:link
+
 # Reset Reverb (if needed)
 # php artisan reverb:restart
 

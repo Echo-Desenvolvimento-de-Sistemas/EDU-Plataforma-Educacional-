@@ -6,6 +6,7 @@ import { Edit, Trash2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import Pagination from '@/components/pagination';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -135,6 +136,8 @@ export default function Index({ grades }: Props) {
                         </tbody>
                     </table>
                 </div>
+
+                <Pagination links={grades.links} />
             </div>
         </AppLayout>
     );
