@@ -6,7 +6,7 @@ import { Edit, Trash2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Pagination from '@/components/pagination';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -32,10 +32,7 @@ interface Grade {
 }
 
 interface Props {
-    grades: {
-        data: Grade[];
-        links: any[];
-    };
+    grades: Grade[];
 }
 
 export default function Index({ grades }: Props) {
@@ -56,7 +53,7 @@ export default function Index({ grades }: Props) {
 
                 {/* Mobile View (Cards) */}
                 <div className="grid gap-4 sm:hidden overflow-y-auto">
-                    {grades.data.map((grade) => (
+                    {grades.map((grade) => (
                         <Card key={grade.id}>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
@@ -105,7 +102,7 @@ export default function Index({ grades }: Props) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                            {grades.data.map((grade) => (
+                            {grades.map((grade) => (
                                 <tr key={grade.id}>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">{grade.name}</td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
@@ -137,7 +134,7 @@ export default function Index({ grades }: Props) {
                     </table>
                 </div>
 
-                <Pagination links={grades.links} />
+
             </div>
         </AppLayout>
     );
