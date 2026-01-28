@@ -1,18 +1,25 @@
 # Stage 1: Build Frontend Assets
-FROM node:22-alpine as frontend
+FROM php:8.2-alpine as frontend
 
 WORKDIR /app
 
+# Install Node.js, NPM, and Core PHP Extensions required for composer/artisan
+RUN apk add --no-cache nodejs npm \
+    && docker-php-ext-install bcmath
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 1. Install Backend Dependencies (for artisan wayfinder)
+COPY composer.json composer.lock ./
+# Install deps ignoring platform reqs if needed, though 8.2 should match
+RUN composer install --no-dev --no-scripts --prefer-dist --ignore-platform-reqs
+
+# 2. Install Frontend Dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Install PHP and Composer for Wayfinder
-RUN apk add --no-cache php php-openssl php-mbstring php-phar php-json php-dom php-tokenizer php-xml php-session composer
-
-# Install Backend Deps (Required for artisan commands)
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --prefer-dist
-
+# 3. Build Assets
 COPY . .
 RUN npm run build
 
