@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 import { Plus, Trash2, Edit, ArrowLeft, GripVertical, Search, Filter } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import QuickQuestionModal from '@/Components/Activity/QuickQuestionModal';
+import QuickQuestionModal from '@/components/Activity/QuickQuestionModal';
 
 interface Option {
     id: number;
