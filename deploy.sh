@@ -8,24 +8,46 @@ set -e
 
 echo "📦 Starting deployment..."
 
-# 1. Check for build flag
-if [ "$1" == "--build" ]; then
-    echo "🏗️ Building image locally on VPS (Ignoring Registry)..."
-    docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
-else
-    echo "⬇️ Pulling latest images from Registry..."
-    docker compose pull app
-    echo "🔄 Updating containers..."
-    docker compose up -d
+# Usage: ./deploy.sh
+
+set -e
+
+# Load .env variables automatically
+if [ -f .env ]; then
+  export $(echo $(cat .env | sed 's/#.*//g' | xargs) | envsubst)
 fi
 
-# 3. Clear caches (optional but recommended)
-echo "🧹 Clearing application caches..."
-docker compose exec -T app php artisan optimize
-docker compose exec -T app php artisan view:cache
+echo "📦 Starting deployment (Swarm Mode)..."
 
-# 4. Run migrations
-echo "🗄️ Running database migrations..."
-docker compose exec -T app php artisan migrate --force
+# 1. Pull latest image
+echo "⬇️ Pulling latest images from Registry..."
+docker compose pull app
+
+# 2. Deploy Stack
+echo "🔄 Updating Swarm Stack..."
+docker stack deploy -c docker-compose.yml edu
+
+echo "⏳ Waiting for service to stabilize (10s)..."
+sleep 10
+
+# 3. Find running app container for commands
+# We take the first one found
+CONTAINER_ID=$(docker ps -q -f name=edu_app | head -n 1)
+
+if [ -z "$CONTAINER_ID" ]; then
+    echo "⚠️  App container not found. Skipping cache clear and migrations."
+    echo "    Check logs with: docker service logs edu_app"
+else
+    echo "🎯 Found container: $CONTAINER_ID"
+    
+    # 3. Clear caches
+    echo "🧹 Clearing application caches..."
+    docker exec $CONTAINER_ID php artisan optimize
+    docker exec $CONTAINER_ID php artisan view:cache
+
+    # 4. Run migrations
+    echo "🗄️ Running database migrations..."
+    docker exec $CONTAINER_ID php artisan migrate --force
+fi
 
 echo "✅ Deployment completed successfully!"
