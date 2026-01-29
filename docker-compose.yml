@@ -95,7 +95,7 @@ networks:
     name: ${TRAEFIK_NETWORK:-echonet}
     external: true
   internal:
-    driver: overlay
+    driver: bridge
 
 volumes:
   db_data:
