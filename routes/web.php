@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Global Calendar
     Route::resource('events', \App\Http\Controllers\SchoolEventController::class);
 
+    // Manual/Help
+    Route::get('/manual', [\App\Http\Controllers\ManualController::class, 'index'])->name('manual');
+
     // User Kanban
     Route::get('/kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
     Route::get('/kanban/{kanbanBoard}', [\App\Http\Controllers\KanbanController::class, 'show'])->name('kanban.show');

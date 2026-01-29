@@ -28,6 +28,7 @@ class EvolutionService
                 'Content-Type' => 'application/json',
             ],
             'timeout' => 10,
+            'verify' => false, // Disable SSL verification for development
         ]);
     }
 

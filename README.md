@@ -1,6 +1,6 @@
-# Sistema de Gestão Escolar (Edu) - Rosa de Sharon
+# Edu - Plataforma de Gestão Escolar Whitelabel
 
-Este é um sistema completo de gestão escolar desenvolvido para atender às necessidades administrativas, pedagógicas e de comunicação de uma instituição de ensino. O projeto utiliza uma stack moderna de tecnologias para oferecer uma experiência fluida e responsiva (Single Page Application - SPA) para todos os perfis de usuários.
+O **Edu** é uma solução completa e *White-label* para gestão escolar, desenvolvida para ser adaptável a diferentes instituições de ensino. O projeto utiliza uma stack moderna de tecnologias para oferecer uma experiência fluida e responsiva (Single Page Application - SPA) para administradores, professores, alunos e responsáveis.
 
 ## 🚀 Tecnologias Utilizadas
 
