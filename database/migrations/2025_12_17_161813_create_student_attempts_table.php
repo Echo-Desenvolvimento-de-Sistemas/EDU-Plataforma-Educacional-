@@ -10,15 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('student_attempts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('activity_id')->constrained()->cascadeOnDelete();
-            $table->decimal('score', 8, 2)->nullable();
-            $table->dateTime('started_at');
-            $table->dateTime('finished_at')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('student_attempts')) {
+            Schema::create('student_attempts', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('activity_id')->constrained()->cascadeOnDelete();
+                $table->decimal('score', 8, 2)->nullable();
+                $table->dateTime('started_at');
+                $table->dateTime('finished_at')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

@@ -45,6 +45,7 @@ services:
     networks:
       - traefik_net # Rede externa dinâmica
       - internal
+    restart: always
 
     deploy:
       mode: replicated
@@ -75,6 +76,7 @@ services:
       MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
     networks:
       - internal
+    restart: always
     deploy:
       placement:
         constraints: [ node.role == manager ] # Recomendado para DB por causa do volume
@@ -86,6 +88,7 @@ services:
       - redis_data:/data
     networks:
       - internal
+    restart: always
 
 networks:
   traefik_net:

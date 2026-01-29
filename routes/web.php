@@ -41,8 +41,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Global Calendar
     Route::resource('events', \App\Http\Controllers\SchoolEventController::class);
 
-    // Manual/Help
     Route::get('/manual', [\App\Http\Controllers\ManualController::class, 'index'])->name('manual');
+
+    // BNCC Search
+    Route::get('/bncc/search', [\App\Http\Controllers\Api\BnccController::class, 'search'])->name('bncc.search');
 
     // User Kanban
     Route::get('/kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
@@ -74,6 +76,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Subject Performance Analytics for Secretaria
         Route::get('/subject-performance', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'index'])->name('subject-performance.index');
         Route::get('/subject-performance/{subject}', [\App\Http\Controllers\Admin\SubjectPerformanceController::class, 'show'])->name('subject-performance.show');
+
+        // Pedagogical Planning Supervision (Reuse Admin Controller)
+        Route::get('/planning', [\App\Http\Controllers\Admin\LessonPlanController::class, 'index'])->name('planning.index');
+        Route::get('/planning/{lessonPlan}', [\App\Http\Controllers\Admin\LessonPlanController::class, 'show'])->name('planning.show');
+        Route::post('/planning/{lessonPlan}/approve', [\App\Http\Controllers\Admin\LessonPlanController::class, 'approve'])->name('planning.approve');
+        Route::post('/planning/{lessonPlan}/request-changes', [\App\Http\Controllers\Admin\LessonPlanController::class, 'requestChanges'])->name('planning.request-changes');
     });
 
     Route::middleware('role:professor')->prefix('professor')->name('professor.')->group(function () {
@@ -117,6 +125,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Question Banks & Questions
         Route::resource('question-banks', \App\Http\Controllers\Professor\QuestionBankController::class);
         Route::resource('questions', \App\Http\Controllers\Professor\QuestionController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+        // Pedagogical Planning
+        Route::resource('planning', \App\Http\Controllers\Professor\LessonPlanController::class);
+        Route::post('/planning/{plan}/submit', [\App\Http\Controllers\Professor\LessonPlanController::class, 'submit'])->name('planning.submit');
     });
 
     Route::middleware('role:aluno')->prefix('aluno')->name('aluno.')->group(function () {
@@ -227,6 +239,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('kanban', \App\Http\Controllers\Admin\KanbanBoardController::class);
         Route::post('/kanban/{kanbanBoard}/users', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'storeUser'])->name('kanban.users.store');
         Route::delete('/kanban/{kanbanBoard}/users/{user}', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'removeUser'])->name('kanban.users.destroy');
+
+        // Pedagogical Planning Supervision
+        Route::get('/planning', [\App\Http\Controllers\Admin\LessonPlanController::class, 'index'])->name('planning.index');
+        Route::get('/planning/{lessonPlan}', [\App\Http\Controllers\Admin\LessonPlanController::class, 'show'])->name('planning.show');
+        Route::post('/planning/{lessonPlan}/approve', [\App\Http\Controllers\Admin\LessonPlanController::class, 'approve'])->name('planning.approve');
+        Route::post('/planning/{lessonPlan}/request-changes', [\App\Http\Controllers\Admin\LessonPlanController::class, 'requestChanges'])->name('planning.request-changes');
     });
 });
 

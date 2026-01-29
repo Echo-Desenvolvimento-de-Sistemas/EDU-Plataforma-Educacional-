@@ -3,15 +3,21 @@
 # Deploy Script for Edu Platform
 # Usage: ./deploy.sh
 
+set -e
+
+
 echo "📦 Starting deployment..."
 
-# 1. Pull the latest image
-echo "⬇️ Pulling latest images..."
-docker compose pull app
-
-# 2. Restart containers
-echo "🔄 Updating containers..."
-docker compose up -d
+# 1. Check for build flag
+if [ "$1" == "--build" ]; then
+    echo "🏗️ Building image locally on VPS (Ignoring Registry)..."
+    docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+else
+    echo "⬇️ Pulling latest images from Registry..."
+    docker compose pull app
+    echo "🔄 Updating containers..."
+    docker compose up -d
+fi
 
 # 3. Clear caches (optional but recommended)
 echo "🧹 Clearing application caches..."

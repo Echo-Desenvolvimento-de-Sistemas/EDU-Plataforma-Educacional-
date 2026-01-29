@@ -92,6 +92,12 @@ class AttendanceController extends Controller
             'selectedDate' => $date,
             'students' => $students,
             'existingContent' => $existingDiary ? $existingDiary->content : '',
+            'dailyPlan' => \App\Models\LessonPlan::where('class_room_id', $classRoom->id)
+                ->where('subject_id', $selectedSubjectId)
+                ->where('status', 'APPROVED')
+                ->whereDate('start_date', '<=', $date)
+                ->whereDate('end_date', '>=', $date)
+                ->first(),
         ]);
     }
 

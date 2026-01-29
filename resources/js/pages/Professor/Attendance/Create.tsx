@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm, Link, router } from '@inertiajs/react';
-import { ArrowLeft, Loader2, Save } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Save } from 'lucide-react';
 import AttendanceTable, { AttendanceStatus, StudentAttendance } from '@/components/Attendance/AttendanceTable';
 import { AttendanceList } from '@/components/Professor/AttendanceList';
 import { Textarea } from '@/components/ui/textarea';
@@ -29,6 +29,10 @@ interface Props {
     selectedDate: string;
     students: StudentAttendance[];
     existingContent?: string;
+    dailyPlan?: {
+        topic: string;
+        methodology: string;
+    } | null;
 }
 
 export default function Create({ classRoom, subjects, selectedSubjectId, selectedDate, students, existingContent }: Props) {
@@ -185,16 +189,29 @@ export default function Create({ classRoom, subjects, selectedSubjectId, selecte
 
                     {/* Content Input (Optional but good to match desktop) */}
                     <div className="mt-6 md:mt-8 bg-card rounded-xl border shadow-sm p-4">
-                        <div className="space-y-2">
+                        <div className="flex items-center justify-between mb-2">
                             <Label htmlFor="content">Conteúdo Ministrado</Label>
-                            <Textarea
-                                id="content"
-                                placeholder="Descreva o que foi ensinado hoje..."
-                                value={data.content}
-                                onChange={e => setData('content', e.target.value)}
-                                rows={3}
-                            />
+                            {/* @ts-ignore */}
+                            {props.dailyPlan && (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setData('content', `Tema: ${props.dailyPlan.topic}\nMetodologia: ${props.dailyPlan.methodology || ''}`)}
+                                    className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                                >
+                                    <BookOpen className="mr-2 h-3 w-3" />
+                                    Importar do Planejamento
+                                </Button>
+                            )}
                         </div>
+                        <Textarea
+                            id="content"
+                            placeholder="Descreva o que foi ensinado hoje..."
+                            value={data.content}
+                            onChange={e => setData('content', e.target.value)}
+                            rows={3}
+                        />
                     </div>
                 </div>
 
