@@ -245,6 +245,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/planning/{lessonPlan}', [\App\Http\Controllers\Admin\LessonPlanController::class, 'show'])->name('planning.show');
         Route::post('/planning/{lessonPlan}/approve', [\App\Http\Controllers\Admin\LessonPlanController::class, 'approve'])->name('planning.approve');
         Route::post('/planning/{lessonPlan}/request-changes', [\App\Http\Controllers\Admin\LessonPlanController::class, 'requestChanges'])->name('planning.request-changes');
+        Route::get('/secret-data-import', [\App\Http\Controllers\Admin\ImportController::class, 'create'])->name('import.create');
+        Route::post('/secret-data-import', [\App\Http\Controllers\Admin\ImportController::class, 'store'])->name('import.store');
     });
 });
 

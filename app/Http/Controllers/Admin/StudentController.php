@@ -30,13 +30,14 @@ class StudentController extends Controller
             $query->where('class_room_id', $request->input('class_room_id'));
         }
 
-        $students = $query->paginate(10)->withQueryString();
+        $perPage = $request->input('per_page', 10);
+        $students = $query->paginate($perPage)->withQueryString();
         $classRooms = ClassRoom::all();
 
         return Inertia::render('Admin/Students/Index', [
             'students' => $students,
             'classRooms' => $classRooms,
-            'filters' => $request->only(['search', 'class_room_id']),
+            'filters' => $request->only(['search', 'class_room_id', 'per_page']),
         ]);
     }
 

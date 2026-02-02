@@ -19,7 +19,9 @@ export default function Pagination({ links }: PaginationProps) {
                 // Decode HTML entities (like &laquo;, &raquo;)
                 const label = link.label
                     .replace('&laquo; Previous', '«')
-                    .replace('Next &raquo;', '»');
+                    .replace('Next &raquo;', '»')
+                    .replace('pagination.previous', '«')
+                    .replace('pagination.next', '»');
 
                 return link.url === null ? (
                     <Button

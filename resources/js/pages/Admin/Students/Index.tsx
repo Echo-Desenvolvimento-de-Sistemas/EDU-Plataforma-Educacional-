@@ -2,17 +2,18 @@ import admin from '@/routes/admin';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import AppLogo from '@/components/app-logo';
-import { Head, Link, router, usePage } from '@inertiajs/react'; // Added router
-import { Edit, Trash2, Plus, Eye, Printer, Search, Filter, Power, Calendar as CalendarIcon } from 'lucide-react'; // Added Search, Filter, Power
+import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Edit, Trash2, Plus, Eye, Printer, Search, Filter, Power, Calendar as CalendarIcon, FileDown, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input'; // Added Input
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Added Select components
-import { useState, useEffect } from 'react'; // Added useEffect
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import StudentRegistrationCard from '@/components/student-registration-card';
-import { useDebounce } from '@/hooks/use-debounce'; // Added useDebounce
+import { useDebounce } from '@/hooks/use-debounce';
+import Pagination from '@/components/pagination';
 import {
     Dialog,
     DialogContent,
@@ -51,11 +52,18 @@ interface Props {
     students: {
         data: Student[];
         links: any[];
+        total: number;
+        per_page: number;
+        current_page: number;
+        last_page: number;
+        from: number;
+        to: number;
     };
-    classRooms: ClassRoom[]; // Added classRooms
-    filters: { // Added filters
+    classRooms: ClassRoom[];
+    filters: {
         search?: string;
         class_room_id?: string;
+        per_page?: string;
     };
 }
 
@@ -66,18 +74,34 @@ export default function Index({ students, classRooms, filters }: Props) {
     // Filter States
     const [search, setSearch] = useState(filters.search || '');
     const [classRoomId, setClassRoomId] = useState(filters.class_room_id || 'all');
+    const [perPage, setPerPage] = useState(filters.per_page || '10');
+
     const debouncedSearch = useDebounce(search, 300);
 
     useEffect(() => {
+        const query = new URLSearchParams(window.location.search);
+        const currentSearch = query.get('search') || '';
+        const currentClassRoom = query.get('class_room_id') || 'all';
+        const currentPerPage = query.get('per_page') || '10';
+
+        if (
+            debouncedSearch === currentSearch &&
+            classRoomId === currentClassRoom &&
+            perPage === currentPerPage
+        ) {
+            return;
+        }
+
         router.get(
             '/admin/students',
             {
                 search: debouncedSearch,
-                class_room_id: classRoomId === 'all' ? undefined : classRoomId
+                class_room_id: classRoomId === 'all' ? undefined : classRoomId,
+                per_page: perPage
             },
-            { preserveState: true, replace: true }
+            { preserveState: true, replace: true, preserveScroll: true }
         );
-    }, [debouncedSearch, classRoomId]);
+    }, [debouncedSearch, classRoomId, perPage]);
 
     const handleViewStudent = (id: number) => {
         setLoadingStudent(true);
@@ -104,23 +128,37 @@ export default function Index({ students, classRooms, filters }: Props) {
             <Head title="Alunos" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-hidden rounded-xl p-4 print:hidden">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Alunos</h1>
-                    <Link
-                        href="/admin/students/create"
-                        className="flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                    >
-                        <Plus className="h-4 w-4" />
-                        Novo Aluno
-                    </Link>
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Alunos</h1>
+                        <p className="text-sm text-muted-foreground">
+                            Gerencie os alunos cadastrados no sistema. Total: {students.total}
+                        </p>
+                    </div>
+                    <div className="flex gap-2">
+                        <Link
+                            href="/admin/secret-data-import"
+                            className="flex items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                        >
+                            <Upload className="h-4 w-4" />
+                            Importar
+                        </Link>
+                        <Link
+                            href="/admin/students/create"
+                            className="flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Novo Aluno
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Filters */}
-                <div className="flex flex-col gap-4 sm:flex-row">
-                    <div className="relative flex-1">
+                <div className="flex flex-col gap-4 sm:flex-row items-end sm:items-center bg-white dark:bg-gray-800 p-4 rounded-lg border shadow-sm">
+                    <div className="relative flex-1 w-full">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
                         <Input
                             type="search"
-                            placeholder="Buscar por nome ou CPF..."
+                            placeholder="Buscar por nome, CPF ou NIS..."
                             className="pl-9"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -138,6 +176,19 @@ export default function Index({ students, classRooms, filters }: Props) {
                                         {classroom.name}
                                     </SelectItem>
                                 ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="w-full sm:w-[130px]">
+                        <Select value={perPage} onValueChange={setPerPage}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Por página" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="10">10 por página</SelectItem>
+                                <SelectItem value="20">20 por página</SelectItem>
+                                <SelectItem value="50">50 por página</SelectItem>
+                                <SelectItem value="100">100 por página</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -209,7 +260,7 @@ export default function Index({ students, classRooms, filters }: Props) {
                 {/* Desktop View (Table) */}
                 <div className="hidden sm:block flex-1 overflow-auto rounded-md border border-gray-200 dark:border-gray-700">
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0">
+                        <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0 z-10">
                             <tr>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                     Nome
@@ -234,7 +285,7 @@ export default function Index({ students, classRooms, filters }: Props) {
                         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
                             {students.data.length > 0 ? (
                                 students.data.map((student) => (
-                                    <tr key={student.id}>
+                                    <tr key={student.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">{student.name}</td>
                                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                             {student.class_room?.name || 'Sem Turma'}
@@ -298,13 +349,17 @@ export default function Index({ students, classRooms, filters }: Props) {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500">
+                                    <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
                                         Nenhum aluno encontrado.
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                <div className="mt-4">
+                    <Pagination links={students.links} />
                 </div>
 
                 {/* View Student Modal - No changes here but included for completeness if needed, though replacement is safer to cover everything */}
@@ -315,7 +370,7 @@ export default function Index({ students, classRooms, filters }: Props) {
                             <DialogDescription className="sr-only">Detalhes do Aluno</DialogDescription>
                             <Button variant="outline" size="sm" onClick={handlePrint} className="ml-auto">
                                 <Printer className="mr-2 h-4 w-4" />
-                                Imprimir
+                                To Print
                             </Button>
                         </DialogHeader>
 
