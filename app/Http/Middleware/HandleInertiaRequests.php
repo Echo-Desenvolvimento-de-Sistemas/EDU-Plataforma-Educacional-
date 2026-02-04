@@ -38,12 +38,32 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        $stats = null;
+        if ($request->user()) {
+            try {
+                // Dependency injection inside middleware method isn't standard, so we resolve manually or use facade if available.
+                // Better approach: resolve service from container
+                $gamificationService = app(\App\Services\GamificationService::class);
+                if ($gamificationService->isConfigured()) {
+                    // Cache for 5 minutes to avoid hitting caching service/external API on every request
+                    $stats = \Illuminate\Support\Facades\Cache::remember(
+                        'user_gamification_stats_' . $request->user()->id,
+                        300,
+                        fn() => $gamificationService->getUserStats($request->user())
+                    );
+                }
+            } catch (\Exception $e) {
+                // Fail silently
+            }
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
+                'gamification' => $stats,
             ],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings' => \App\Models\Setting::all()->pluck('value', 'key'),

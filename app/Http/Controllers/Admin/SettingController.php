@@ -46,6 +46,8 @@ class SettingController extends Controller
             'mail_encryption' => 'nullable|string|max:10',
             'mail_from_address' => 'nullable|email|max:255',
             'mail_from_name' => 'nullable|string|max:255',
+            'gamification_url' => 'nullable|string|max:500',
+            'gamification_secret' => 'nullable|string|max:500',
         ]);
 
         $settings = $request->only([
@@ -69,7 +71,9 @@ class SettingController extends Controller
             'mail_password',
             'mail_encryption',
             'mail_from_address',
-            'mail_from_name'
+            'mail_from_name',
+            'gamification_url',
+            'gamification_secret'
         ]);
 
         foreach ($settings as $key => $value) {

@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm, router } from '@inertiajs/react';
-import { Save } from 'lucide-react';
+import { Save, Download } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -45,6 +45,8 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
         mail_encryption: settings.mail_encryption || 'tls',
         mail_from_address: settings.mail_from_address || '',
         mail_from_name: settings.mail_from_name || '',
+        gamification_url: settings.gamification_url || '',
+        gamification_secret: settings.gamification_secret || '',
     });
 
     const [logoPreview, setLogoPreview] = useState<string | null>(settings.logo_url || null);
@@ -377,6 +379,67 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
                                 </p>
                                 {errors.email_domain_suffix && <p className="text-sm text-red-500">{errors.email_domain_suffix}</p>}
                             </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Links Externos</CardTitle>
+                        <CardDescription>Configure links para plataformas externas que aparecerão na sidebar.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="gamification_url">URL da Plataforma de Gamificação</Label>
+                                <Input
+                                    id="gamification_url"
+                                    value={data.gamification_url}
+                                    onChange={(e) => setData('gamification_url', e.target.value)}
+                                    placeholder="https://exemplo.com/gamificacao"
+                                />
+                                <p className="text-sm text-muted-foreground">
+                                    Link para a plataforma de gamificação que será exibido na sidebar para todos os usuários.
+                                </p>
+                                {errors.gamification_url && <p className="text-sm text-red-500">{errors.gamification_url}</p>}
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="gamification_secret">Chave Secreta (Token de Integração)</Label>
+                                <Input
+                                    id="gamification_secret"
+                                    type="password"
+                                    value={data.gamification_secret}
+                                    onChange={(e) => setData('gamification_secret', e.target.value)}
+                                    placeholder="sk_..."
+                                />
+                                <p className="text-sm text-muted-foreground">
+                                    Token seguro para autenticação entre os sistemas. Compartilhe apenas com o administrador do sistema de gamificação.
+                                </p>
+                                {errors.gamification_secret && <p className="text-sm text-red-500">{errors.gamification_secret}</p>}
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Migração e Integração</CardTitle>
+                        <CardDescription>Ferramentas para portabilidade de dados.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                                <h4 className="text-sm font-medium">Exportar Dados para Gamificação</h4>
+                                <p className="text-sm text-muted-foreground">Gera um arquivo JSON com usuários, turmas e matrículas.</p>
+                            </div>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => window.location.href = '/admin/gamification/test/export'}
+                            >
+                                <Download className="mr-2 h-4 w-4" />
+                                Exportar Dados
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>

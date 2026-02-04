@@ -3,6 +3,12 @@ import { LucideIcon } from 'lucide-react';
 
 export interface Auth {
     user: User;
+    gamification?: {
+        points: number;
+        level: number;
+        next_level_points?: number;
+        badges_count?: number;
+    } | null;
 }
 
 export interface BreadcrumbItem {
@@ -20,6 +26,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    external?: boolean;
 }
 
 export interface SharedData {

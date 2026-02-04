@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \App\Models\User::observe(\App\Observers\UserObserver::class);
+        \App\Models\ClassRoom::observe(\App\Observers\ClassRoomObserver::class);
+        \App\Models\Allocation::observe(\App\Observers\AllocationObserver::class);
+
         if (config('app.env') === 'production') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }

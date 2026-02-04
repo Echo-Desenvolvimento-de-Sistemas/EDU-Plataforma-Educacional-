@@ -15,7 +15,7 @@ import {
 import { dashboard } from '@/routes';
 import { SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Book, BookOpen, Calendar, Folder, Layers, LayoutGrid, Users, Link as LinkIcon, FileText, Settings2, SquareTerminal, Printer, GraduationCap, TrendingUp, MessageCircle, ChevronDown } from 'lucide-react';
+import { Book, BookOpen, Calendar, Folder, Layers, LayoutGrid, Users, Link as LinkIcon, FileText, Settings2, SquareTerminal, Printer, GraduationCap, TrendingUp, MessageCircle, ChevronDown, Trophy } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import AppLogo from './app-logo';
 
@@ -34,6 +34,32 @@ import secretaria from '@/routes/secretaria';
 
 export function AppSidebar() {
     const user = usePage<SharedData>().props.auth.user;
+    const settings = usePage<SharedData>().props.settings as Record<string, string>;
+    const gamificationUrl = settings?.gamification_url || '';
+
+    // Build footer items dynamically
+    const footerItems: NavItem[] = [
+        {
+            title: 'Agenda Digital',
+            href: '/agenda/inbox',
+            icon: MessageCircle,
+        },
+        {
+            title: 'Projetos (Kanban)',
+            href: '/kanban',
+            icon: Layers,
+        },
+    ];
+
+    // Add gamification link if URL is configured
+    if (gamificationUrl) {
+        footerItems.push({
+            title: 'Gamificação',
+            href: '/gamification/sso',
+            icon: Trophy,
+            external: true,
+        });
+    }
 
     return (
         <Sidebar collapsible="icon" variant="inset">
@@ -497,19 +523,7 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={[
-                    {
-                        title: 'Agenda Digital',
-                        href: '/agenda/inbox',
-                        icon: MessageCircle,
-                    },
-                    {
-                        title: 'Projetos (Kanban)',
-                        href: '/kanban',
-                        icon: Layers,
-                    },
-
-                ]} className="mt-auto" />
+                <NavFooter items={footerItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

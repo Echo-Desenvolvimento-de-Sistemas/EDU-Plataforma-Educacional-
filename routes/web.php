@@ -33,6 +33,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/first-access', [\App\Http\Controllers\FirstAccessController::class, 'index'])->name('first-access.index');
     Route::post('/first-access', [\App\Http\Controllers\FirstAccessController::class, 'store'])->name('first-access.store');
 
+    // Gamification SSO
+    Route::get('/gamification/sso', [\App\Http\Controllers\GamificationAuthController::class, 'redirect'])->name('gamification.sso');
+
+
     Route::get('/dashboard', function () {
         $role = auth()->user()->role;
         return redirect()->route($role . '.dashboard');
@@ -187,6 +191,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/settings/whatsapp/connect', [App\Http\Controllers\Admin\AgendaSettingController::class, 'connectWhatsapp'])->name('settings.whatsapp.connect');
         Route::get('/settings/whatsapp/status', [App\Http\Controllers\Admin\AgendaSettingController::class, 'checkWhatsappStatus'])->name('settings.whatsapp.status');
         Route::post('/settings/whatsapp/disconnect', [App\Http\Controllers\Admin\AgendaSettingController::class, 'disconnectWhatsapp'])->name('settings.whatsapp.disconnect');
+
+        // Gamification Test
+        Route::get('/gamification/test', [\App\Http\Controllers\Admin\GamificationTestController::class, 'index'])->name('gamification.test');
+        Route::get('/gamification/test/export', [\App\Http\Controllers\Admin\GamificationTestController::class, 'export'])->name('gamification.send');
 
         // Status Toggling
         Route::patch('/users/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
