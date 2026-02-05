@@ -55,9 +55,21 @@ class GamificationTestController extends Controller
             ];
         });
 
+        $students = \App\Models\Student::all()->map(function ($s) {
+            return [
+                'external_id' => $s->id,
+                'name' => $s->name,
+                'cpf' => $s->cpf,
+                'birth_date' => $s->birth_date,
+                'class_room_id' => $s->class_room_id,
+                'status' => $s->status,
+            ];
+        });
+
         // 2. Montar Estrutura Final
         $exportData = [
             'users' => $users,
+            'students' => $students,
             'class_rooms' => $classRooms,
             'allocations' => $allocations,
             'generated_at' => now()->toIso8601String(),
