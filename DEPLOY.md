@@ -57,7 +57,7 @@ O processo de atualização é simples e automatizado:
     docker compose exec app chown -R www-data:www-data /var/www/html/storage
     ```
 *   **Imagem antiga**: Se o script não baixar a nova versão, verifique se a Action no GitHub foi concluída com sucesso.
-*   **Cache Persistente**: Se as alterações não aparecerem mesmo após o deploy, force a atualização dos containers:
+*   **Imagem antiga / Erro de Autenticação**: Se o script não baixar a nova versão ou ocorrer erro de autenticação no Registry, force a atualização com credenciais:
     ```bash
-    docker service update --force edu_app
+    docker service update --force --with-registry-auth edu_app
     ```

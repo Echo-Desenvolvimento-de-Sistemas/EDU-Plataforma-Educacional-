@@ -1,4 +1,5 @@
 import { wayfinder } from '@laravel/vite-plugin-wayfinder';
+// Fix git object corruption
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';

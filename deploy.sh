@@ -14,7 +14,10 @@ set -e
 
 # Load .env variables automatically
 if [ -f .env ]; then
-  export $(echo $(cat .env | sed 's/#.*//g' | xargs) | envsubst)
+  # Use set -a to export all variables defined in .env
+  set -a
+  source .env
+  set +a
 fi
 
 echo "📦 Starting deployment (Swarm Mode)..."
@@ -25,7 +28,7 @@ docker compose pull app
 
 # 2. Deploy Stack
 echo "🔄 Updating Swarm Stack..."
-docker stack deploy -c docker-compose.yml edu
+docker stack deploy --with-registry-auth -c docker-compose.yml edu
 
 echo "⏳ Waiting for service to stabilize (10s)..."
 sleep 10
