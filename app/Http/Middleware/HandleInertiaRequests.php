@@ -45,15 +45,24 @@ class HandleInertiaRequests extends Middleware
                 // Better approach: resolve service from container
                 $gamificationService = app(\App\Services\GamificationService::class);
                 if ($gamificationService->isConfigured()) {
-                    // Cache for 5 minutes to avoid hitting caching service/external API on every request
+                    // Cache for 10 minutes to avoid hitting external API on every request
+                    // Use a timeout to prevent slow API calls from blocking the request
                     $stats = \Illuminate\Support\Facades\Cache::remember(
                         'user_gamification_stats_' . $request->user()->id,
-                        300,
-                        fn() => $gamificationService->getUserStats($request->user())
+                        600, // 10 minutes
+                        function () use ($gamificationService, $request) {
+                            try {
+                                return $gamificationService->getUserStats($request->user());
+                            } catch (\Exception $e) {
+                                \Log::warning('Gamification stats failed: ' . $e->getMessage());
+                                return null;
+                            }
+                        }
                     );
                 }
             } catch (\Exception $e) {
                 // Fail silently
+                \Log::warning('Gamification service error: ' . $e->getMessage());
             }
         }
 
@@ -66,7 +75,11 @@ class HandleInertiaRequests extends Middleware
                 'gamification' => $stats,
             ],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'settings' => \App\Models\Setting::all()->pluck('value', 'key'),
+            'settings' => \Illuminate\Support\Facades\Cache::remember('app.settings', 3600, function () {
+                // Only load specific settings keys instead of all
+                return \App\Models\Setting::whereIn('key', ['gamification_url', 'gamification_secret'])
+                    ->pluck('value', 'key');
+            }),
         ];
     }
 }

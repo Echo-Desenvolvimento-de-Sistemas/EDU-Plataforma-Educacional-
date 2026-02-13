@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Prevent lazy loading in development to catch N+1 queries
+        if ($this->app->environment('local')) {
+            \Illuminate\Database\Eloquent\Model::preventLazyLoading();
+        }
+
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\ClassRoom::observe(\App\Observers\ClassRoomObserver::class);
         \App\Models\Allocation::observe(\App\Observers\AllocationObserver::class);
@@ -28,7 +33,10 @@ class AppServiceProvider extends ServiceProvider
         }
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-                $settings = \App\Models\Setting::all()->pluck('value', 'key');
+                // Cache settings for 1 hour to reduce database queries
+                $settings = \Illuminate\Support\Facades\Cache::remember('app.settings', 3600, function () {
+                    return \App\Models\Setting::all()->pluck('value', 'key');
+                });
 
                 if ($settings->has('mail_host')) {
                     config([

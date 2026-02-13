@@ -1,89 +1,106 @@
-# Stage 1: Build Frontend Assets
-FROM php:8.2-alpine as frontend
+# Multi-stage build for Laravel application with Nginx and PHP-FPM
+FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app
 
-# Install Node.js, NPM, and Core PHP Extensions required for composer/artisan
-RUN apk add --no-cache nodejs npm \
-    && docker-php-ext-install bcmath
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# 1. Install Backend Dependencies (for artisan wayfinder)
-COPY composer.json composer.lock ./
-# Install deps ignoring platform reqs if needed, though 8.2 should match
-RUN composer install --no-dev --no-scripts --prefer-dist --ignore-platform-reqs
-
-# 2. Install Frontend Dependencies
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm ci
 
-# 3. Build Assets
+# Copy source files
 COPY . .
+
+# Build frontend assets
 RUN npm run build
 
-# Stage 2: Production Environment
+# ============================================
+# Production PHP Image
+# ============================================
 FROM php:8.2-fpm-alpine
 
 # Install system dependencies
 RUN apk add --no-cache \
     nginx \
     supervisor \
-    curl \
-    git \
+    mysql-client \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libzip-dev \
     zip \
     unzip \
-    libpng-dev \
-    libzip-dev \
-    freetype-dev \
-    libjpeg-turbo-dev \
+    git \
+    curl \
+    oniguruma-dev \
     icu-dev \
-    oniguruma-dev
-
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
-    gd \
-    pdo_mysql \
-    bcmath \
-    mbstring \
-    exif \
-    pcntl \
-    intl \
-    opcache \
-    zip
+        pdo_mysql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip \
+        intl \
+        soap \
+        opcache
+
+# Install Redis extension
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .build-deps
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy backend dependencies definition
-COPY composer.json composer.lock ./
-
-# Install backend dependencies (optimized)
-RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
-
 # Copy application files
-COPY . .
+COPY --chown=www-data:www-data . .
 
-# Copy built frontend assets from Stage 1
-COPY --from=frontend /app/public/build public/build
+# Copy built frontend assets from frontend-builder
+COPY --from=frontend-builder --chown=www-data:www-data /app/public/build ./public/build
 
-# Setup Nginx and Supervisor
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+# Copy configuration files
 COPY .docker/nginx/default.conf /etc/nginx/http.d/default.conf
-COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY .docker/supervisord.conf /etc/supervisord.conf
 COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-# Permissions
-# Permissions
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && mkdir -p /var/log/supervisor \
-    && chown -R www-data:www-data /var/log/supervisor
+# Configure PHP for production
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && echo "opcache.enable=1" >> "$PHP_INI_DIR/conf.d/opcache.ini" \
+    && echo "opcache.memory_consumption=256" >> "$PHP_INI_DIR/conf.d/opcache.ini" \
+    && echo "opcache.interned_strings_buffer=16" >> "$PHP_INI_DIR/conf.d/opcache.ini" \
+    && echo "opcache.max_accelerated_files=10000" >> "$PHP_INI_DIR/conf.d/opcache.ini" \
+    && echo "opcache.validate_timestamps=0" >> "$PHP_INI_DIR/conf.d/opcache.ini"
 
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod +x /usr/local/bin/entrypoint.sh
+
+# Create log directories
+RUN mkdir -p /var/log/supervisor /var/log/nginx /var/log/php-fpm \
+    && chown -R www-data:www-data /var/log/supervisor /var/log/nginx /var/log/php-fpm
+
+# Expose port
 EXPOSE 80
 
-ENTRYPOINT ["entrypoint.sh"]
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost/api/health || exit 1
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+# Start supervisord
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

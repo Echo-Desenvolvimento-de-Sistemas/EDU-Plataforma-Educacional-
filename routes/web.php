@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
+// Health check endpoint for Docker
+Route::get('/api/health', function () {
+    return response()->json(['status' => 'ok'], 200);
+});
+
+
 Route::get('/', function () {
     if (auth()->check()) {
         $role = auth()->user()->role;

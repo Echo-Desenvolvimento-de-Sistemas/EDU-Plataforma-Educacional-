@@ -1,63 +1,454 @@
-# Guia de Deploy (VPS)
+# EDU Platform - Deployment Guide
 
-Este guia descreve o fluxo de deploy automatizado via GitHub Actions e script no servidor.
+Complete guide for deploying the EDU educational platform to the VPS at `echo.dev.br`.
 
-## Configuração Inicial (Apenas na primeira vez)
-
-1.  **Acesse sua VPS via SSH**.
-2.  **Clone o projeto**:
-    ```bash
-    git clone https://github.com/Echo-Desenvolvimento-de-Sistemas/EDU-Plataforma-Educacional-.git /var/www/edu
-    cd /var/www/edu
-    ```
-3.  **Configure o ambiente**:
-    ```bash
-    cp .env.production.example .env
-    nano .env
-    # Edite as variáveis de ambiente (Domínio, Banco de Dados, etc)
-    ```
-4.  **Dê permissão de execução ao script**:
-    ```bash
-    chmod +x deploy.sh
-    ```
-5.  **Faça o login no Registry do GitHub (GHCR)**:
-    ```bash
-    # Você precisará de um Personal Access Token (PAT) do GitHub com permissão de 'read:packages'
-    echo $CR_PAT | docker login ghcr.io -u SEU_USUARIO_GITHUB --password-stdin
-    ```
-
-## Fluxo de Deploy (Dia a Dia)
-
-O processo de atualização é simples e automatizado:
-
-1.  **No seu computador**:
-    *   Faça as alterações no código.
-    *   Envie para o GitHub (`git push origin main`).
-    *   Aguarde a **GitHub Action** finalizar (ela constrói e envia a imagem Docker).
-
-2.  **No Servidor VPS**:
-    *   Acesse a pasta do projeto e execute o script de deploy:
-    ```bash
-    cd /var/www/edu
-    ./deploy.sh
-    ```
-
-### O que o script faz?
-1.  Baixa a versão mais recente da imagem Docker (`docker compose pull`).
-2.  Recria os containers (`docker compose up -d`).
-3.  Otimiza caches (`php artisan optimize`).
-4.  Roda migrações de banco de dados pendentes (`php artisan migrate`).
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Initial Setup](#initial-setup)
+- [Deployment Process](#deployment-process)
+- [Post-Deployment](#post-deployment)
+- [Maintenance](#maintenance)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## Solução de Problemas
+## Prerequisites
 
-*   **Permissões negadas**: Se o script falhar ao escrever em pastas, rode:
-    ```bash
-    docker compose exec app chown -R www-data:www-data /var/www/html/storage
-    ```
-*   **Imagem antiga**: Se o script não baixar a nova versão, verifique se a Action no GitHub foi concluída com sucesso.
-*   **Imagem antiga / Erro de Autenticação**: Se o script não baixar a nova versão ou ocorrer erro de autenticação no Registry, force a atualização com credenciais:
-    ```bash
-    docker service update --force --with-registry-auth edu_app
-    ```
+### VPS Requirements
+- **OS**: Linux (Ubuntu 20.04+ recommended)
+- **Docker**: 20.10+
+- **Docker Swarm**: Initialized
+- **Network**: `echonet` overlay network created
+- **Database**: MariaDB 10.6+ accessible on `echonet`
+- **Reverse Proxy**: Traefik configured with SSL
+
+### Access Requirements
+- SSH access to VPS
+- GitHub account with access to the repository
+- GitHub Personal Access Token (PAT) with `read:packages` permission
+
+### Infrastructure Details
+```
+Network: echonet (10.0.1.0/24)
+Database Host: mariadb
+Database Port: 3306
+Database Name: edu
+Database User: root
+Database Password: Akio2604*
+Application URL: https://app.colegiorosadesharom.com.br
+```
+
+---
+
+## Initial Setup
+
+### 1. Clone the Repository
+
+```bash
+# SSH into your VPS
+ssh user@echo.dev.br
+
+# Navigate to your projects directory
+cd /opt/apps
+
+# Clone the repository
+git clone https://github.com/Echo-Desenvolvimento-de-Sistemas/EDU-Plataforma-Educacional.git edu
+cd edu
+```
+
+### 2. Configure Environment
+
+```bash
+# Copy production environment file
+cp .env.production .env
+
+# Edit environment variables if needed
+nano .env
+```
+
+**Important environment variables to verify:**
+- `APP_URL`: Should be `https://app.colegiorosadesharom.com.br`
+- `DB_HOST`: Should be `mariadb`
+- `DB_DATABASE`: Should be `edu`
+- `DB_PASSWORD`: Verify it matches your MariaDB password
+- `MAIL_*`: Configure SMTP settings for email functionality
+
+### 3. Set Deployment Script Permissions
+
+```bash
+chmod +x deploy.sh
+```
+
+### 4. Login to GitHub Container Registry
+
+```bash
+# Login with your GitHub username and Personal Access Token
+docker login ghcr.io
+# Username: your-github-username
+# Password: your-github-personal-access-token
+```
+
+**To create a GitHub PAT:**
+1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token (classic)"
+3. Select scope: `read:packages`
+4. Copy the token and use it as password
+
+### 5. Verify Network
+
+```bash
+# Check if echonet network exists
+docker network ls | grep echonet
+
+# If not exists, it should already be created by your infrastructure
+# If needed, create it:
+docker network create --driver overlay echonet
+```
+
+---
+
+## Deployment Process
+
+### Automated Deployment (Recommended)
+
+```bash
+# Run the deployment script
+./deploy.sh
+```
+
+The script will:
+1. Login to GitHub Container Registry
+2. Pull the latest Docker image
+3. Create `.env` file if not exists
+4. Generate `APP_KEY` if missing
+5. Create the database if not exists
+6. Deploy the stack to Docker Swarm
+7. Show service status and logs
+
+### Manual Deployment
+
+If you prefer manual control:
+
+```bash
+# 1. Login to GHCR
+docker login ghcr.io
+
+# 2. Pull the latest image
+docker pull ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
+
+# 3. Create database
+docker exec $(docker ps -q -f name=database_mariadb) \
+  mysql -uroot -pAkio2604* \
+  -e "CREATE DATABASE IF NOT EXISTS edu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# 4. Deploy the stack
+docker stack deploy -c docker-compose.yml --with-registry-auth edu
+
+# 5. Check status
+docker stack services edu
+```
+
+---
+
+## Post-Deployment
+
+### 1. Verify Deployment
+
+```bash
+# Check service status
+docker stack services edu
+
+# View logs
+docker service logs edu_app -f
+
+# Check if containers are running
+docker ps | grep edu
+```
+
+### 2. Run Database Migrations
+
+Migrations run automatically via the entrypoint script. To verify:
+
+```bash
+# Check migration status
+docker exec $(docker ps -q -f name=edu_app) php artisan migrate:status
+```
+
+### 3. Admin User Created Automatically
+
+The deployment automatically creates a default admin user:
+
+**Credentials:**
+- **Email**: `admin@admin.com`
+- **Password**: `admin123`
+
+> [!WARNING]
+> **Change the admin password immediately after first login!** This is a default credential for initial access only.
+
+To change the password after login, use the profile settings or run:
+
+```bash
+docker exec $(docker ps -q -f name=edu_app) php artisan tinker
+# In tinker:
+$user = App\Models\User::where('email', 'admin@admin.com')->first();
+$user->password = bcrypt('your-new-secure-password');
+$user->save();
+exit
+```
+
+### 4. Verify Application Access
+
+1. Open browser and navigate to `https://app.colegiorosadesharom.com.br`
+2. Verify SSL certificate is valid
+3. Login with admin credentials
+4. Test basic functionality
+
+### 5. Configure Storage
+
+```bash
+# Verify storage permissions
+docker exec $(docker ps -q -f name=edu_app) ls -la /var/www/html/storage
+
+# If needed, fix permissions (already done in Dockerfile)
+docker exec $(docker ps -q -f name=edu_app) chown -R www-data:www-data /var/www/html/storage
+```
+
+---
+
+## Maintenance
+
+### Updating the Application
+
+#### Option 1: Using GitHub Actions (Recommended)
+
+1. Push changes to `main` branch
+2. GitHub Actions will automatically build and push new image
+3. On VPS, run:
+```bash
+cd /opt/apps/edu
+./deploy.sh
+```
+
+#### Option 2: Manual Update
+
+```bash
+# Pull latest code
+git pull origin main
+
+# Pull latest image
+docker pull ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
+
+# Update the stack
+docker stack deploy -c docker-compose.yml --with-registry-auth edu
+```
+
+### Database Backups
+
+```bash
+# Create backup directory
+mkdir -p /opt/backups/edu
+
+# Backup database
+docker exec $(docker ps -q -f name=database_mariadb) \
+  mysqldump -uroot -pAkio2604* edu > /opt/backups/edu/edu_$(date +%Y%m%d_%H%M%S).sql
+
+# Compress backup
+gzip /opt/backups/edu/edu_$(date +%Y%m%d_%H%M%S).sql
+```
+
+**Automated backups with cron:**
+```bash
+# Edit crontab
+crontab -e
+
+# Add daily backup at 2 AM
+0 2 * * * docker exec $(docker ps -q -f name=database_mariadb) mysqldump -uroot -pAkio2604* edu | gzip > /opt/backups/edu/edu_$(date +\%Y\%m\%d_\%H\%M\%S).sql.gz
+```
+
+### Viewing Logs
+
+```bash
+# Application logs
+docker service logs edu_app -f
+
+# Redis logs
+docker service logs edu_redis -f
+
+# Last 100 lines
+docker service logs edu_app --tail 100
+
+# Logs since 1 hour ago
+docker service logs edu_app --since 1h
+```
+
+### Scaling Services
+
+```bash
+# Scale app to 2 replicas
+docker service scale edu_app=2
+
+# Scale back to 1 replica
+docker service scale edu_app=1
+```
+
+---
+
+## Troubleshooting
+
+### Application Not Accessible
+
+**Check service status:**
+```bash
+docker stack services edu
+```
+
+**Check container logs:**
+```bash
+docker service logs edu_app --tail 50
+```
+
+**Verify Traefik routing:**
+```bash
+docker service logs traefik_traefik | grep edu
+```
+
+### Database Connection Issues
+
+**Test database connectivity:**
+```bash
+docker exec $(docker ps -q -f name=edu_app) php artisan tinker
+# In tinker: DB::connection()->getPdo();
+```
+
+**Check if database exists:**
+```bash
+docker exec $(docker ps -q -f name=database_mariadb) \
+  mysql -uroot -pAkio2604* -e "SHOW DATABASES LIKE 'edu';"
+```
+
+**Verify network connectivity:**
+```bash
+docker exec $(docker ps -q -f name=edu_app) ping -c 3 mariadb
+```
+
+### SSL Certificate Issues
+
+**Check Traefik logs:**
+```bash
+docker service logs traefik_traefik | grep app.colegiorosadesharom.com.br
+```
+
+**Verify DNS:**
+```bash
+nslookup app.colegiorosadesharom.com.br
+```
+
+### Container Keeps Restarting
+
+**Check health status:**
+```bash
+docker ps -a | grep edu_app
+```
+
+**View detailed logs:**
+```bash
+docker service logs edu_app --tail 200
+```
+
+**Common issues:**
+- Missing `APP_KEY` in `.env`
+- Database connection failure
+- Permission issues on storage directories
+- Missing dependencies
+
+### Storage/Upload Issues
+
+**Check volume mounts:**
+```bash
+docker volume ls | grep edu
+docker volume inspect edu_storage_data
+```
+
+**Verify permissions:**
+```bash
+docker exec $(docker ps -q -f name=edu_app) ls -la /var/www/html/storage
+```
+
+### Performance Issues
+
+**Check resource usage:**
+```bash
+docker stats
+```
+
+**Clear application cache:**
+```bash
+docker exec $(docker ps -q -f name=edu_app) php artisan cache:clear
+docker exec $(docker ps -q -f name=edu_app) php artisan config:clear
+docker exec $(docker ps -q -f name=edu_app) php artisan view:clear
+```
+
+**Optimize for production:**
+```bash
+docker exec $(docker ps -q -f name=edu_app) php artisan config:cache
+docker exec $(docker ps -q -f name=edu_app) php artisan route:cache
+docker exec $(docker ps -q -f name=edu_app) php artisan view:cache
+```
+
+### Rollback to Previous Version
+
+```bash
+# Find previous image SHA
+docker images | grep edu-plataforma-educacional
+
+# Update service to use specific image
+docker service update --image ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:sha-<commit-sha> edu_app
+```
+
+---
+
+## Additional Commands
+
+### Accessing the Container
+
+```bash
+# Get shell access
+docker exec -it $(docker ps -q -f name=edu_app) sh
+
+# Run artisan commands
+docker exec $(docker ps -q -f name=edu_app) php artisan <command>
+```
+
+### Removing the Stack
+
+```bash
+# Remove the entire stack
+docker stack rm edu
+
+# Remove volumes (WARNING: This deletes all data!)
+docker volume rm edu_storage_data edu_cache_data edu_redis_data
+```
+
+### Monitoring
+
+```bash
+# Watch service status
+watch -n 2 'docker stack services edu'
+
+# Monitor logs in real-time
+docker service logs edu_app -f
+```
+
+---
+
+## Support
+
+For issues or questions:
+- Check application logs: `docker service logs edu_app`
+- Review this documentation
+- Contact the development team
+
+**Useful Links:**
+- Application: https://app.colegiorosadesharom.com.br
+- Portainer: https://portainer.echo.dev.br
+- Database Admin: https://db.echo.dev.br

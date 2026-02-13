@@ -14,7 +14,8 @@ export default defineConfig({
         }),
         react({
             babel: {
-                plugins: ['babel-plugin-react-compiler'],
+                // Only use React Compiler in production for better dev performance
+                plugins: process.env.NODE_ENV === 'production' ? ['babel-plugin-react-compiler'] : [],
             },
         }),
         tailwindcss(),

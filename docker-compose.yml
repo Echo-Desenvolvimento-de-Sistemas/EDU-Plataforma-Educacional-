@@ -2,102 +2,68 @@ version: '3.8'
 
 services:
   app:
-    # Use the image built by GitHub Actions
     image: ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
-    # build:  <-- Disable build in Portainer/Swarm, use the image above
-    #   context: .
-    #   dockerfile: Dockerfile
-    environment:
-      APP_NAME: "${APP_NAME:-Laravel}"
-      APP_ENV: production
-      APP_KEY: "${APP_KEY}"
-      APP_DEBUG: "${APP_DEBUG:-false}"
-      APP_URL: "https://${DOMAIN_NAME:-app.colegiorosadesharom.com.br}"
-
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: "${DB_DATABASE:-app}"
-      DB_USERNAME: "${DB_USERNAME:-app}"
-      DB_PASSWORD: "${DB_PASSWORD:-secret}"
-
-      REDIS_HOST: redis
-      REDIS_PASSWORD: null
-      REDIS_PORT: 6379
-
-      BROADCAST_CONNECTION: reverb
-
-      REVERB_APP_ID: "${REVERB_APP_ID:-app-id}"
-      REVERB_APP_KEY: "${REVERB_APP_KEY:-app-key}"
-      REVERB_APP_SECRET: "${REVERB_APP_SECRET:-app-secret}"
-      REVERB_HOST: "0.0.0.0"
-      REVERB_PORT: 8080
-      REVERB_SCHEME: http
-
-      VITE_REVERB_APP_KEY: "${REVERB_APP_KEY:-app-key}"
-      VITE_REVERB_HOST: "${DOMAIN_NAME:-app.colegiorosadesharom.com.br}"
-      VITE_REVERB_PORT: 443
-      VITE_REVERB_SCHEME: https
-
-    volumes:
-      - storage_data:/var/www/html/storage
-
+    env_file:
+      - .env
     networks:
-      - traefik_net # Rede externa dinâmica
-      - internal
-    restart: always
-
+      - echonet
+    volumes:
+      - storage_data:/var/www/html/storage/app
+      - cache_data:/var/www/html/bootstrap/cache
     deploy:
       mode: replicated
       replicas: 1
-      labels:
-        # Habilita Traefik
-        - "traefik.enable=true"
-        # Roteador HTTP (Porta 80 padrão)
-        - "traefik.http.routers.edu-app.rule=Host(`app.colegiorosadesharom.com.br`)"
-        - "traefik.http.routers.edu-app.entrypoints=websecure"
-        - "traefik.http.routers.edu-app.tls.certresolver=myresolver" # Ajuste conforme seu resolver no Traefik (ex: letsencrypt)
-        - "traefik.http.services.edu-app.loadbalancer.server.port=80"
-        - "traefik.docker.network=${TRAEFIK_NETWORK:-echonet}"
-
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
       update_config:
         parallelism: 1
         delay: 10s
         order: start-first
-
-  db:
-    image: mariadb:10.11
-    volumes:
-      - db_data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-secret}"
-      MYSQL_DATABASE: "${DB_DATABASE:-app}"
-      MYSQL_USER: "${DB_USERNAME:-app}"
-      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
-    networks:
-      - internal
-    restart: always
-    deploy:
-      placement:
-        constraints: [ node.role == manager ] # Recomendado para DB por causa do volume
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.edu.loadbalancer.server.port=80"
+        - "traefik.http.routers.edu.rule=Host(`app.colegiorosadesharom.com.br`)"
+        - "traefik.http.routers.edu.entrypoints=websecure"
+        - "traefik.http.routers.edu.tls.certresolver=myresolver"
+        # WebSocket support for Reverb
+        - "traefik.http.routers.edu-ws.rule=Host(`app.colegiorosadesharom.com.br`) && PathPrefix(`/app`)"
+        - "traefik.http.routers.edu-ws.entrypoints=websecure"
+        - "traefik.http.routers.edu-ws.tls.certresolver=myresolver"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/api/health" ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
 
   redis:
-    image: redis:alpine
-    command: redis-server --appendonly yes
+    image: redis:7-alpine
+    networks:
+      - echonet
     volumes:
       - redis_data:/data
-    networks:
-      - internal
-    restart: always
-
-networks:
-  traefik_net:
-    name: ${TRAEFIK_NETWORK:-echonet}
-    external: true
-  internal:
-    driver: overlay
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
 volumes:
-  db_data:
-  redis_data:
   storage_data:
+    driver: local
+  cache_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  echonet:
+    external: true

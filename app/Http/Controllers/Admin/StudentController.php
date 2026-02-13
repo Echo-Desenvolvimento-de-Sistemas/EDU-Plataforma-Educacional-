@@ -32,7 +32,7 @@ class StudentController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $students = $query->paginate($perPage)->withQueryString();
-        $classRooms = ClassRoom::all();
+        $classRooms = ClassRoom::select('id', 'name', 'grade_id')->with('grade:id,name')->get();
 
         return Inertia::render('Admin/Students/Index', [
             'students' => $students,
@@ -43,7 +43,7 @@ class StudentController extends Controller
 
     public function create()
     {
-        $classRooms = ClassRoom::all();
+        $classRooms = ClassRoom::select('id', 'name', 'grade_id')->with('grade:id,name')->get();
         return Inertia::render('Admin/Students/Create', [
             'classRooms' => $classRooms,
         ]);
@@ -167,8 +167,8 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
-        $classRooms = ClassRoom::all();
-        $guardians = \App\Models\Guardian::all();
+        $classRooms = ClassRoom::select('id', 'name', 'grade_id')->with('grade:id,name')->get();
+        $guardians = \App\Models\Guardian::select('id', 'name', 'cpf')->get();
         $student->load(['guardians', 'address', 'health', 'user']);
 
         // Fetch data for document issuance

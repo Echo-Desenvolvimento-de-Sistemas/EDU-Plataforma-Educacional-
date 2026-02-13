@@ -62,6 +62,32 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's profile photo URL.
+     */
+    public function getProfilePhotoUrlAttribute(): ?string
+    {
+        // For students, use their photo_path
+        // Only access student relation if it's already loaded to avoid lazy loading violation
+        if ($this->role === 'aluno' && $this->relationLoaded('student')) {
+            $student = $this->getRelation('student');
+            if ($student && $student->photo_path) {
+                return asset('storage/' . $student->photo_path);
+            }
+        }
+
+        // For other roles, return null to use initials fallback
+        // Future enhancement: add photo_path column to users table
+        return null;
+    }
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['profile_photo_url'];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>

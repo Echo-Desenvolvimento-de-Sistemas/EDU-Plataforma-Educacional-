@@ -39,10 +39,11 @@ class GamificationService
         }
 
         try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $this->secret,
-                'Accept' => 'application/json',
-            ])->post($this->url . $endpoint, $data);
+            $response = Http::timeout(3) // 3 second timeout
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $this->secret,
+                    'Accept' => 'application/json',
+                ])->post($this->url . $endpoint, $data);
 
             if ($response->failed()) {
                 Log::error("Gamification API Error: " . $response->body());
@@ -152,16 +153,18 @@ class GamificationService
         }
 
         try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $this->secret,
-                'Accept' => 'application/json',
-            ])->get($this->url . "/api/user/{$user->id}/stats");
+            $response = Http::timeout(3) // 3 second timeout
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $this->secret,
+                    'Accept' => 'application/json',
+                ])->get($this->url . "/api/user/{$user->id}/stats");
 
             if ($response->successful()) {
                 return $response->json();
             }
         } catch (\Exception $e) {
             // Fail silently for stats
+            Log::warning("Gamification stats timeout/error for user {$user->id}: " . $e->getMessage());
         }
 
         return null;
