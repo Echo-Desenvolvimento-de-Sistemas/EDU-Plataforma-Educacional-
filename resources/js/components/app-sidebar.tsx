@@ -12,7 +12,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard } from '@/routes/index';
 import { SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Book, BookOpen, Calendar, Folder, Layers, LayoutGrid, Users, Link as LinkIcon, FileText, Settings2, SquareTerminal, Printer, GraduationCap, TrendingUp, MessageCircle, ChevronDown, Trophy } from 'lucide-react';
