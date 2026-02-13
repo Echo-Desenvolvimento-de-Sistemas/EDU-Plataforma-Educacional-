@@ -1,4 +1,4 @@
-import secretaria from '@/routes/secretaria';
+import secretaria from '@/routes/secretaria/index';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

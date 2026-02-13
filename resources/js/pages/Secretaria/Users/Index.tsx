@@ -1,4 +1,4 @@
-import secretaria from '@/routes/secretaria';
+import secretaria from '@/routes/secretaria/index';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
