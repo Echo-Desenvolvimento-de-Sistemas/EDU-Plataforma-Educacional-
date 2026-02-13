@@ -21,6 +21,9 @@ export default defineConfig({
         tailwindcss(),
         wayfinder({
             formVariants: true,
+            // Skip type generation during production build (Docker)
+            // PHP is not available in the frontend-builder stage
+            generateTypes: process.env.NODE_ENV !== 'production',
         }),
     ],
     esbuild: {
