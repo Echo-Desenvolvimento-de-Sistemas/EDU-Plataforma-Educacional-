@@ -3,7 +3,7 @@ import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Printer } from 'lucide-react';
-import documents from '@/routes/aluno/documents/index';
+import documents from '@/routes/aluno/documents';
 
 interface IssuedDocument {
     id: number;

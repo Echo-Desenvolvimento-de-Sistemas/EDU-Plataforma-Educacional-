@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'; // Import Button
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'; // Import Card components
 import { Label } from '@/components/ui/label'; // Import Label
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Import Select components
-import admin from '@/routes/admin/index'; // Import admin routes
+import admin from '@/routes/admin'; // Import admin routes
 import { ArrowLeft, CheckCircle, Printer } from 'lucide-react'; // Import icons
 
 interface Student {

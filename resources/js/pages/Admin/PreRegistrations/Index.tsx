@@ -1,7 +1,7 @@
 import StudentRegistrationCard from '@/components/student-registration-card';
 import AppLogo from '@/components/app-logo';
 import AppLayout from '@/layouts/app-layout';
-import admin from '@/routes/admin/index';
+import admin from '@/routes/admin';
 import { Head, useForm, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

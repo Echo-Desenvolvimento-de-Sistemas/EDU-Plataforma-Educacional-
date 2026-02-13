@@ -20,7 +20,7 @@ import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Toggle } from '@/components/ui/toggle';
-import admin from '@/routes/admin/index';
+import admin from '@/routes/admin';
 
 interface DocumentTemplate {
     id: number;

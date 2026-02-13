@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { BookOpen, Calendar, Plus } from 'lucide-react';
-import professor from '@/routes/professor/index';
+import professor from '@/routes/professor';
 
 export default function Index({ plans }: { plans: any[] }) {
     const getStatusColor = (status: string) => {

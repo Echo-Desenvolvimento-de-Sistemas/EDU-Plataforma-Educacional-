@@ -10,7 +10,7 @@ import { ptBR } from 'date-fns/locale';
 import { BookOpen, Calendar, CheckCircle, Eye, Filter, Search } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import admin from '@/routes/admin/index';
+import admin from '@/routes/admin';
 
 export default function Index({ plans, filters }: { plans: any, filters: any }) {
     const getStatusColor = (status: string) => {

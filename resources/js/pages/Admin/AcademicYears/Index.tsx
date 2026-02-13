@@ -1,4 +1,4 @@
-import admin from '@/routes/admin/index';
+import admin from '@/routes/admin';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
