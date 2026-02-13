@@ -3,10 +3,13 @@ FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app
 
+# Set Node memory limit for build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install all dependencies
 RUN npm ci
 
 # Copy source files
@@ -14,6 +17,7 @@ COPY . .
 
 # Build frontend assets
 RUN npm run build
+
 
 # ============================================
 # Production PHP Image
@@ -38,16 +42,16 @@ RUN apk add --no-cache \
     libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
-        pdo_mysql \
-        mbstring \
-        exif \
-        pcntl \
-        bcmath \
-        gd \
-        zip \
-        intl \
-        soap \
-        opcache
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
+    intl \
+    soap \
+    opcache
 
 # Install Redis extension
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
