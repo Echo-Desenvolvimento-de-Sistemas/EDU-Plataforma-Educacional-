@@ -11,7 +11,7 @@ import { BnccSelector } from '@/components/Pedagogical/BnccSelector';
 import { useForm, usePage } from '@inertiajs/react';
 import { AlertCircle, Save, Send } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import professor from '@/routes/professor';
+import professor from '@/routes/professor/index';
 
 export default function Edit({ plan, classes, subjects }: any) {
     const { auth } = usePage().props as any;

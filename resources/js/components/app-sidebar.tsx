@@ -29,8 +29,8 @@ const mainNavItems: NavItem[] = [
 
 
 
-import admin from '@/routes/admin';
-import secretaria from '@/routes/secretaria';
+import admin from '@/routes/admin/index';
+import secretaria from '@/routes/secretaria/index';
 
 export function AppSidebar() {
     const user = usePage<SharedData>().props.auth.user;

@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FileText, Plus, ExternalLink, Printer } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import documents from '@/routes/aluno/documents';
+import documents from '@/routes/aluno/documents/index';
 import { useState } from 'react';
 
 interface DocumentTemplate {

@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import admin from '@/routes/admin';
+import admin from '@/routes/admin/index';
 
 export default function Show({ plan }: { plan: any }) {
     const { data, setData, post, processing, errors } = useForm({

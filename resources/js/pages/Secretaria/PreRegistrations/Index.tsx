@@ -2,7 +2,7 @@ import StudentRegistrationCard from '@/components/student-registration-card';
 import AppLogo from '@/components/app-logo';
 import AppLayout from '@/layouts/app-layout';
 import { Head, useForm, router, usePage } from '@inertiajs/react';
-import secretaria from '@/routes/secretaria';
+import secretaria from '@/routes/secretaria/index';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

@@ -1,4 +1,4 @@
-import admin from '@/routes/admin';
+import admin from '@/routes/admin/index';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import AppLogo from '@/components/app-logo';

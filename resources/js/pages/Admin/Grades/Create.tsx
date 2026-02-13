@@ -1,4 +1,4 @@
-import admin from '@/routes/admin';
+import admin from '@/routes/admin/index';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
