@@ -18,10 +18,14 @@ class AllocationSeeder extends Seeder
         $professor = User::where('email', 'professor@example.com')->first();
 
         if (!$professor) {
-            $professor = User::factory()->create([
-                'email' => 'professor@example.com',
-                'role' => 'professor'
-            ]);
+            $professor = clone User::firstOrCreate(
+                ['email' => 'professor@example.com'],
+                [
+                    'name' => 'Professor Demo',
+                    'password' => bcrypt('password'),
+                    'role' => 'professor'
+                ]
+            );
         }
 
         // Ensure dependencies exist
