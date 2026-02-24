@@ -219,18 +219,23 @@ docker exec $(docker ps -q -f name=edu_app) chown -R www-data:www-data /var/www/
 
 ### Updating the Application
 
-#### Option 1: Using GitHub Actions (Recommended)
+Always run a manual update to ensure your host files (like scripts and `docker-compose.yml`) are in sync before pulling the latest image.
 
-1. Push changes to `main` branch
-2. GitHub Actions will automatically build and push new image
-3. On VPS, run:
+1. Navigate to your project directory:
 ```bash
 cd /opt/apps/edu
+```
+
+2. Pull the latest code and deploy:
+```bash
+# Pull latest code
+git pull origin main
+
+# Run the deployment script (which pulls the image and updates the stack)
 ./deploy.sh
 ```
 
-#### Option 2: Manual Update
-
+*(Alternatively, if doing everything manually without the script)*
 ```bash
 # Pull latest code
 git pull origin main
