@@ -161,6 +161,34 @@ export default function KanbanBoardPage({ board }: Props) {
         setIsCreateOpen(true);
     };
 
+    const handleDeleteCard = (cardId: number, columnId: number) => {
+        if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return;
+
+        // Optimistic update
+        const previousBoard = { ...localBoard };
+        setLocalBoard(prev => {
+            const newCols = prev.columns.map(col => {
+                if (col.id === columnId) {
+                    return { ...col, cards: col.cards.filter(c => c.id !== cardId) };
+                }
+                return col;
+            });
+            return { ...prev, columns: newCols };
+        });
+
+        // Send backend request
+        router.delete(`/kanban/cards/${cardId}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Tarefa excluída!');
+            },
+            onError: () => {
+                toast.error('Erro ao excluir tarefa.');
+                setLocalBoard(previousBoard); // rollback
+            }
+        });
+    };
+
     const submitCard = (e: React.FormEvent) => {
         e.preventDefault();
         post('/kanban/cards', {
@@ -195,6 +223,7 @@ export default function KanbanBoardPage({ board }: Props) {
                         board={localBoard}
                         onDragEnd={onDragEnd}
                         onAddCard={handleAddCard}
+                        onDeleteCard={handleDeleteCard}
                     />
                 </div>
 

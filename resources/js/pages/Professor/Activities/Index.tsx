@@ -25,7 +25,7 @@ export default function Index({ activities }: Props) {
                         </h2>
                         <Link
                             href="/professor/activities/create"
-                            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
                         >
                             <Plus className="w-5 h-5" />
                             Nova Atividade
@@ -49,7 +49,7 @@ export default function Index({ activities }: Props) {
                             <div className="mt-6">
                                 <Link
                                     href="/professor/activities/create"
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 >
                                     <Plus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                                     Criar Nova Atividade

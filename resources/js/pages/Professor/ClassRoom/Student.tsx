@@ -94,9 +94,9 @@ export default function StudentShow({ classRoom, student, subject, attendanceHis
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-blue-50 rounded-lg text-center">
-                                    <p className="text-xs font-bold text-blue-600 uppercase">Aulas</p>
-                                    <p className="text-xl font-bold text-blue-900">{attendanceHistory.length}</p>
+                                <div className="p-3 bg-primary/10 rounded-lg text-center">
+                                    <p className="text-xs font-bold text-primary uppercase">Aulas</p>
+                                    <p className="text-xl font-bold text-primary">{attendanceHistory.length}</p>
                                 </div>
                                 <div className="p-3 bg-green-50 rounded-lg text-center">
                                     <p className="text-xs font-bold text-green-600 uppercase">Presenças</p>
@@ -136,7 +136,7 @@ export default function StudentShow({ classRoom, student, subject, attendanceHis
                                     {periods.map((period) => (
                                         <div key={period.id} className="space-y-3">
                                             <h3 className="font-semibold text-lg flex items-center gap-2">
-                                                <GraduationCap className="h-5 w-5 text-indigo-600" />
+                                                <GraduationCap className="h-5 w-5 text-primary" />
                                                 {period.name}
                                                 {period.status === 'closed' && <Badge variant="secondary">Fechado</Badge>}
                                             </h3>

@@ -122,7 +122,7 @@ export default function Show({ bank, questions }: Props) {
                                     setEditingQuestion(null);
                                     setIsModalOpen(true);
                                 }}
-                                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                                className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
                             >
                                 <Plus className="w-5 h-5" />
                                 Adicionar Questão
@@ -140,14 +140,14 @@ export default function Show({ bank, questions }: Props) {
                                     placeholder="Buscar por enunciado, código ou tópico..."
                                     value={filters.search}
                                     onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                                    className="pl-9 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    className="pl-9 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                 />
                             </div>
                             <div className="w-full md:w-48">
                                 <select
                                     value={filters.difficulty}
                                     onChange={e => setFilters(prev => ({ ...prev, difficulty: e.target.value }))}
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                 >
                                     <option value="">Todas Dificuldades</option>
                                     <option value="1">Fácil</option>
@@ -159,7 +159,7 @@ export default function Show({ bank, questions }: Props) {
                                 <select
                                     value={filters.type}
                                     onChange={e => setFilters(prev => ({ ...prev, type: e.target.value }))}
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                 >
                                     <option value="">Todos Tipos</option>
                                     <option value="MULTIPLE_CHOICE">Múltipla Escolha</option>
@@ -193,7 +193,7 @@ export default function Show({ bank, questions }: Props) {
                                                         </span>
                                                         {getDifficultyLabel(question.difficulty)}
                                                         {question.subject && (
-                                                            <span className="text-xs text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800">
+                                                            <span className="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 dark:bg-primary/20 dark:text-primary/70 dark:border-primary/30">
                                                                 {question.subject}
                                                             </span>
                                                         )}
@@ -211,7 +211,7 @@ export default function Show({ bank, questions }: Props) {
                                                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button
                                                             onClick={() => handleEdit(question)}
-                                                            className="p-1 text-gray-400 hover:text-indigo-600 transition-colors"
+                                                            className="p-1 text-gray-400 hover:text-primary transition-colors"
                                                             title="Editar"
                                                         >
                                                             <Edit className="w-4 h-4" />

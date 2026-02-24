@@ -216,7 +216,9 @@ export default function Create({ classRooms, subjects, academicYears, educationL
                                             value={data.username}
                                             onChange={(e) => setData('username', e.target.value)}
                                             autoComplete="username"
+                                            placeholder="Opcional"
                                         />
+                                        <p className="mt-1 text-xs text-muted-foreground">Opcional. Se não preenchido o sistema focará no Email ou CPF.</p>
                                         <InputError className="mt-2" message={errors.username} />
                                     </div>
 
@@ -254,9 +256,9 @@ export default function Create({ classRooms, subjects, academicYears, educationL
                                                 className="mt-1 block w-full"
                                                 value={data.password}
                                                 onChange={(e) => setData('password', e.target.value)}
-                                                required
                                                 autoComplete="new-password"
                                             />
+                                            <p className="mt-1 text-xs text-muted-foreground">Opcional. Deixe em branco para usar a Senha Padrão de novos usuários.</p>
                                             <InputError className="mt-2" message={errors.password} />
                                         </div>
 
@@ -268,7 +270,6 @@ export default function Create({ classRooms, subjects, academicYears, educationL
                                                 className="mt-1 block w-full"
                                                 value={data.password_confirmation}
                                                 onChange={(e) => setData('password_confirmation', e.target.value)}
-                                                required
                                                 autoComplete="new-password"
                                             />
                                             <InputError className="mt-2" message={errors.password_confirmation} />

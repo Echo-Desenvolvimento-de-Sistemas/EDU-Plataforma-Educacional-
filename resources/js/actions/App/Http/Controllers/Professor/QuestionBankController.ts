@@ -212,7 +212,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
 export const show = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
 show.url = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -255,7 +255,7 @@ show.url = (args: { question_bank: string | number } | [question_bank: string | 
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
 show.get = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -264,7 +264,7 @@ show.get = (args: { question_bank: string | number } | [question_bank: string | 
 })
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
 show.head = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -274,7 +274,7 @@ show.head = (args: { question_bank: string | number } | [question_bank: string |
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
     const showForm = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -284,7 +284,7 @@ show.head = (args: { question_bank: string | number } | [question_bank: string |
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
         showForm.get = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -293,7 +293,7 @@ show.head = (args: { question_bank: string | number } | [question_bank: string |
         })
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::show
- * @see app/Http/Controllers/Professor/QuestionBankController.php:42
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:51
  * @route '/professor/question-banks/{question_bank}'
  */
         showForm.head = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -309,7 +309,7 @@ show.head = (args: { question_bank: string | number } | [question_bank: string |
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
 export const edit = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -324,7 +324,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
 edit.url = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -352,7 +352,7 @@ edit.url = (args: { question_bank: string | number } | [question_bank: string | 
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
 edit.get = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -361,7 +361,7 @@ edit.get = (args: { question_bank: string | number } | [question_bank: string | 
 })
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
 edit.head = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -371,7 +371,7 @@ edit.head = (args: { question_bank: string | number } | [question_bank: string |
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
     const editForm = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -381,7 +381,7 @@ edit.head = (args: { question_bank: string | number } | [question_bank: string |
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
         editForm.get = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -390,7 +390,7 @@ edit.head = (args: { question_bank: string | number } | [question_bank: string |
         })
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::edit
- * @see app/Http/Controllers/Professor/QuestionBankController.php:57
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:66
  * @route '/professor/question-banks/{question_bank}/edit'
  */
         editForm.head = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -406,7 +406,7 @@ edit.head = (args: { question_bank: string | number } | [question_bank: string |
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
 export const update = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -421,7 +421,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
 update.url = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -449,7 +449,7 @@ update.url = (args: { question_bank: string | number } | [question_bank: string 
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
 update.put = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -458,7 +458,7 @@ update.put = (args: { question_bank: string | number } | [question_bank: string 
 })
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
 update.patch = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -468,7 +468,7 @@ update.patch = (args: { question_bank: string | number } | [question_bank: strin
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
     const updateForm = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -483,7 +483,7 @@ update.patch = (args: { question_bank: string | number } | [question_bank: strin
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
         updateForm.put = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -497,7 +497,7 @@ update.patch = (args: { question_bank: string | number } | [question_bank: strin
         })
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::update
- * @see app/Http/Controllers/Professor/QuestionBankController.php:68
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:77
  * @route '/professor/question-banks/{question_bank}'
  */
         updateForm.patch = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -513,7 +513,7 @@ update.patch = (args: { question_bank: string | number } | [question_bank: strin
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::destroy
- * @see app/Http/Controllers/Professor/QuestionBankController.php:85
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:94
  * @route '/professor/question-banks/{question_bank}'
  */
 export const destroy = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -528,7 +528,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::destroy
- * @see app/Http/Controllers/Professor/QuestionBankController.php:85
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:94
  * @route '/professor/question-banks/{question_bank}'
  */
 destroy.url = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -556,7 +556,7 @@ destroy.url = (args: { question_bank: string | number } | [question_bank: string
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::destroy
- * @see app/Http/Controllers/Professor/QuestionBankController.php:85
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:94
  * @route '/professor/question-banks/{question_bank}'
  */
 destroy.delete = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -566,7 +566,7 @@ destroy.delete = (args: { question_bank: string | number } | [question_bank: str
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::destroy
- * @see app/Http/Controllers/Professor/QuestionBankController.php:85
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:94
  * @route '/professor/question-banks/{question_bank}'
  */
     const destroyForm = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -581,7 +581,7 @@ destroy.delete = (args: { question_bank: string | number } | [question_bank: str
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionBankController::destroy
- * @see app/Http/Controllers/Professor/QuestionBankController.php:85
+ * @see app/Http/Controllers/Professor/QuestionBankController.php:94
  * @route '/professor/question-banks/{question_bank}'
  */
         destroyForm.delete = (args: { question_bank: string | number } | [question_bank: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

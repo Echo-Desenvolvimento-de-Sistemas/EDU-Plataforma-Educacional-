@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\KanbanController::store
- * @see app/Http/Controllers/KanbanController.php:59
+ * @see app/Http/Controllers/KanbanController.php:75
  * @route '/kanban/cards'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\KanbanController::store
- * @see app/Http/Controllers/KanbanController.php:59
+ * @see app/Http/Controllers/KanbanController.php:75
  * @route '/kanban/cards'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\KanbanController::store
- * @see app/Http/Controllers/KanbanController.php:59
+ * @see app/Http/Controllers/KanbanController.php:75
  * @route '/kanban/cards'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\KanbanController::store
- * @see app/Http/Controllers/KanbanController.php:59
+ * @see app/Http/Controllers/KanbanController.php:75
  * @route '/kanban/cards'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\KanbanController::store
- * @see app/Http/Controllers/KanbanController.php:59
+ * @see app/Http/Controllers/KanbanController.php:75
  * @route '/kanban/cards'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\KanbanController::move
- * @see app/Http/Controllers/KanbanController.php:157
+ * @see app/Http/Controllers/KanbanController.php:242
  * @route '/kanban/cards/{card}/move'
  */
 export const move = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -71,7 +71,7 @@ move.definition = {
 
 /**
 * @see \App\Http\Controllers\KanbanController::move
- * @see app/Http/Controllers/KanbanController.php:157
+ * @see app/Http/Controllers/KanbanController.php:242
  * @route '/kanban/cards/{card}/move'
  */
 move.url = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ move.url = (args: { card: number | { id: number } } | [card: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\KanbanController::move
- * @see app/Http/Controllers/KanbanController.php:157
+ * @see app/Http/Controllers/KanbanController.php:242
  * @route '/kanban/cards/{card}/move'
  */
 move.patch = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -114,7 +114,7 @@ move.patch = (args: { card: number | { id: number } } | [card: number | { id: nu
 
     /**
 * @see \App\Http\Controllers\KanbanController::move
- * @see app/Http/Controllers/KanbanController.php:157
+ * @see app/Http/Controllers/KanbanController.php:242
  * @route '/kanban/cards/{card}/move'
  */
     const moveForm = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -129,7 +129,7 @@ move.patch = (args: { card: number | { id: number } } | [card: number | { id: nu
 
             /**
 * @see \App\Http\Controllers\KanbanController::move
- * @see app/Http/Controllers/KanbanController.php:157
+ * @see app/Http/Controllers/KanbanController.php:242
  * @route '/kanban/cards/{card}/move'
  */
         moveForm.patch = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -145,22 +145,22 @@ move.patch = (args: { card: number | { id: number } } | [card: number | { id: nu
     move.form = moveForm
 /**
 * @see \App\Http\Controllers\KanbanController::update
- * @see app/Http/Controllers/KanbanController.php:96
+ * @see app/Http/Controllers/KanbanController.php:181
  * @route '/kanban/cards/{card}'
  */
-export const update = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'get',
 })
 
 update.definition = {
-    methods: ["put"],
+    methods: ["get","head"],
     url: '/kanban/cards/{card}',
-} satisfies RouteDefinition<["put"]>
+} satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\KanbanController::update
- * @see app/Http/Controllers/KanbanController.php:96
+ * @see app/Http/Controllers/KanbanController.php:181
  * @route '/kanban/cards/{card}'
  */
 update.url = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -193,23 +193,125 @@ update.url = (args: { card: number | { id: number } } | [card: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\KanbanController::update
- * @see app/Http/Controllers/KanbanController.php:96
+ * @see app/Http/Controllers/KanbanController.php:181
  * @route '/kanban/cards/{card}'
  */
-update.put = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.get = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: update.url(args, options),
-    method: 'put',
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\KanbanController::update
+ * @see app/Http/Controllers/KanbanController.php:181
+ * @route '/kanban/cards/{card}'
+ */
+update.head = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: update.url(args, options),
+    method: 'head',
 })
 
     /**
 * @see \App\Http\Controllers\KanbanController::update
- * @see app/Http/Controllers/KanbanController.php:96
+ * @see app/Http/Controllers/KanbanController.php:181
  * @route '/kanban/cards/{card}'
  */
-    const updateForm = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
+    const updateForm = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: update.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\KanbanController::update
+ * @see app/Http/Controllers/KanbanController.php:181
+ * @route '/kanban/cards/{card}'
+ */
+        updateForm.get = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: update.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\KanbanController::update
+ * @see app/Http/Controllers/KanbanController.php:181
+ * @route '/kanban/cards/{card}'
+ */
+        updateForm.head = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: update.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    update.form = updateForm
+/**
+* @see \App\Http\Controllers\KanbanController::destroy
+ * @see app/Http/Controllers/KanbanController.php:289
+ * @route '/kanban/cards/{card}'
+ */
+export const destroy = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+destroy.definition = {
+    methods: ["delete"],
+    url: '/kanban/cards/{card}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\KanbanController::destroy
+ * @see app/Http/Controllers/KanbanController.php:289
+ * @route '/kanban/cards/{card}'
+ */
+destroy.url = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { card: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { card: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    card: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        card: typeof args.card === 'object'
+                ? args.card.id
+                : args.card,
+                }
+
+    return destroy.definition.url
+            .replace('{card}', parsedArgs.card.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\KanbanController::destroy
+ * @see app/Http/Controllers/KanbanController.php:289
+ * @route '/kanban/cards/{card}'
+ */
+destroy.delete = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+    /**
+* @see \App\Http\Controllers\KanbanController::destroy
+ * @see app/Http/Controllers/KanbanController.php:289
+ * @route '/kanban/cards/{card}'
+ */
+    const destroyForm = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
+                        _method: 'DELETE',
                         ...(options?.query ?? options?.mergeQuery ?? {}),
                     }
                 }),
@@ -217,25 +319,26 @@ update.put = (args: { card: number | { id: number } } | [card: number | { id: nu
     })
 
             /**
-* @see \App\Http\Controllers\KanbanController::update
- * @see app/Http/Controllers/KanbanController.php:96
+* @see \App\Http\Controllers\KanbanController::destroy
+ * @see app/Http/Controllers/KanbanController.php:289
  * @route '/kanban/cards/{card}'
  */
-        updateForm.put = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
+        destroyForm.delete = (args: { card: number | { id: number } } | [card: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
+                            _method: 'DELETE',
                             ...(options?.query ?? options?.mergeQuery ?? {}),
                         }
                     }),
             method: 'post',
         })
     
-    update.form = updateForm
+    destroy.form = destroyForm
 const cards = {
     store: Object.assign(store, store),
 move: Object.assign(move, move),
 update: Object.assign(update, update),
+destroy: Object.assign(destroy, destroy),
 }
 
 export default cards

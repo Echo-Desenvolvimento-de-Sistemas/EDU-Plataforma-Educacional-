@@ -20,7 +20,7 @@ export default function Manual() {
 
                 {/* Header */}
                 <div className="space-y-2">
-                    <h1 className="text-3xl font-bold tracking-tight text-blue-900">Manual do Professor</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-primary">Manual do Professor</h1>
                     <p className="text-lg text-muted-foreground">
                         Guia completo para explorar todas as funcionalidades do painel acadêmico.
                     </p>
@@ -28,16 +28,16 @@ export default function Manual() {
 
                 <Tabs defaultValue="dashboard" className="w-full">
                     <TabsList className="w-full justify-start border-b rounded-none p-0 h-auto bg-transparent mb-6 gap-2 flex-wrap">
-                        <TabsTrigger value="dashboard" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-4 py-3">
+                        <TabsTrigger value="dashboard" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary/90 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-4 py-3">
                             Painel Principal
                         </TabsTrigger>
-                        <TabsTrigger value="attendance" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-4 py-3">
+                        <TabsTrigger value="attendance" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary/90 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-4 py-3">
                             Chamada & Frequência
                         </TabsTrigger>
-                        <TabsTrigger value="grades" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-4 py-3">
+                        <TabsTrigger value="grades" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary/90 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-4 py-3">
                             Notas & Avaliações
                         </TabsTrigger>
-                        <TabsTrigger value="faq" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none px-4 py-3">
+                        <TabsTrigger value="faq" className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary/90 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none px-4 py-3">
                             Dúvidas Frequentes
                         </TabsTrigger>
                     </TabsList>
@@ -48,7 +48,7 @@ export default function Manual() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
-                                        <Clock className="w-5 h-5 text-blue-600" />
+                                        <Clock className="w-5 h-5 text-primary" />
                                         Cronograma & Aulas
                                     </CardTitle>
                                 </CardHeader>
@@ -58,7 +58,7 @@ export default function Manual() {
                                         O cartão destacado no topo (Acompanhamento) mostra a aula que está acontecendo agora ou a próxima da fila.
                                     </p>
                                     <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                                        <li><strong className="text-blue-700">Agora:</strong> Indica a aula que está em andamento. Clique para ir direto para a chamada.</li>
+                                        <li><strong className="text-primary/90">Agora:</strong> Indica a aula que está em andamento. Clique para ir direto para a chamada.</li>
                                         <li><strong className="text-slate-700">Concluída:</strong> Aulas que já passaram no dia de hoje. Você ainda pode clicar nelas para ajustar a frequência ou conteúdo.</li>
                                         <li><strong className="text-gray-500">Próximas:</strong> Aulas agendadas para mais tarde.</li>
                                     </ul>
@@ -138,7 +138,7 @@ export default function Manual() {
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
-                                    <GraduationCap className="w-5 h-5 text-indigo-600" />
+                                    <GraduationCap className="w-5 h-5 text-primary" />
                                     Lançamento de Notas (Novo Grid)
                                 </CardTitle>
                                 <CardDescription>
@@ -150,7 +150,7 @@ export default function Manual() {
                                 <div className="grid gap-6 md:grid-cols-2">
                                     <div className="space-y-4">
                                         <h4 className="font-bold text-base flex items-center gap-2">
-                                            <Plus className="w-4 h-4 text-blue-600" />
+                                            <Plus className="w-4 h-4 text-primary" />
                                             1. Criar Avaliação
                                         </h4>
                                         <p className="text-muted-foreground">
@@ -169,7 +169,7 @@ export default function Manual() {
 
                                     <div className="space-y-4">
                                         <h4 className="font-bold text-base flex items-center gap-2">
-                                            <GripVertical className="w-4 h-4 text-blue-600" />
+                                            <GripVertical className="w-4 h-4 text-primary" />
                                             2. Lançar no Grid
                                         </h4>
                                         <p className="text-muted-foreground">
@@ -196,8 +196,8 @@ export default function Manual() {
                                     </p>
                                 </div>
 
-                                <div className="bg-blue-50 p-4 rounded-lg flex items-center justify-between border border-blue-100">
-                                    <span className="text-blue-900 font-medium">
+                                <div className="bg-primary/10 p-4 rounded-lg flex items-center justify-between border border-primary/20">
+                                    <span className="text-primary font-medium">
                                         Não esqueça de clicar em <strong>Salvar Notas</strong> ao finalizar os lançamentos!
                                     </span>
                                 </div>

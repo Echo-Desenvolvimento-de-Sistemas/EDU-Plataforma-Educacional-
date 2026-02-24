@@ -13,10 +13,13 @@ class SchoolEventController extends Controller
      */
     public function index(Request $request)
     {
-        // Return JSON if requested (for calendar fetch) or render the View
+        $user = auth()->user();
+
+        // Return JSON if requested (for calendar fetch)
         if ($request->wantsJson()) {
             $query = SchoolEvent::query();
 
+            // Filter by Date Range
             if ($request->has('start') && $request->has('end')) {
                 $query->where(function ($q) use ($request) {
                     $q->whereBetween('start_date', [$request->start, $request->end])
@@ -24,30 +27,48 @@ class SchoolEventController extends Controller
                 });
             }
 
-            // Filter by Target Audience (based on User Role)
-            $user = auth()->user();
-            if ($user && !in_array($user->role, ['admin', 'secretaria'])) {
-                // Determine user's generic group for filtering
+            // Filter by Target Audience and Creator
+            if (!in_array($user->role, ['admin', 'secretaria'])) {
                 $role = $user->role; // 'professor', 'aluno', 'responsavel'
 
-                // Logic: 
-                // If target_audience is null, assume public/all? Or only admin sees? 
-                // Let's assume null = visible to all or implement migration to default to all.
-                // Or better: filter where target_audience contains user role OR target_audience is null.
-
-                $query->where(function ($q) use ($role) {
-                    $q->whereJsonContains('target_audience', $role)
-                        ->orWhereNull('target_audience'); // Legacy/Public support
+                $query->where(function ($q) use ($role, $user) {
+                    $q->where('created_by', $user->id) // See their own created events (like personal events)
+                        ->orWhereJsonContains('target_audience', $role) // See events targeted to their role
+                        ->orWhereNull('target_audience'); // Legacy/Public support visible to all
                 });
             }
 
-            return response()->json($query->get());
+            $events = $query->get();
+            $classSchedules = [];
+
+            // If it's a Professor, fetch their teaching classes
+            if ($user->role === 'professor' && $user->professor) {
+                $professorId = $user->professor->id;
+                $classSchedules = \App\Models\ClassSchedule::whereIn('subject_id', function ($q) use ($professorId) {
+                    $q->select('subject_id')
+                        ->from('allocations')
+                        ->where('professor_id', $professorId);
+                })->with(['subject', 'classRoom'])->get();
+            }
+            // If it's a Student, fetch their attending classes
+            elseif ($user->role === 'aluno' && $user->student) {
+                $gradeId = $user->student->grade_id;
+                $classSchedules = \App\Models\ClassSchedule::whereIn('subject_id', function ($q) use ($gradeId) {
+                    $q->select('id')
+                        ->from('subjects')
+                        ->where('grade_id', $gradeId);
+                })->with(['subject', 'classRoom'])->get();
+            }
+
+            return response()->json([
+                'events' => $events,
+                'classSchedules' => $classSchedules,
+            ]);
         }
 
         return Inertia::render('Calendar/Index', [
-            // Pass initial events for the current month? Or let frontend fetch.
-            // Let's pass simplified logic for now or just the User Role to know permissions
-            'can_edit' => in_array(auth()->user()->role, ['admin', 'secretaria'])
+            'can_edit' => in_array($user->role, ['admin', 'secretaria', 'professor']),
+            'user_role' => $user->role,
         ]);
     }
 
@@ -56,8 +77,8 @@ class SchoolEventController extends Controller
      */
     public function store(Request $request)
     {
-        // Authorization: Only Admin and Secretaria
-        if (!in_array(auth()->user()->role, ['admin', 'secretaria'])) {
+        // Authorization: Admin, Secretaria, and Professor
+        if (!in_array(auth()->user()->role, ['admin', 'secretaria', 'professor'])) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -71,8 +92,15 @@ class SchoolEventController extends Controller
             'target_audience.*' => 'string|in:professor,aluno,responsavel'
         ]);
 
+        $data = $validated;
+
+        if (auth()->user()->role === 'professor') {
+            // Professors can only create events for students (or personal events if we decide to allow empty, but rule says "apenas para alunos")
+            $data['target_audience'] = ['aluno'];
+        }
+
         $event = SchoolEvent::create([
-            ...$validated,
+            ...$data,
             'created_by' => auth()->id()
         ]);
 
@@ -82,11 +110,15 @@ class SchoolEventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SchoolEvent $schoolEvent) // Model binding usually requires 'event' param name matching route or explicit binding
+    public function update(Request $request, SchoolEvent $event)
     {
         // Authorization
-        if (!in_array(auth()->user()->role, ['admin', 'secretaria'])) {
+        if (!in_array(auth()->user()->role, ['admin', 'secretaria', 'professor'])) {
             abort(403, 'Unauthorized action.');
+        }
+
+        if (auth()->user()->role === 'professor' && $event->created_by !== auth()->id()) {
+            abort(403, 'You can only update your own events.');
         }
 
         $validated = $request->validate([
@@ -99,7 +131,13 @@ class SchoolEventController extends Controller
             'target_audience.*' => 'string|in:professor,aluno,responsavel'
         ]);
 
-        $schoolEvent->update($validated);
+        $data = $validated;
+
+        if (auth()->user()->role === 'professor') {
+            $data['target_audience'] = ['aluno'];
+        }
+
+        $event->update($data);
 
         return back()->with('success', 'Evento atualizado.');
     }
@@ -107,13 +145,17 @@ class SchoolEventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SchoolEvent $schoolEvent)
+    public function destroy(SchoolEvent $event)
     {
-        if (!in_array(auth()->user()->role, ['admin', 'secretaria'])) {
+        if (!in_array(auth()->user()->role, ['admin', 'secretaria', 'professor'])) {
             abort(403, 'Unauthorized action.');
         }
 
-        $schoolEvent->delete();
+        if (auth()->user()->role === 'professor' && $event->created_by !== auth()->id()) {
+            abort(403, 'You can only delete your own events.');
+        }
+
+        $event->delete();
 
         return back()->with('success', 'Evento removido.');
     }

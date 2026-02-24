@@ -6,9 +6,10 @@ interface Props {
     board: KanbanBoardType;
     onDragEnd: (result: DropResult) => void;
     onAddCard?: (columnId: number) => void;
+    onDeleteCard?: (cardId: number, columnId: number) => void;
 }
 
-export default function KanbanBoard({ board, onDragEnd, onAddCard }: Props) {
+export default function KanbanBoard({ board, onDragEnd, onAddCard, onDeleteCard }: Props) {
     const isDragEnabled = board.permission === 'edit' || (board.permission as string) === 'edit'; // Ensure string check works
 
     return (
@@ -20,6 +21,7 @@ export default function KanbanBoard({ board, onDragEnd, onAddCard }: Props) {
                         column={column}
                         isDragEnabled={isDragEnabled}
                         onAddCard={board.permission !== 'view' ? onAddCard : undefined}
+                        onDeleteCard={onDeleteCard}
                     />
                 ))}
             </div>

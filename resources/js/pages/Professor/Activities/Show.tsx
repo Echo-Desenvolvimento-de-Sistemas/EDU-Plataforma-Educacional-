@@ -42,8 +42,8 @@ export default function Show({ activity, attempts }: Props) {
                     {/* Header Stats */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                            <div className="p-3 bg-indigo-50 rounded-lg">
-                                <Users className="w-6 h-6 text-indigo-600" />
+                            <div className="p-3 bg-primary/10 rounded-lg">
+                                <Users className="w-6 h-6 text-primary" />
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-gray-500">Total de Tentativas</p>
@@ -94,7 +94,7 @@ export default function Show({ activity, attempts }: Props) {
                                         <tr key={attempt.id}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
-                                                    <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs">
+                                                    <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary/90 font-bold text-xs">
                                                         {attempt.student?.name?.charAt(0) || 'A'}
                                                     </div>
                                                     <div className="ml-4">

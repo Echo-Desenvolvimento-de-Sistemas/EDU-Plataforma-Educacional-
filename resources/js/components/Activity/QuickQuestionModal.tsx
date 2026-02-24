@@ -167,7 +167,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                             <select
                                 value={data.type}
                                 onChange={e => updateData('type', e.target.value)}
-                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                             >
                                 <option value="MULTIPLE_CHOICE">Múltipla Escolha</option>
                                 <option value="TRUE_FALSE">Verdadeiro ou Falso</option>
@@ -178,7 +178,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                             <select
                                 value={data.difficulty}
                                 onChange={e => updateData('difficulty', parseInt(e.target.value))}
-                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                             >
                                 <option value={1}>Fácil</option>
                                 <option value={2}>Médio</option>
@@ -195,7 +195,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                             value={data.statement}
                             onChange={e => updateData('statement', e.target.value)}
                             rows={3}
-                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                             placeholder="Digite a pergunta..."
                             required
                         />
@@ -216,7 +216,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                         type="text"
                                         value={data.subject || ''}
                                         onChange={e => updateData('subject', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                         placeholder="Ex: Matemática"
                                     />
                                 </div>
@@ -226,7 +226,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                         type="text"
                                         value={data.topic || ''}
                                         onChange={e => updateData('topic', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                         placeholder="Ex: Álgebra"
                                     />
                                 </div>
@@ -236,7 +236,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                         type="text"
                                         value={data.grade_level || ''}
                                         onChange={e => updateData('grade_level', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                         placeholder="Ex: 8º Ano"
                                     />
                                 </div>
@@ -246,7 +246,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                         type="text"
                                         value={data.bncc_code || ''}
                                         onChange={e => updateData('bncc_code', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                         placeholder="Ex: EF08MA01"
                                     />
                                 </div>
@@ -260,7 +260,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                             <button
                                 type="button"
                                 onClick={addOption}
-                                className="text-xs text-indigo-600 flex items-center gap-1 font-medium"
+                                className="text-xs text-primary flex items-center gap-1 font-medium"
                             >
                                 <Plus className="w-3 h-3" /> Adicionar
                             </button>
@@ -274,7 +274,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                             type="checkbox"
                                             checked={option.is_correct}
                                             onChange={e => updateOption(index, 'is_correct', e.target.checked)}
-                                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                            className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                                             title="Correta"
                                         />
                                     </div>
@@ -315,7 +315,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 text-sm flex items-center gap-2"
+                            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 text-sm flex items-center gap-2"
                         >
                             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                             {questionToEdit ? 'Atualizar Questão' : 'Salvar Questão'}

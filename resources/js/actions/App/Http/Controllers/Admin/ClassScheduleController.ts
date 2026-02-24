@@ -235,6 +235,61 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     
     store.form = storeForm
 /**
+* @see \App\Http\Controllers\Admin\ClassScheduleController::reorder
+ * @see app/Http/Controllers/Admin/ClassScheduleController.php:64
+ * @route '/admin/class-schedules/reorder'
+ */
+export const reorder = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: reorder.url(options),
+    method: 'post',
+})
+
+reorder.definition = {
+    methods: ["post"],
+    url: '/admin/class-schedules/reorder',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Admin\ClassScheduleController::reorder
+ * @see app/Http/Controllers/Admin/ClassScheduleController.php:64
+ * @route '/admin/class-schedules/reorder'
+ */
+reorder.url = (options?: RouteQueryOptions) => {
+    return reorder.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\ClassScheduleController::reorder
+ * @see app/Http/Controllers/Admin/ClassScheduleController.php:64
+ * @route '/admin/class-schedules/reorder'
+ */
+reorder.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: reorder.url(options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\ClassScheduleController::reorder
+ * @see app/Http/Controllers/Admin/ClassScheduleController.php:64
+ * @route '/admin/class-schedules/reorder'
+ */
+    const reorderForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: reorder.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\ClassScheduleController::reorder
+ * @see app/Http/Controllers/Admin/ClassScheduleController.php:64
+ * @route '/admin/class-schedules/reorder'
+ */
+        reorderForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: reorder.url(options),
+            method: 'post',
+        })
+    
+    reorder.form = reorderForm
+/**
 * @see \App\Http\Controllers\Admin\ClassScheduleController::destroy
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:58
  * @route '/admin/class-schedules/{schedule}'
@@ -323,6 +378,6 @@ destroy.delete = (args: { schedule: number | { id: number } } | [schedule: numbe
         })
     
     destroy.form = destroyForm
-const ClassScheduleController = { index, getByClass, store, destroy }
+const ClassScheduleController = { index, getByClass, store, reorder, destroy }
 
 export default ClassScheduleController

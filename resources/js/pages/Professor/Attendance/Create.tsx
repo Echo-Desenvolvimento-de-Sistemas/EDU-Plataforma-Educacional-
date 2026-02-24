@@ -35,7 +35,7 @@ interface Props {
     } | null;
 }
 
-export default function Create({ classRoom, subjects, selectedSubjectId, selectedDate, students, existingContent }: Props) {
+export default function Create({ classRoom, subjects, selectedSubjectId, selectedDate, students, existingContent, dailyPlan }: Props) {
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Painel', href: '/professor/dashboard' },
         { title: classRoom.name, href: `/professor/classes/${classRoom.id}` },
@@ -191,14 +191,13 @@ export default function Create({ classRoom, subjects, selectedSubjectId, selecte
                     <div className="mt-6 md:mt-8 bg-card rounded-xl border shadow-sm p-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label htmlFor="content">Conteúdo Ministrado</Label>
-                            {/* @ts-ignore */}
-                            {props.dailyPlan && (
+                            {dailyPlan && (
                                 <Button
                                     type="button"
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => setData('content', `Tema: ${props.dailyPlan.topic}\nMetodologia: ${props.dailyPlan.methodology || ''}`)}
-                                    className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                                    onClick={() => setData('content', `Tema: ${dailyPlan.topic}\nMetodologia: ${dailyPlan.methodology || ''}`)}
+                                    className="text-primary border-blue-200 hover:bg-primary/10"
                                 >
                                     <BookOpen className="mr-2 h-3 w-3" />
                                     Importar do Planejamento
@@ -229,7 +228,7 @@ export default function Create({ classRoom, subjects, selectedSubjectId, selecte
                         </Button>
 
                         <Button
-                            className="w-full h-12 text-lg font-bold shadow-lg bg-blue-600 hover:bg-blue-700 text-white"
+                            className="w-full h-12 text-lg font-bold shadow-lg bg-primary hover:bg-primary/90 text-white"
                             size="lg"
                             onClick={submit}
                             disabled={processing}

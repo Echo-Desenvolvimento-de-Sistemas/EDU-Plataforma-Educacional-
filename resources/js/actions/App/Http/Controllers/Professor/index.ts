@@ -8,6 +8,7 @@ import ActivityController from './ActivityController'
 import QuestionBankController from './QuestionBankController'
 import QuestionController from './QuestionController'
 import LessonPlanController from './LessonPlanController'
+import ClassScheduleController from './ClassScheduleController'
 const Professor = {
     DashboardController: Object.assign(DashboardController, DashboardController),
 ClassRoomController: Object.assign(ClassRoomController, ClassRoomController),
@@ -19,6 +20,7 @@ ActivityController: Object.assign(ActivityController, ActivityController),
 QuestionBankController: Object.assign(QuestionBankController, QuestionBankController),
 QuestionController: Object.assign(QuestionController, QuestionController),
 LessonPlanController: Object.assign(LessonPlanController, LessonPlanController),
+ClassScheduleController: Object.assign(ClassScheduleController, ClassScheduleController),
 }
 
 export default Professor

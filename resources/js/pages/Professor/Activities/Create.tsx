@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react';
 import { useForm, Link, router } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import QuickQuestionModal from '@/components/Activity/QuickQuestionModal';
-import { Plus, Trash2, ArrowLeft, Search, Filter, Calendar, Clock, Settings, ChevronRight, Check, Edit } from 'lucide-react';
+import QuickBankModal from '@/components/Activity/QuickBankModal';
+import { Plus, Trash2, ArrowLeft, Search, Filter, Calendar, Clock, Settings, ChevronRight, Check, Edit, FolderPlus } from 'lucide-react';
 import clsx from 'clsx';
 import { Head } from '@inertiajs/react';
 
@@ -34,11 +35,22 @@ export default function Create({ classRooms, banks }: Props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingQuestion, setEditingQuestion] = useState<any | null>(null);
+    const [isBankModalOpen, setIsBankModalOpen] = useState(false);
 
     const handleQuestionCreated = () => {
         setIsModalOpen(false);
         setEditingQuestion(null);
         router.reload({ only: ['banks'] });
+    };
+
+    const handleBankCreated = (newBank: any) => {
+        setIsBankModalOpen(false);
+        router.reload({
+            only: ['banks'],
+            onSuccess: () => {
+                setSelectedBankId(newBank.id);
+            }
+        });
     };
 
     // Helper to get questions based on current filters
@@ -86,13 +98,13 @@ export default function Create({ classRooms, banks }: Props) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-8">
-                            <div className={clsx("flex items-center space-x-2", step >= 1 ? "text-indigo-600 dark:text-indigo-400" : "text-gray-400")}>
-                                <div className={clsx("w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2", step >= 1 ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/50" : "border-gray-300")}>1</div>
+                            <div className={clsx("flex items-center space-x-2", step >= 1 ? "text-primary dark:text-primary/80" : "text-gray-400")}>
+                                <div className={clsx("w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2", step >= 1 ? "border-primary bg-primary/10 dark:bg-primary/30" : "border-gray-300")}>1</div>
                                 <span className="font-medium">Montagem da Prova</span>
                             </div>
                             <ChevronRight className="w-5 h-5 text-gray-300" />
-                            <div className={clsx("flex items-center space-x-2", step >= 2 ? "text-indigo-600 dark:text-indigo-400" : "text-gray-400")}>
-                                <div className={clsx("w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2", step >= 2 ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/50" : "border-gray-300")}>2</div>
+                            <div className={clsx("flex items-center space-x-2", step >= 2 ? "text-primary dark:text-primary/80" : "text-gray-400")}>
+                                <div className={clsx("w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2", step >= 2 ? "border-primary bg-primary/10 dark:bg-primary/30" : "border-gray-300")}>2</div>
                                 <span className="font-medium">Agendamento</span>
                             </div>
                         </div>
@@ -105,7 +117,7 @@ export default function Create({ classRooms, banks }: Props) {
                                 <button
                                     onClick={() => setStep(2)}
                                     disabled={data.questions.length === 0 || !data.title}
-                                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center"
+                                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center"
                                 >
                                     Próxima Etapa <ChevronRight className="w-4 h-4 ml-1" />
                                 </button>
@@ -139,7 +151,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                 placeholder="Título da Atividade (ex: Prova de Matemática - 1º Bimestre)"
                                                 value={data.title}
                                                 onChange={e => setData('title', e.target.value)}
-                                                className="block w-full text-xl font-bold border-0 border-b-2 border-gray-200 focus:border-indigo-500 focus:ring-0 px-0 bg-transparent text-gray-900 dark:text-white dark:border-gray-700 placeholder-gray-400"
+                                                className="block w-full text-xl font-bold border-0 border-b-2 border-gray-200 focus:border-primary focus:ring-0 px-0 bg-transparent text-gray-900 dark:text-white dark:border-gray-700 placeholder-gray-400"
                                                 required
                                             />
                                             {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
@@ -157,7 +169,7 @@ export default function Create({ classRooms, banks }: Props) {
                                 <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col overflow-hidden dark:bg-gray-900 dark:border-gray-800">
                                     <div className="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 flex justify-between items-center dark:bg-gray-800/50">
                                         <h3 className="font-semibold text-gray-700 dark:text-gray-200">Questões Selecionadas</h3>
-                                        <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full font-bold dark:bg-indigo-900 dark:text-indigo-300">
+                                        <span className="text-xs bg-primary/20 text-primary/90 px-2 py-1 rounded-full font-bold dark:bg-indigo-900 dark:text-primary/70">
                                             {data.questions.length} itens
                                         </span>
                                     </div>
@@ -171,7 +183,7 @@ export default function Create({ classRooms, banks }: Props) {
                                             data.questions.map((q, index) => {
                                                 const bankQ = banks.flatMap(b => b.questions).find(bq => bq.id === q.id);
                                                 return (
-                                                    <div key={q.id} className="flex gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors group dark:bg-gray-800 dark:border-gray-700">
+                                                    <div key={q.id} className="flex gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-primary/40 transition-colors group dark:bg-gray-800 dark:border-gray-700">
                                                         <div className="flex flex-col items-center gap-1 pt-1">
                                                             <span className="font-bold text-gray-400 text-sm">#{index + 1}</span>
                                                         </div>
@@ -193,7 +205,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                                         updated[index].points = Number(e.target.value);
                                                                         setData('questions', updated);
                                                                     }}
-                                                                    className="w-16 h-8 text-right rounded border-gray-300 text-sm focus:border-indigo-500 text-gray-900 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                                                    className="w-16 h-8 text-right rounded border-gray-300 text-sm focus:border-primary text-gray-900 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                                     min="0"
                                                                     step="0.5"
                                                                 />
@@ -210,7 +222,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                                             setIsModalOpen(true);
                                                                         }
                                                                     }}
-                                                                    className="text-indigo-400 hover:text-indigo-600 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                                    className="text-primary/80 hover:text-primary p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                                                                     title="Editar questão"
                                                                 >
                                                                     <Edit className="w-4 h-4" />
@@ -239,14 +251,22 @@ export default function Create({ classRooms, banks }: Props) {
                                         <h3 className="font-semibold text-gray-800 dark:text-white flex items-center gap-2">
                                             <Search className="w-4 h-4" /> Banco de Questões
                                         </h3>
-                                        {selectedBankId && (
+                                        <div className="flex gap-2">
                                             <button
-                                                onClick={() => setIsModalOpen(true)}
-                                                className="text-xs bg-indigo-50 text-indigo-600 px-2 py-1 rounded hover:bg-indigo-100 flex items-center gap-1 font-medium transition-colors dark:bg-indigo-900/30 dark:text-indigo-400 dark:hover:bg-indigo-900/50"
+                                                onClick={() => setIsBankModalOpen(true)}
+                                                className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-gray-200 flex items-center gap-1 font-medium transition-colors dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                                             >
-                                                <Plus className="w-3 h-3" /> Nova Questão
+                                                <FolderPlus className="w-3 h-3" /> Novo
                                             </button>
-                                        )}
+                                            {selectedBankId && (
+                                                <button
+                                                    onClick={() => setIsModalOpen(true)}
+                                                    className="text-xs bg-primary/10 text-primary px-2 py-1 rounded hover:bg-primary/20 flex items-center gap-1 font-medium transition-colors dark:bg-primary/20 dark:text-primary/80 dark:hover:bg-primary/30"
+                                                >
+                                                    <Plus className="w-3 h-3" /> Nova Questão
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
 
                                     <select
@@ -301,7 +321,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                 onClick={() => !isAdded && addQuestion(q.id)}
                                                 className={clsx(
                                                     "p-3 rounded-lg border bg-white shadow-sm transition-all cursor-pointer text-sm dark:bg-gray-800 dark:border-gray-700",
-                                                    isAdded ? "opacity-50 ring-2 ring-indigo-100" : "hover:shadow-md hover:border-indigo-300 hover:-translate-y-0.5"
+                                                    isAdded ? "opacity-50 ring-2 ring-indigo-100" : "hover:shadow-md hover:border-primary/40 hover:-translate-y-0.5"
                                                 )}
                                             >
                                                 <div className="flex justify-between items-start gap-2 mb-2">
@@ -313,7 +333,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                     )}>
                                                         {q.difficulty === 1 ? 'Fácil' : q.difficulty === 2 ? 'Médio' : 'Difícil'}
                                                     </span>
-                                                    {isAdded && <Check className="w-4 h-4 text-indigo-600" />}
+                                                    {isAdded && <Check className="w-4 h-4 text-primary" />}
                                                 </div>
                                                 <p className="text-gray-700 line-clamp-3 mb-2 dark:text-gray-300">{q.statement}</p>
                                             </div>
@@ -325,7 +345,7 @@ export default function Create({ classRooms, banks }: Props) {
                                 </div>
                             </div>
 
-                            {/* Modal */}
+                            {/* Modals */}
                             {selectedBankId && (
                                 <QuickQuestionModal
                                     isOpen={isModalOpen}
@@ -338,6 +358,11 @@ export default function Create({ classRooms, banks }: Props) {
                                     questionToEdit={editingQuestion}
                                 />
                             )}
+                            <QuickBankModal
+                                isOpen={isBankModalOpen}
+                                onClose={() => setIsBankModalOpen(false)}
+                                onBankCreated={handleBankCreated}
+                            />
                         </div>
                     )}
 
@@ -351,14 +376,14 @@ export default function Create({ classRooms, banks }: Props) {
                                 </div>
 
                                 <div className="space-y-6">
-                                    <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100 flex justify-between items-center dark:bg-indigo-900/20 dark:border-indigo-800">
+                                    <div className="bg-primary/10 p-4 rounded-lg border border-primary/20 flex justify-between items-center dark:bg-primary/20 dark:border-primary/30">
                                         <div className="flex flex-col">
-                                            <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest dark:text-indigo-400">Resumo</span>
+                                            <span className="text-xs font-bold text-primary uppercase tracking-widest dark:text-primary/80">Resumo</span>
                                             <span className="text-lg font-semibold text-gray-900 dark:text-white">{data.title}</span>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{totalPoints}</p>
-                                            <span className="text-xs text-indigo-600 dark:text-indigo-400">PONTOS TOTAIS</span>
+                                            <p className="text-2xl font-bold text-primary dark:text-primary/80">{totalPoints}</p>
+                                            <span className="text-xs text-primary dark:text-primary/80">PONTOS TOTAIS</span>
                                         </div>
                                     </div>
 
@@ -368,7 +393,7 @@ export default function Create({ classRooms, banks }: Props) {
                                             <select
                                                 value={data.class_room_id}
                                                 onChange={e => setData('class_room_id', e.target.value)}
-                                                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 pl-4 pr-10 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 pl-4 pr-10 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                                 required
                                             >
                                                 <option value="">Selecione uma turma...</option>
@@ -388,7 +413,7 @@ export default function Create({ classRooms, banks }: Props) {
                                                 type="datetime-local"
                                                 value={data.deadline}
                                                 onChange={e => setData('deadline', e.target.value)}
-                                                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-3 pl-10 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary py-3 pl-10 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                             />
                                         </div>
                                         <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Os alunos não poderão enviar respostas após esta data.</p>
@@ -408,12 +433,12 @@ export default function Create({ classRooms, banks }: Props) {
                                                     id="toggle"
                                                     checked={data.settings.randomize_order}
                                                     onChange={e => setData('settings', { ...data.settings, randomize_order: e.target.checked })}
-                                                    className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer checked:right-0 checked:border-indigo-600"
+                                                    className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer checked:right-0 checked:border-primary"
                                                     style={{ right: data.settings.randomize_order ? '0' : 'auto', left: data.settings.randomize_order ? 'auto' : '0' }}
                                                 />
                                                 <label
                                                     htmlFor="toggle"
-                                                    className={clsx("toggle-label block overflow-hidden h-6 rounded-full cursor-pointer bg-gray-300", data.settings.randomize_order ? "bg-indigo-600" : "")}
+                                                    className={clsx("toggle-label block overflow-hidden h-6 rounded-full cursor-pointer bg-gray-300", data.settings.randomize_order ? "bg-primary" : "")}
                                                 ></label>
                                             </div>
                                         </div>
@@ -429,7 +454,7 @@ export default function Create({ classRooms, banks }: Props) {
                                         <button
                                             onClick={submit}
                                             disabled={processing}
-                                            className="px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-bold shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition-all transform hover:-translate-y-1"
+                                            className="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all transform hover:-translate-y-1"
                                         >
                                             Agendar Atividade
                                         </button>

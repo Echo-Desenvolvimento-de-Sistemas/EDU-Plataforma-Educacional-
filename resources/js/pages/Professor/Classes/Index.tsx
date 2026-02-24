@@ -27,20 +27,20 @@ export default function ClassesIndex({ classes }: { classes: ClassData[] }) {
             <Head title="Minhas Turmas" />
             <div className="p-8 max-w-7xl mx-auto space-y-6">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-blue-900">Minhas Turmas</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Minhas Turmas</h1>
                     <p className="text-muted-foreground">Gerencie suas disciplinas, alunos e lançamentos.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {classes.map((cls) => (
-                        <Card key={cls.id} className="flex flex-col hover:shadow-lg transition-shadow border-t-4 border-t-blue-600">
+                        <Card key={cls.id} className="flex flex-col hover:shadow-lg transition-shadow border-t-4 border-t-primary">
                             <CardHeader>
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <CardTitle className="text-xl text-blue-950">{cls.name}</CardTitle>
+                                        <CardTitle className="text-xl text-foreground">{cls.name}</CardTitle>
                                         <CardDescription className="font-medium text-slate-600">{cls.grade}</CardDescription>
                                     </div>
-                                    <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                    <Badge variant="outline" className="text-xs bg-primary/10 text-primary/90 border-primary/20">
                                         {cls.year}
                                     </Badge>
                                 </div>
@@ -68,7 +68,7 @@ export default function ClassesIndex({ classes }: { classes: ClassData[] }) {
                                 </div>
                             </CardContent>
                             <CardFooter className="pt-2">
-                                <Button className="w-full bg-blue-600 hover:bg-blue-700 group" asChild>
+                                <Button className="w-full bg-primary hover:bg-primary/90 group" asChild>
                                     <Link href={`/professor/classes/${cls.id}`}>
                                         Gerenciar Turma
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

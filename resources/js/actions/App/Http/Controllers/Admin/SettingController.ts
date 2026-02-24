@@ -132,6 +132,84 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     update.form = updateForm
-const SettingController = { index, update }
+/**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+export const exportGamification = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportGamification.url(options),
+    method: 'get',
+})
+
+exportGamification.definition = {
+    methods: ["get","head"],
+    url: '/admin/settings/export',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+exportGamification.url = (options?: RouteQueryOptions) => {
+    return exportGamification.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+exportGamification.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: exportGamification.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+exportGamification.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: exportGamification.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+    const exportGamificationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: exportGamification.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+        exportGamificationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: exportGamification.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Admin\SettingController::exportGamification
+ * @see app/Http/Controllers/Admin/SettingController.php:142
+ * @route '/admin/settings/export'
+ */
+        exportGamificationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: exportGamification.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    exportGamification.form = exportGamificationForm
+const SettingController = { index, update, exportGamification }
 
 export default SettingController

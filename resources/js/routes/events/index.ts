@@ -157,7 +157,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\SchoolEventController::store
- * @see app/Http/Controllers/SchoolEventController.php:57
+ * @see app/Http/Controllers/SchoolEventController.php:78
  * @route '/events'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::store
- * @see app/Http/Controllers/SchoolEventController.php:57
+ * @see app/Http/Controllers/SchoolEventController.php:78
  * @route '/events'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::store
- * @see app/Http/Controllers/SchoolEventController.php:57
+ * @see app/Http/Controllers/SchoolEventController.php:78
  * @route '/events'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\SchoolEventController::store
- * @see app/Http/Controllers/SchoolEventController.php:57
+ * @see app/Http/Controllers/SchoolEventController.php:78
  * @route '/events'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\SchoolEventController::store
- * @see app/Http/Controllers/SchoolEventController.php:57
+ * @see app/Http/Controllers/SchoolEventController.php:78
  * @route '/events'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -406,10 +406,10 @@ edit.head = (args: { event: string | number } | [event: string | number ] | stri
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-export const update = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -421,14 +421,17 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-update.url = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions) => {
+update.url = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { event: args }
     }
 
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { event: args.id }
+        }
     
     if (Array.isArray(args)) {
         args = {
@@ -439,7 +442,9 @@ update.url = (args: { event: string | number } | [event: string | number ] | str
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        event: args.event,
+                        event: typeof args.event === 'object'
+                ? args.event.id
+                : args.event,
                 }
 
     return update.definition.url
@@ -449,29 +454,29 @@ update.url = (args: { event: string | number } | [event: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-update.put = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-update.patch = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
 
     /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-    const updateForm = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -483,10 +488,10 @@ update.patch = (args: { event: string | number } | [event: string | number ] | s
 
             /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-        updateForm.put = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -497,10 +502,10 @@ update.patch = (args: { event: string | number } | [event: string | number ] | s
         })
             /**
 * @see \App\Http\Controllers\SchoolEventController::update
- * @see app/Http/Controllers/SchoolEventController.php:85
+ * @see app/Http/Controllers/SchoolEventController.php:113
  * @route '/events/{event}'
  */
-        updateForm.patch = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -513,10 +518,10 @@ update.patch = (args: { event: string | number } | [event: string | number ] | s
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\SchoolEventController::destroy
- * @see app/Http/Controllers/SchoolEventController.php:110
+ * @see app/Http/Controllers/SchoolEventController.php:148
  * @route '/events/{event}'
  */
-export const destroy = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -528,14 +533,17 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::destroy
- * @see app/Http/Controllers/SchoolEventController.php:110
+ * @see app/Http/Controllers/SchoolEventController.php:148
  * @route '/events/{event}'
  */
-destroy.url = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions) => {
+destroy.url = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { event: args }
     }
 
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { event: args.id }
+        }
     
     if (Array.isArray(args)) {
         args = {
@@ -546,7 +554,9 @@ destroy.url = (args: { event: string | number } | [event: string | number ] | st
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-                        event: args.event,
+                        event: typeof args.event === 'object'
+                ? args.event.id
+                : args.event,
                 }
 
     return destroy.definition.url
@@ -556,20 +566,20 @@ destroy.url = (args: { event: string | number } | [event: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\SchoolEventController::destroy
- * @see app/Http/Controllers/SchoolEventController.php:110
+ * @see app/Http/Controllers/SchoolEventController.php:148
  * @route '/events/{event}'
  */
-destroy.delete = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
     /**
 * @see \App\Http\Controllers\SchoolEventController::destroy
- * @see app/Http/Controllers/SchoolEventController.php:110
+ * @see app/Http/Controllers/SchoolEventController.php:148
  * @route '/events/{event}'
  */
-    const destroyForm = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -581,10 +591,10 @@ destroy.delete = (args: { event: string | number } | [event: string | number ] |
 
             /**
 * @see \App\Http\Controllers\SchoolEventController::destroy
- * @see app/Http/Controllers/SchoolEventController.php:110
+ * @see app/Http/Controllers/SchoolEventController.php:148
  * @route '/events/{event}'
  */
-        destroyForm.delete = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { event: number | { id: number } } | [event: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

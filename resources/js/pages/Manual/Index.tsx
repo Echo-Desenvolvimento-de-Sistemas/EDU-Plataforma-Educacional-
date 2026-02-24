@@ -1,326 +1,556 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { BookOpen, Shield, School, GraduationCap, Users, User, ArrowRight } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { CheckCircle2, Circle, ChevronRight, ChevronLeft, BookOpen, Shield, School, GraduationCap, User, Users, Trophy, Sparkles } from 'lucide-react';
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+interface SubTask {
+    id: string;
+    label: string;
+    detail?: string;
+}
+
+interface Step {
+    id: string;
+    title: string;
+    icon: React.ReactNode;
+    description: string;
+    tasks: SubTask[];
+    tip?: string;
+}
 
 interface ManualIndexProps {
     role: string;
 }
 
+// ─── Learning Path Data ──────────────────────────────────────────────────────
+
+const learningPaths: Record<string, Step[]> = {
+    admin: [
+        {
+            id: 'setup',
+            title: 'Configuração Inicial',
+            icon: <Sparkles className="h-5 w-5" />,
+            description: 'Configure a base do sistema antes de cadastrar qualquer usuário. A ordem abaixo é importante para garantir que tudo funcione corretamente.',
+            tip: 'Siga esta ordem rigorosamente — cada item depende do anterior.',
+            tasks: [
+                { id: 'a1', label: 'Criar o Ano Letivo atual', detail: 'Vá em Recursos → Anos Letivos e crie o ano (ex: "2024"). Marque como "Aberto".' },
+                { id: 'a2', label: 'Cadastrar Níveis de Ensino', detail: 'Em Recursos → Níveis de Ensino, adicione os ciclos (Fundamental I, Médio, etc.).' },
+                { id: 'a3', label: 'Cadastrar Disciplinas', detail: 'Em Recursos → Disciplinas, liste todas as matérias da escola.' },
+                { id: 'a4', label: 'Criar Cursos e Grades Curriculares', detail: 'Em Recursos → Cursos, crie os cursos e vincule as disciplinas.' },
+                { id: 'a5', label: 'Criar Turmas', detail: 'Em Recursos → Turmas, crie as salas e vincule a um Ano Letivo e Curso.' },
+            ],
+        },
+        {
+            id: 'users',
+            title: 'Gestão de Usuários',
+            icon: <Shield className="h-5 w-5" />,
+            description: 'Gerencie os funcionários, professores e outros administradores do sistema.',
+            tasks: [
+                { id: 'b1', label: 'Acessar o menu Usuários', detail: 'Clique em "Usuários" no menu lateral esquerdo.' },
+                { id: 'b2', label: 'Criar um novo usuário', detail: 'Clique em "Novo Usuário", preencha Nome, E-mail e defina a Função (Role).' },
+                { id: 'b3', label: 'Verificar a senha provisória', detail: 'Uma senha provisória será gerada. O usuário deverá trocá-la no primeiro acesso.' },
+                { id: 'b4', label: 'Ativar/desativar usuários quando necessário', detail: 'Use o botão de status na tabela de usuários.' },
+            ],
+        },
+        {
+            id: 'ensalamento',
+            title: 'Grade Horária (Ensalamento)',
+            icon: <School className="h-5 w-5" />,
+            description: 'Defina os horários de cada disciplina por turma. Isso é necessário para o controle correto de frequência.',
+            tip: 'Sem o ensalamento, a chamada por aula não funcionará corretamente.',
+            tasks: [
+                { id: 'c1', label: 'Acessar Ensalamento no menu', detail: 'Clique em "Ensalamento" no menu lateral.' },
+                { id: 'c2', label: 'Selecionar uma turma', detail: 'Escolha a turma que deseja configurar.' },
+                { id: 'c3', label: 'Alocar disciplinas nos slots', detail: 'Arraste as disciplinas disponíveis para os horários da semana.' },
+                { id: 'c4', label: 'Repetir para todas as turmas', detail: 'Cada turma precisa ter seu horário configurado individualmente.' },
+            ],
+        },
+        {
+            id: 'students',
+            title: 'Matrículas e Alunos',
+            icon: <Users className="h-5 w-5" />,
+            description: 'Gerencie as matrículas de alunos novos e rematrículas anuais.',
+            tasks: [
+                { id: 'd1', label: 'Verificar pré-matrículas pendentes', detail: 'Acesse Pré-Matrículas para ver inscrições vindas do site.' },
+                { id: 'd2', label: 'Efetivar ou cadastrar alunos', detail: 'Clique em "Efetivar Matrícula" ou vá em Alunos → Novo Aluno para cadastro manual.' },
+                { id: 'd3', label: 'Vincular Responsável ao Aluno', detail: 'No perfil do aluno, vá na aba Responsáveis e vincule o CPF do responsável.' },
+                { id: 'd4', label: 'Usar Matrícula em Lote para rematrículas', detail: 'Em Matrícula em Lote, selecione turma de origem e destino para promover vários alunos.' },
+            ],
+        },
+        {
+            id: 'whatsapp',
+            title: 'Integração e Relatórios',
+            icon: <Trophy className="h-5 w-5" />,
+            description: 'Conecte o WhatsApp para comunicações automáticas e acompanhe os relatórios do sistema.',
+            tasks: [
+                { id: 'e1', label: 'Conectar o WhatsApp', detail: 'Vá em Configurações → WhatsApp, clique em "Conectar" e escaneie o QR Code.' },
+                { id: 'e2', label: 'Verificar status "Conectado"', detail: 'O status deve mudar para verde após o escaneamento.' },
+                { id: 'e3', label: 'Acompanhar relatório de frequência', detail: 'Em Frequência → Relatório, filtre por turma e período.' },
+                { id: 'e4', label: 'Visualizar desempenho por disciplina', detail: 'Acesse Desempenho por Disciplina para identificar turmas com baixo rendimento.' },
+            ],
+        },
+    ],
+
+    secretaria: [
+        {
+            id: 'matriculas',
+            title: 'Matrículas de Novos Alunos',
+            icon: <School className="h-5 w-5" />,
+            description: 'Gerencie o processo completo de matrícula, desde a análise de pré-inscrições até o cadastro manual.',
+            tasks: [
+                { id: 'sa1', label: 'Verificar Pré-Matrículas pendentes', detail: 'Acesse Pré-Matrículas para ver candidatos vindos do site da escola.' },
+                { id: 'sa2', label: 'Analisar os dados do candidato', detail: 'Clique em "Analisar" para ver as informações detalhadas.' },
+                { id: 'sa3', label: 'Efetivar a matrícula', detail: 'Se aprovado, clique em "Efetivar Matrícula". O sistema cria Aluno e Responsável automaticamente.' },
+                { id: 'sa4', label: 'Realizar matrícula manual quando necessário', detail: 'Vá em Alunos → Novo Aluno para cadastro sem pré-inscrição.' },
+            ],
+        },
+        {
+            id: 'documentos',
+            title: 'Emissão de Documentos',
+            icon: <BookOpen className="h-5 w-5" />,
+            description: 'Emita atestados, históricos e declarações com assinatura digital verificável.',
+            tip: 'Todos os documentos possuem QR Code para verificação de autenticidade.',
+            tasks: [
+                { id: 'sb1', label: 'Localizar o aluno em Alunos', detail: 'Use a busca por nome ou matrícula.' },
+                { id: 'sb2', label: 'Acessar os documentos do aluno', detail: 'Clique no ícone de "Documentos" no registro.' },
+                { id: 'sb3', label: 'Selecionar o modelo do documento', detail: 'Escolha entre Atestado de Matrícula, Histórico Escolar, Declaração, etc.' },
+                { id: 'sb4', label: 'Gerar e baixar o PDF', detail: 'O PDF inclui assinatura digital com QR Code verificável.' },
+            ],
+        },
+        {
+            id: 'lote',
+            title: 'Matrícula em Lote',
+            icon: <Users className="h-5 w-5" />,
+            description: 'Promova vários alunos de uma turma para outra de forma rápida ao início de cada ano letivo.',
+            tasks: [
+                { id: 'sc1', label: 'Acessar Matrícula em Lote', detail: 'Clique em "Matrícula em Lote" no menu lateral.' },
+                { id: 'sc2', label: 'Selecionar a turma de origem', detail: 'Ex: "1º Ano A - 2024".' },
+                { id: 'sc3', label: 'Selecionar a turma de destino', detail: 'Ex: "2º Ano A - 2025".' },
+                { id: 'sc4', label: 'Marcar os alunos e processar', detail: 'Selecione os alunos aprovados e clique em "Processar".' },
+            ],
+        },
+    ],
+
+    professor: [
+        {
+            id: 'chamada',
+            title: 'Realizar a Chamada',
+            icon: <GraduationCap className="h-5 w-5" />,
+            description: 'Registre a frequência dos alunos diariamente. O sistema já marca todos como presentes por padrão.',
+            tip: 'Salve a chamada antes de sair da página. Não há salvamento automático.',
+            tasks: [
+                { id: 'pa1', label: 'Acessar o Dashboard e clicar na Turma', detail: 'No seu painel, selecione a turma desejada.' },
+                { id: 'pa2', label: 'Ir para a aba Chamada', detail: 'Clique na aba "Chamada" dentro da turma.' },
+                { id: 'pa3', label: 'Verificar a data (padrão: hoje)', detail: 'Altere a data se for uma chamada retroativa.' },
+                { id: 'pa4', label: 'Marcar apenas os ausentes como "Falta"', detail: 'Clique no nome do aluno ausente para alternar para "Falta".' },
+                { id: 'pa5', label: 'Clicar em "Salvar Chamada"', detail: 'Confirme o salvamento no botão ao final da lista.' },
+            ],
+        },
+        {
+            id: 'notas',
+            title: 'Lançamento de Notas',
+            icon: <BookOpen className="h-5 w-5" />,
+            description: 'Crie avaliações e lance as notas em uma grade editável. A média é calculada automaticamente.',
+            tasks: [
+                { id: 'pb1', label: 'Na turma, acessar a aba Notas', detail: 'Clique em "Notas" dentro da visualização da turma.' },
+                { id: 'pb2', label: 'Criar uma Nova Avaliação', detail: 'Clique em "+ Nova Avaliação" e defina Nome, Data e Peso.' },
+                { id: 'pb3', label: 'Digitar as notas na grade', detail: 'Uma coluna nova aparece. Digite a nota de cada aluno.' },
+                { id: 'pb4', label: 'Pressionar Enter ou Tab para salvar', detail: 'Cada nota é salva individualmente ao navegar para o próximo campo.' },
+            ],
+        },
+        {
+            id: 'atividades',
+            title: 'Banco de Questões e Atividades',
+            icon: <Trophy className="h-5 w-5" />,
+            description: 'Crie provas e atividades online que os alunos responderão diretamente no sistema.',
+            tasks: [
+                { id: 'pc1', label: 'Acessar Banco de Questões', detail: 'Clique em "Banco de Questões" no menu lateral.' },
+                { id: 'pc2', label: 'Criar questões de múltipla escolha ou dissertativas', detail: 'Clique em "+ Nova Questão" e preencha o enunciado e opções.' },
+                { id: 'pc3', label: 'Crear uma Atividade com as questões', detail: 'Em Atividades → Nova Atividade, selecione questões do banco e defina a data de entrega.' },
+                { id: 'pc4', label: 'Corrigir automaticamente (múltipla escolha)', detail: 'Após o prazo, a correção automática é aplicada. Dissertativas precisam de correção manual.' },
+            ],
+        },
+    ],
+
+    aluno: [
+        {
+            id: 'boletim',
+            title: 'Boletim e Frequência',
+            icon: <User className="h-5 w-5" />,
+            description: 'Acompanhe suas notas e frequência em tempo real.',
+            tasks: [
+                { id: 'aa1', label: 'Acessar o Painel Principal', detail: 'Ao fazer login, você já estará no seu painel.' },
+                { id: 'aa2', label: 'Clicar em "Boletim"', detail: 'Visualize suas notas por disciplina e bimestre.' },
+                { id: 'aa3', label: 'Verificar suas Faltas em "Frequência"', detail: 'Veja o total de faltas por matéria e o percentual de presença.' },
+            ],
+        },
+        {
+            id: 'atividades',
+            title: 'Atividades Online',
+            icon: <BookOpen className="h-5 w-5" />,
+            description: 'Realize as atividades e provas enviadas pelos professores diretamente pelo sistema.',
+            tip: 'Fique de olho no prazo de entrega de cada atividade!',
+            tasks: [
+                { id: 'ab1', label: 'Acessar "Atividades" no menu lateral', detail: 'Clique em Atividades para ver todas as tarefas.' },
+                { id: 'ab2', label: 'Iniciar uma atividade pendente', detail: 'Atividades com o botão "Iniciar" ainda podem ser respondidas.' },
+                { id: 'ab3', label: 'Responder as questões', detail: 'Para múltipla escolha, clique na alternativa correta. Dissertativas têm campo de texto.' },
+                { id: 'ab4', label: 'Clicar em "Enviar Respostas"', detail: 'Ao finalizar, envie antes do prazo. Não é possível editar após o envio.' },
+            ],
+        },
+    ],
+
+    responsavel: [
+        {
+            id: 'acompanhamento',
+            title: 'Acompanhamento Escolar',
+            icon: <Users className="h-5 w-5" />,
+            description: 'Acompanhe o desempenho, faltas e comunicados dos seus filhos.',
+            tasks: [
+                { id: 'ra1', label: 'Fazer login com seu CPF e senha', detail: 'Use o e-mail e senha cadastrados pela secretaria.' },
+                { id: 'ra2', label: 'Ver o card de cada filho vinculado', detail: 'Cada filho aparecerá como um card no painel.' },
+                { id: 'ra3', label: 'Expandir as informações do aluno', detail: 'Clique no nome para ver Notas, Faltas e Ocorrências.' },
+                { id: 'ra4', label: 'Verificar communicados na Agenda Digital', detail: 'Acesse a Agenda para ver avisos e comunicados da escola.' },
+            ],
+        },
+    ],
+};
+
+// ─── Progress Storage Helpers ─────────────────────────────────────────────────
+
+function getStorageKey(role: string, stepId: string) {
+    return `manual_progress_${role}_${stepId}`;
+}
+
+function loadChecked(role: string, stepId: string): Set<string> {
+    try {
+        const raw = localStorage.getItem(getStorageKey(role, stepId));
+        if (raw) return new Set(JSON.parse(raw));
+    } catch { }
+    return new Set();
+}
+
+function saveChecked(role: string, stepId: string, checked: Set<string>) {
+    try {
+        localStorage.setItem(getStorageKey(role, stepId), JSON.stringify([...checked]));
+    } catch { }
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 export default function ManualIndex({ role }: ManualIndexProps) {
-    const defaultTab = ['admin', 'secretaria', 'professor', 'aluno', 'responsavel'].includes(role) ? role : 'intro';
+    const { auth } = usePage<{ auth: { user: { name: string } } }>().props;
+    const userName = auth?.user?.name?.split(' ')[0] ?? 'Usuário';
+
+    const steps = learningPaths[role] ?? learningPaths['aluno'];
+    const [activeStep, setActiveStep] = useState(0);
+    const [checkedMap, setCheckedMap] = useState<Record<string, Set<string>>>({});
+    const [animating, setAnimating] = useState(false);
+
+    // Load all progress from localStorage on mount
+    useEffect(() => {
+        const map: Record<string, Set<string>> = {};
+        steps.forEach(s => { map[s.id] = loadChecked(role, s.id); });
+        setCheckedMap(map);
+    }, [role]);
+
+    // Total progress
+    const totalTasks = steps.reduce((acc, s) => acc + s.tasks.length, 0);
+    const totalDone = steps.reduce((acc, s) => acc + (checkedMap[s.id]?.size ?? 0), 0);
+    const overallPct = totalTasks > 0 ? Math.round((totalDone / totalTasks) * 100) : 0;
+
+    const isStepDone = useCallback((step: Step) => {
+        const checked = checkedMap[step.id];
+        return checked ? checked.size === step.tasks.length : false;
+    }, [checkedMap]);
+
+    const toggleTask = (stepId: string, taskId: string) => {
+        setCheckedMap(prev => {
+            const existing = new Set(prev[stepId] ?? []);
+            if (existing.has(taskId)) existing.delete(taskId);
+            else existing.add(taskId);
+            saveChecked(role, stepId, existing);
+            return { ...prev, [stepId]: existing };
+        });
+    };
+
+    const navigateTo = (idx: number) => {
+        if (idx === activeStep || animating) return;
+        setAnimating(true);
+        setTimeout(() => {
+            setActiveStep(idx);
+            setAnimating(false);
+        }, 180);
+    };
+
+    const currentStep = steps[activeStep];
+    const currentChecked = checkedMap[currentStep?.id] ?? new Set();
+    const stepPct = currentStep ? Math.round((currentChecked.size / currentStep.tasks.length) * 100) : 0;
+
+    const roleLabel: Record<string, string> = {
+        admin: 'Administrador', secretaria: 'Secretaria', professor: 'Professor',
+        aluno: 'Aluno', responsavel: 'Responsável',
+    };
+    const roleColors: Record<string, string> = {
+        admin: '#ef4444', secretaria: '#3b82f6', professor: '#22c55e',
+        aluno: '#f59e0b', responsavel: '#a855f7',
+    };
+    const accent = roleColors[role] ?? '#6366f1';
 
     return (
         <AppLayout breadcrumbs={[{ title: 'Manual do Usuário', href: '/manual' }]}>
             <Head title="Manual do Usuário" />
 
-            <div className="flex bg-muted/40 p-4 md:p-6 min-h-screen">
-                <main className="mx-auto w-full max-w-5xl space-y-6">
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-3xl font-bold tracking-tight">Manual do Usuário - Edu</h1>
-                        <p className="text-muted-foreground">
-                            Guia passo a passo completo para utilização da plataforma.
-                        </p>
+            <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background p-4 md:p-6 space-y-6">
+
+                {/* ── Hero ── */}
+                <div
+                    className="relative overflow-hidden rounded-2xl p-6 md:p-8 text-white shadow-lg"
+                    style={{ background: `linear-gradient(135deg, ${accent}cc 0%, ${accent}88 60%, ${accent}44 100%)` }}
+                >
+                    {/* decorative circles */}
+                    <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 bg-white" />
+                    <div className="absolute -bottom-6 -right-20 h-56 w-56 rounded-full opacity-10 bg-white" />
+
+                    <div className="relative flex flex-col md:flex-row md:items-center gap-4">
+                        <div className="flex-1">
+                            <p className="text-white/80 text-sm font-medium uppercase tracking-wide mb-1">
+                                {roleLabel[role] ?? role}
+                            </p>
+                            <h1 className="text-2xl md:text-3xl font-bold mb-1">
+                                Olá, {userName}! 👋
+                            </h1>
+                            <p className="text-white/80 text-sm md:text-base">
+                                {overallPct === 100
+                                    ? '🎉 Você concluiu toda a trilha de aprendizado!'
+                                    : `Continue sua trilha de aprendizado — ${totalDone} de ${totalTasks} tarefas concluídas.`}
+                            </p>
+                        </div>
+                        <div className="flex-shrink-0 text-center">
+                            <div className="relative inline-flex items-center justify-center">
+                                <svg className="h-20 w-20 -rotate-90" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="3" />
+                                    <circle
+                                        cx="18" cy="18" r="15.9" fill="none"
+                                        stroke="white" strokeWidth="3"
+                                        strokeDasharray={`${overallPct} ${100 - overallPct}`}
+                                        strokeLinecap="round"
+                                        style={{ transition: 'stroke-dasharray 0.6s ease' }}
+                                    />
+                                </svg>
+                                <span className="absolute text-xl font-bold">{overallPct}%</span>
+                            </div>
+                            <p className="text-white/70 text-xs mt-1">Progresso geral</p>
+                        </div>
                     </div>
+                </div>
 
-                    <Tabs defaultValue={defaultTab} className="w-full">
-                        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 h-auto">
-                            <TabsTrigger value="intro">Introdução</TabsTrigger>
-                            <TabsTrigger value="admin" className={role !== 'admin' ? 'hidden lg:flex' : ''} disabled={role !== 'admin'}>Admin</TabsTrigger>
-                            <TabsTrigger value="secretaria" className={role !== 'secretaria' && role !== 'admin' ? 'hidden lg:flex' : ''} disabled={role !== 'secretaria' && role !== 'admin'}>Secretaria</TabsTrigger>
-                            <TabsTrigger value="professor" className={role !== 'professor' && role !== 'admin' ? 'hidden lg:flex' : ''} disabled={role !== 'professor' && role !== 'admin'}>Professor</TabsTrigger>
-                            <TabsTrigger value="aluno" className={role !== 'aluno' && role !== 'admin' ? 'hidden lg:flex' : ''} disabled={role !== 'aluno' && role !== 'admin' && role !== 'responsavel'}>Aluno</TabsTrigger>
-                            <TabsTrigger value="responsavel" className={role !== 'responsavel' && role !== 'admin' ? 'hidden lg:flex' : ''} disabled={role !== 'responsavel' && role !== 'admin'}>Responsável</TabsTrigger>
-                        </TabsList>
+                {/* ── Main Layout ── */}
+                <div className="flex flex-col lg:flex-row gap-5">
 
-                        {/* INTRODUCTION */}
-                        <TabsContent value="intro" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <BookOpen className="h-6 w-6 text-primary" />
-                                        <CardTitle>Bem-vindo à Plataforma Edu</CardTitle>
-                                    </div>
-                                    <CardDescription>Visão geral e primeiros passos.</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <p>Este sistema conecta toda a comunidade escolar. Abaixo, identifique seu perfil para entender suas permissões:</p>
+                    {/* ── Sidebar Stepper ── */}
+                    <aside className="lg:w-64 xl:w-72 flex-shrink-0">
+                        <div className="rounded-xl border bg-card shadow-sm p-4 space-y-1">
+                            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 px-1">
+                                Sua trilha
+                            </p>
 
-                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                        <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                                            <div className="flex items-center gap-2 mb-2 font-semibold text-red-600">
-                                                <Shield className="h-5 w-5" /> Admin
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Responsável por configurar o sistema, criar anos letivos, turmas e gerenciar todos os usuários.</p>
+                            {steps.map((step, idx) => {
+                                const done = isStepDone(step);
+                                const active = idx === activeStep;
+                                const checked = checkedMap[step.id];
+                                const pct = checked ? Math.round((checked.size / step.tasks.length) * 100) : 0;
+
+                                return (
+                                    <button
+                                        key={step.id}
+                                        onClick={() => navigateTo(idx)}
+                                        className={`w-full text-left rounded-lg px-3 py-3 flex items-start gap-3 transition-all duration-200 group
+                                            ${active
+                                                ? 'bg-primary/10 border border-primary/30'
+                                                : 'hover:bg-muted border border-transparent'
+                                            }`}
+                                    >
+                                        {/* Status icon */}
+                                        <span className="mt-0.5 flex-shrink-0">
+                                            {done ? (
+                                                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                                            ) : active ? (
+                                                <span
+                                                    className="h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold text-white"
+                                                    style={{ borderColor: accent, backgroundColor: accent }}
+                                                >
+                                                    {idx + 1}
+                                                </span>
+                                            ) : (
+                                                <span className="h-5 w-5 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center text-[10px] font-bold text-muted-foreground">
+                                                    {idx + 1}
+                                                </span>
+                                            )}
+                                        </span>
+
+                                        <div className="flex-1 min-w-0">
+                                            <p className={`text-sm font-medium truncate ${active ? 'text-primary' : done ? 'text-muted-foreground' : 'text-foreground'}`}>
+                                                {step.title}
+                                            </p>
+                                            {pct > 0 && !done && (
+                                                <div className="mt-1.5 h-1 rounded-full bg-muted overflow-hidden">
+                                                    <div
+                                                        className="h-full rounded-full transition-all duration-500"
+                                                        style={{ width: `${pct}%`, backgroundColor: accent }}
+                                                    />
+                                                </div>
+                                            )}
+                                            {done && (
+                                                <p className="text-xs text-green-600 mt-0.5">Concluído ✓</p>
+                                            )}
                                         </div>
-                                        <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                                            <div className="flex items-center gap-2 mb-2 font-semibold text-blue-600">
-                                                <School className="h-5 w-5" /> Secretaria
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Realiza matrículas, emite documentos oficiais, valida históricos e gerencia a vida acadêmica dos alunos.</p>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </aside>
+
+                    {/* ── Step Content ── */}
+                    <main className="flex-1 min-w-0">
+                        <div
+                            className="rounded-xl border bg-card shadow-sm overflow-hidden transition-opacity duration-200"
+                            style={{ opacity: animating ? 0 : 1 }}
+                        >
+                            {/* Step Header */}
+                            <div className="p-6 border-b" style={{ background: `linear-gradient(135deg, ${accent}18 0%, transparent 70%)` }}>
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <span
+                                            className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm flex-shrink-0"
+                                            style={{ backgroundColor: accent }}
+                                        >
+                                            {currentStep?.icon}
+                                        </span>
+                                        <div>
+                                            <p className="text-xs text-muted-foreground font-medium">
+                                                Passo {activeStep + 1} de {steps.length}
+                                            </p>
+                                            <h2 className="text-lg font-bold text-foreground leading-tight">
+                                                {currentStep?.title}
+                                            </h2>
                                         </div>
-                                        <div className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-                                            <div className="flex items-center gap-2 mb-2 font-semibold text-green-600">
-                                                <GraduationCap className="h-5 w-5" /> Professor
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Lança frequências, notas, cria atividades, e acompanha o desempenho das turmas.</p>
+                                    </div>
+                                    {/* Mini progress */}
+                                    <div className="flex-shrink-0 text-right">
+                                        <p className="text-2xl font-bold" style={{ color: accent }}>{stepPct}%</p>
+                                        <p className="text-xs text-muted-foreground">{currentChecked.size}/{currentStep?.tasks.length} tarefas</p>
+                                    </div>
+                                </div>
+
+                                {/* Step progress bar */}
+                                <div className="mt-4 h-2 rounded-full bg-muted overflow-hidden">
+                                    <div
+                                        className="h-full rounded-full transition-all duration-500"
+                                        style={{ width: `${stepPct}%`, backgroundColor: accent }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Step Body */}
+                            <div className="p-6 space-y-5">
+                                <p className="text-muted-foreground leading-relaxed">
+                                    {currentStep?.description}
+                                </p>
+
+                                {currentStep?.tip && (
+                                    <div className="flex items-start gap-2 p-3 rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-900/10">
+                                        <span className="text-amber-500 text-sm mt-0.5">💡</span>
+                                        <p className="text-sm text-amber-800 dark:text-amber-300">{currentStep.tip}</p>
+                                    </div>
+                                )}
+
+                                {/* Task Checklist */}
+                                <div className="space-y-3">
+                                    {currentStep?.tasks.map((task, tidx) => {
+                                        const done = currentChecked.has(task.id);
+                                        return (
+                                            <button
+                                                key={task.id}
+                                                onClick={() => toggleTask(currentStep.id, task.id)}
+                                                className={`w-full text-left rounded-xl border p-4 flex items-start gap-3 transition-all duration-200
+                                                    ${done
+                                                        ? 'border-green-200 bg-green-50 dark:border-green-900/40 dark:bg-green-900/10'
+                                                        : 'border-border hover:border-primary/40 hover:bg-muted/50'
+                                                    }`}
+                                            >
+                                                <span className="mt-0.5 flex-shrink-0">
+                                                    {done
+                                                        ? <CheckCircle2 className="h-5 w-5 text-green-500" />
+                                                        : <Circle className="h-5 w-5 text-muted-foreground/40" />
+                                                    }
+                                                </span>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className={`text-sm font-medium ${done ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                                                        {tidx + 1}. {task.label}
+                                                    </p>
+                                                    {task.detail && (
+                                                        <p className={`text-xs mt-0.5 leading-relaxed ${done ? 'text-muted-foreground/60' : 'text-muted-foreground'}`}>
+                                                            {task.detail}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Completion badge */}
+                                {stepPct === 100 && (
+                                    <div className="flex items-center gap-3 p-4 rounded-xl border border-green-200 bg-green-50 dark:border-green-900/40 dark:bg-green-900/10">
+                                        <Trophy className="h-6 w-6 text-green-500 flex-shrink-0" />
+                                        <div>
+                                            <p className="font-semibold text-green-700 dark:text-green-400">Passo concluído! 🎉</p>
+                                            {activeStep < steps.length - 1 && (
+                                                <p className="text-sm text-green-600 dark:text-green-500">Continue para o próximo passo da trilha.</p>
+                                            )}
                                         </div>
                                     </div>
+                                )}
+                            </div>
 
-                                    <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                                        <h4 className="font-semibold mb-2 flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Dica de Navegação</h4>
-                                        <p className="text-sm">Utilize as abas acima para navegar diretamente para o manual específico do seu perfil.</p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
+                            {/* Navigation Footer */}
+                            <div className="px-6 py-4 border-t bg-muted/30 flex items-center justify-between gap-3">
+                                <button
+                                    onClick={() => navigateTo(activeStep - 1)}
+                                    disabled={activeStep === 0}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all hover:bg-background disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                    <ChevronLeft className="h-4 w-4" />
+                                    Anterior
+                                </button>
 
-                        {/* ADMIN CONTENT */}
-                        <TabsContent value="admin" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <Shield className="h-6 w-6 text-red-500" />
-                                        <CardTitle>Guia do Administrador</CardTitle>
-                                    </div>
-                                    <CardDescription>Passo a passo para gestão completa da instituição.</CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <Accordion type="single" collapsible className="w-full">
-                                        <AccordionItem value="setup-inicial">
-                                            <AccordionTrigger>1. Configuração Inicial (Obrigatório)</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Antes de qualquer cadastro, siga esta ordem para garantir o funcionamento do sistema:</p>
-                                                <ol className="list-decimal list-inside space-y-1 ml-2">
-                                                    <li>Vá para <strong>Recursos > Anos Letivos</strong> e crie o ano corrente (ex: "2024"). Marque como "Aberto".</li>
-                                                    <li>Em <strong>Recursos > Níveis de Ensino</strong>, cadastre os ciclos (ex: Fundamental I, Médio).</li>
-                                                    <li>Em <strong>Recursos > Disciplinas</strong>, cadastre todas as matérias da escola.</li>
-                                                    <li>Em <strong>Recursos > Cursos</strong>, crie os cursos e vincule as disciplinas à grade curricular.</li>
-                                                    <li>Finalmente, em <strong>Recursos > Turmas</strong>, crie as salas de aula vinculando-as a um Ano Letivo e Curso.</li>
-                                                </ol>
-                                            </AccordionContent>
-                                        </AccordionItem>
+                                <span className="text-xs text-muted-foreground hidden sm:block">
+                                    {steps.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => navigateTo(i)}
+                                            className={`inline-block mx-0.5 h-2 rounded-full transition-all duration-300 ${i === activeStep ? 'w-5' : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60'
+                                                }`}
+                                            style={i === activeStep ? { backgroundColor: accent } : {}}
+                                        />
+                                    ))}
+                                </span>
 
-                                        <AccordionItem value="gestao-usuarios">
-                                            <AccordionTrigger>2. Gestão de Usuários</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Para adicionar funcionários ou outros admins:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Acesse <strong>Usuários</strong> no menu lateral.</li>
-                                                    <li>Clique em "Novo Usuário".</li>
-                                                    <li>Preencha Nome, E-mail e defina a <strong>Função (Role)</strong>.</li>
-                                                    <li>Uma senha provisória será gerada ou definida por você.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="ensalamento">
-                                            <AccordionTrigger>3. Ensalamento (Grade Horária)</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Para definir os horários das aulas:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Acesse <strong>Ensalamento</strong>.</li>
-                                                    <li>Selecione a Turma desejada.</li>
-                                                    <li>Arraste as disciplinas disponíveis para os slots de horário da semana.</li>
-                                                    <li>Isso permitirá que o sistema controle a frequência corretamente por aula.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="whatsapp">
-                                            <AccordionTrigger>4. Integração WhatsApp</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Conecte o sistema para enviar avisos automáticos:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Vá em <strong>Configurações > WhatsApp</strong>.</li>
-                                                    <li>Clique em "Conectar" e escaneie o QR Code.</li>
-                                                    <li>Status "Conectado" indica que o sistema pode enviar mensagens de cobrança e avisos.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-
-                        {/* SECRETARIA CONTENT */}
-                        <TabsContent value="secretaria" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <School className="h-6 w-6 text-blue-500" />
-                                        <CardTitle>Guia da Secretaria</CardTitle>
-                                    </div>
-                                    <CardDescription>Processos de matrícula e documentação.</CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <Accordion type="single" collapsible className="w-full">
-                                        <AccordionItem value="matriculas">
-                                            <AccordionTrigger>Matrícula de Novos Alunos</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <ol className="list-decimal list-inside space-y-1 ml-2">
-                                                    <li>Acesse <strong>Pré-Matrículas</strong> para ver candidatos vindos do site.</li>
-                                                    <li>Clique em "Analisar" para ver os dados.</li>
-                                                    <li>Se aprovado, clique em "Efetivar Matrícula". O sistema criará o Aluno e o Responsável automaticamente.</li>
-                                                    <li>Para matrículas manuais, vá em <strong>Alunos > Novo Aluno</strong>.</li>
-                                                </ol>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="documentos">
-                                            <AccordionTrigger>Emissão de Documentos</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Gere Atestados, Históricos e Declarações:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Vá em <strong>Alunos</strong> e busque o aluno desejado.</li>
-                                                    <li>Clique no ícone de "Documentos" no registro do aluno.</li>
-                                                    <li>Selecione o modelo (ex: Atestado de Matrícula).</li>
-                                                    <li>O PDF será gerado com assinatura digital verificável via QR Code.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="lote">
-                                            <AccordionTrigger>Matrícula em Lote</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Para rematricular vários alunos de um ano para o outro:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Acesse <strong>Matrícula em Lote</strong>.</li>
-                                                    <li>Selecione a turma de origem (ex: 1º Ano A - 2024).</li>
-                                                    <li>Selecione a turma de destino (ex: 2º Ano A - 2025).</li>
-                                                    <li>Marque os alunos e clique em "Processar".</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-
-                        {/* PROFESSOR CONTENT */}
-                        <TabsContent value="professor" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <GraduationCap className="h-6 w-6 text-green-500" />
-                                        <CardTitle>Painel do Professor</CardTitle>
-                                    </div>
-                                </CardHeader>
-                                <CardContent>
-                                    <Accordion type="single" collapsible className="w-full">
-                                        <AccordionItem value="chamada">
-                                            <AccordionTrigger>Como realizar a Chamada</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <ol className="list-decimal list-inside space-y-1 ml-2">
-                                                    <li>No Dashboard, clique na Turma desejada.</li>
-                                                    <li>Selecione a aba <strong>Chamada</strong>.</li>
-                                                    <li>Verifique a data selecionada (por padrão, hoje).</li>
-                                                    <li>O sistema traz todos como "Presente". Clique apenas nos alunos ausentes para marcar "Falta".</li>
-                                                    <li>Clique em "Salvar Chamada".</li>
-                                                </ol>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="notas">
-                                            <AccordionTrigger>Lançamento de Notas e Avaliações</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>O sistema funciona baseado em Avaliações (Provas, Trabalhos):</p>
-                                                <ol className="list-decimal list-inside space-y-1 ml-2">
-                                                    <li>Na visualização da Turma, vá para a aba <strong>Notas</strong>.</li>
-                                                    <li>Clique em <strong>+ Nova Avaliação</strong>.</li>
-                                                    <li>Defina o Nome (ex: Prova 1), Data e Peso.</li>
-                                                    <li>Uma coluna nova aparecerá na grade. Digite a nota de cada aluno e pressione Enter ou Tab para salvar automaticamente.</li>
-                                                    <li>A média final é recalculada a cada nota inserida.</li>
-                                                </ol>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="banco-questoes">
-                                            <AccordionTrigger>Banco de Questões e Atividades</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Crie provas online para os alunos:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Vá em <strong>Banco de Questões</strong> > <strong>Nova Questão</strong>.</li>
-                                                    <li>Cadastre perguntas de Múltipla Escolha ou Dissertativas.</li>
-                                                    <li>Depois, vá em <strong>Atividades</strong> > <strong>Nova Atividade</strong>.</li>
-                                                    <li>Selecione as questões do banco e defina a data de entrega.</li>
-                                                    <li>Os alunos responderão pelo portal deles e a correção automática (para múltipla escolha) será aplicada.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-
-                        {/* ALUNO/PAIS CONTENT */}
-                        <TabsContent value="aluno" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <User className="h-6 w-6 text-yellow-500" />
-                                        <CardTitle>Manual do Aluno</CardTitle>
-                                    </div>
-                                </CardHeader>
-                                <CardContent>
-                                    <Accordion type="single" collapsible className="w-full">
-                                        <AccordionItem value="boletim">
-                                            <AccordionTrigger>Acessando Boletim e Faltas</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>No seu Painel Principal:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Clique em <strong>Boletim</strong> para ver suas notas detalhadas por disciplina.</li>
-                                                    <li>Clique em <strong>Frequência</strong> para ver o total de faltas por matéria.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="atividades">
-                                            <AccordionTrigger>Realizando Atividades Online</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <ol className="list-decimal list-inside space-y-1 ml-2">
-                                                    <li>No menu lateral, clique em <strong>Atividades</strong>.</li>
-                                                    <li>Atividades pendentes aparecerão com o botão "Iniciar".</li>
-                                                    <li>Responda as questões dentro do prazo.</li>
-                                                    <li>Ao finalizar, clique em <strong>Enviar Respostas</strong>.</li>
-                                                </ol>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-
-                        <TabsContent value="responsavel" className="space-y-4 mt-6">
-                            <Card>
-                                <CardHeader>
-                                    <div className="flex items-center gap-2">
-                                        <Users className="h-6 w-6 text-purple-500" />
-                                        <CardTitle>Manual do Responsável</CardTitle>
-                                    </div>
-                                </CardHeader>
-                                <CardContent>
-                                    <Accordion type="single" collapsible className="w-full">
-                                        <AccordionItem value="acompanhamento">
-                                            <AccordionTrigger>Acompanhamento Escolar</AccordionTrigger>
-                                            <AccordionContent className="text-muted-foreground space-y-2">
-                                                <p>Ao fazer login:</p>
-                                                <ul className="list-disc list-inside ml-2">
-                                                    <li>Você verá o card de cada filho vinculado ao seu CPF.</li>
-                                                    <li>Clique no nome do aluno para expandir as informações de <strong>Notas</strong>, <strong>Faltas</strong> e <strong>Ocorrências</strong>.</li>
-                                                    <li>Use a <strong>Agenda Digital</strong> para ver comunicados enviados pela escola.</li>
-                                                </ul>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-
-                    </Tabs>
-                </main>
+                                <button
+                                    onClick={() => navigateTo(activeStep + 1)}
+                                    disabled={activeStep === steps.length - 1}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                                    style={{ backgroundColor: accent }}
+                                >
+                                    Próximo
+                                    <ChevronRight className="h-4 w-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </main>
+                </div>
             </div>
         </AppLayout>
     );

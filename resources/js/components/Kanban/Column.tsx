@@ -8,9 +8,10 @@ interface Props {
     column: KanbanColumnType;
     isDragEnabled: boolean;
     onAddCard?: (columnId: number) => void;
+    onDeleteCard?: (cardId: number, columnId: number) => void;
 }
 
-export default function KanbanColumn({ column, isDragEnabled, onAddCard }: Props) {
+export default function KanbanColumn({ column, isDragEnabled, onAddCard, onDeleteCard }: Props) {
     return (
         <div className="flex h-full w-[300px] min-w-[300px] flex-col rounded-xl bg-gray-100/50 p-2 dark:bg-gray-800/50">
             <div className="mb-3 flex items-center justify-between px-2">
@@ -47,6 +48,7 @@ export default function KanbanColumn({ column, isDragEnabled, onAddCard }: Props
                                 card={card}
                                 index={index}
                                 isDragEnabled={isDragEnabled}
+                                onDelete={onDeleteCard ? (cardId) => onDeleteCard(cardId, column.id) : undefined}
                             />
                         ))}
                         {provided.placeholder}

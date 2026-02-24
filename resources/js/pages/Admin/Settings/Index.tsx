@@ -47,6 +47,7 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
         mail_from_name: settings.mail_from_name || '',
         gamification_url: settings.gamification_url || '',
         gamification_secret: settings.gamification_secret || '',
+        default_user_password: settings.default_user_password || '',
     });
 
     const [logoPreview, setLogoPreview] = useState<string | null>(settings.logo_url || null);
@@ -379,6 +380,22 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
                                 </p>
                                 {errors.email_domain_suffix && <p className="text-sm text-red-500">{errors.email_domain_suffix}</p>}
                             </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="default_user_password">Senha Padrão para Novos Usuários</Label>
+                                <Input
+                                    id="default_user_password"
+                                    type="text"
+                                    value={data.default_user_password}
+                                    onChange={(e) => setData('default_user_password', e.target.value)}
+                                    placeholder="Ex: mudar123"
+                                    className="max-w-md"
+                                />
+                                <p className="text-sm text-muted-foreground">
+                                    Essa será a senha definida automaticamente quando um novo usuário for criado (se nenhuma senha específica for escolhida na tela de criação). Se vazia, o sistema tentará usar <b>mudar123</b>.
+                                </p>
+                                {errors.default_user_password && <p className="text-sm text-red-500">{errors.default_user_password}</p>}
+                            </div>
                         </div>
                     </CardContent>
                 </Card>
@@ -435,7 +452,7 @@ export default function SettingsIndex({ settings }: { settings: Record<string, s
                             <Button
                                 type="button"
                                 variant="outline"
-                                onClick={() => window.location.href = '/admin/gamification/test/export'}
+                                onClick={() => window.location.href = '/admin/settings/export'}
                             >
                                 <Download className="mr-2 h-4 w-4" />
                                 Exportar Dados

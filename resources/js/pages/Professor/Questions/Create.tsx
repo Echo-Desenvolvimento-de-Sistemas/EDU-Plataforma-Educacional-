@@ -81,7 +81,7 @@ export default function Create({ bank }: Props) {
                                     <select
                                         value={data.type}
                                         onChange={e => setData('type', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     >
                                         <option value="MULTIPLE_CHOICE">Múltipla Escolha</option>
                                         <option value="TRUE_FALSE">Verdadeiro ou Falso</option>
@@ -92,7 +92,7 @@ export default function Create({ bank }: Props) {
                                     <select
                                         value={data.difficulty}
                                         onChange={e => setData('difficulty', parseInt(e.target.value))}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     >
                                         <option value={1}>Fácil</option>
                                         <option value={2}>Médio</option>
@@ -110,7 +110,7 @@ export default function Create({ bank }: Props) {
                                     value={data.statement}
                                     onChange={e => setData('statement', e.target.value)}
                                     rows={4}
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     placeholder="Digite a pergunta aqui..."
                                     required
                                 />
@@ -127,7 +127,7 @@ export default function Create({ bank }: Props) {
                                             type="text"
                                             value={data.subject}
                                             onChange={e => setData('subject', e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                             placeholder="Ex: Matemática"
                                         />
                                     </div>
@@ -137,7 +137,7 @@ export default function Create({ bank }: Props) {
                                             type="text"
                                             value={data.topic}
                                             onChange={e => setData('topic', e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                             placeholder="Ex: Frações"
                                         />
                                     </div>
@@ -147,7 +147,7 @@ export default function Create({ bank }: Props) {
                                             type="text"
                                             value={data.grade_level}
                                             onChange={e => setData('grade_level', e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                             placeholder="Ex: 6º Ano"
                                         />
                                     </div>
@@ -157,7 +157,7 @@ export default function Create({ bank }: Props) {
                                             type="text"
                                             value={data.bncc_code}
                                             onChange={e => setData('bncc_code', e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                             placeholder="Ex: EF06MA01"
                                         />
                                     </div>
@@ -171,7 +171,7 @@ export default function Create({ bank }: Props) {
                                     <button
                                         type="button"
                                         onClick={addOption}
-                                        className="text-sm text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                        className="text-sm text-primary hover:text-primary/80 font-medium flex items-center gap-1 dark:text-primary/80 dark:hover:text-primary/70"
                                     >
                                         <Plus className="w-4 h-4" /> Adicionar Opção
                                     </button>
@@ -185,7 +185,7 @@ export default function Create({ bank }: Props) {
                                                     type="checkbox" // Or radio if strictly one answer
                                                     checked={option.is_correct}
                                                     onChange={e => updateOption(index, 'is_correct', e.target.checked)}
-                                                    className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                                    className="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded"
                                                     title="Marcar como correta"
                                                 />
                                             </div>
@@ -194,7 +194,7 @@ export default function Create({ bank }: Props) {
                                                     type="text"
                                                     value={option.label}
                                                     onChange={e => updateOption(index, 'label', e.target.value)}
-                                                    className={`block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white ${option.is_correct ? 'border-green-300 bg-green-50 dark:bg-green-900/30' : 'border-gray-300'}`}
+                                                    className={`block w-full rounded-md shadow-sm focus:ring-primary focus:border-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white ${option.is_correct ? 'border-green-300 bg-green-50 dark:bg-green-900/30' : 'border-gray-300'}`}
                                                     placeholder={`Opção ${index + 1}`}
                                                     required
                                                 />
@@ -220,7 +220,7 @@ export default function Create({ bank }: Props) {
                                     value={data.explanation}
                                     onChange={e => setData('explanation', e.target.value)}
                                     rows={2}
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     placeholder="Explique o porquê da resposta correta..."
                                 />
                             </div>
@@ -236,7 +236,7 @@ export default function Create({ bank }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 shadow-sm flex items-center gap-2"
+                                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 shadow-sm flex items-center gap-2"
                             >
                                 {processing ? 'Salvando...' : 'Salvar Questão'}
                             </button>

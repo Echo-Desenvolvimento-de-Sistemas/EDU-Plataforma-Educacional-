@@ -258,7 +258,7 @@ export default function Index({ classes, gradingPeriods }: Props) {
                         <p className="text-muted-foreground">Selecione a turma para visualizar as avaliações.</p>
                     </div>
                     {selectedClassId && selectedSubjectId && (
-                        <Button onClick={() => setIsCreateOpen(true)} variant="secondary">
+                        <Button onClick={() => setIsCreateOpen(true)}>
                             <Plus className="w-4 h-4 mr-2" />
                             Nova Avaliação
                         </Button>
@@ -318,14 +318,14 @@ export default function Index({ classes, gradingPeriods }: Props) {
                 {/* Content */}
                 {loadingData ? (
                     <div className="flex justify-center py-12">
-                        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
                     </div>
                 ) : (
                     <>
                         {selectedClassId && selectedPeriodId && assessments.length === 0 && (
-                            <div className="text-center py-12 bg-white rounded-lg border border-dashed">
-                                <p className="text-gray-500">Nenhuma avaliação encontrada para este período.</p>
-                                <p className="text-sm text-gray-400 mt-1">Clique em "Nova Avaliação" para começar.</p>
+                            <div className="text-center py-12 bg-card rounded-lg border border-dashed">
+                                <p className="text-muted-foreground">Nenhuma avaliação encontrada para este período.</p>
+                                <p className="text-sm text-muted-foreground/80 mt-1">Clique em "Nova Avaliação" para começar.</p>
                             </div>
                         )}
 

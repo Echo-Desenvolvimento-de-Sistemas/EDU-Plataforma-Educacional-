@@ -2,6 +2,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link } from '@inertiajs/react';
+import { HelpCircle, ArrowRight } from 'lucide-react';
 
 export function AppSidebarHeader({
     breadcrumbs = [],
@@ -15,13 +16,23 @@ export function AppSidebarHeader({
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
 
-            <Link href="/manual" className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-full hover:bg-muted" title="Manual do Usuário">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-help-circle">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                    <path d="M12 17h.01" />
-                </svg>
-            </Link>
+            <div className="flex items-center gap-3">
+                <span className="hidden sm:flex items-center text-sm font-medium text-primary animate-pulse">
+                    Precisa de ajuda?
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                </span>
+                <Link
+                    href="/manual"
+                    className="group relative flex items-center justify-center p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ring-2 ring-primary/20 hover:ring-primary shadow-sm"
+                    title="Precisa de Ajuda? Acesse o Manual"
+                >
+                    <HelpCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                    </span>
+                </Link>
+            </div>
         </header>
     );
 }

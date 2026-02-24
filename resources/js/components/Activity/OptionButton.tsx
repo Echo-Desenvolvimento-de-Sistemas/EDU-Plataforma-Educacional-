@@ -19,22 +19,22 @@ export default function OptionButton({ option, isSelected, onSelect, disabled }:
             className={clsx(
                 "w-full text-left p-6 rounded-xl border-2 transition-all duration-200 relative overflow-hidden group",
                 isSelected
-                    ? "border-indigo-600 bg-indigo-50 shadow-md ring-2 ring-indigo-200 ring-offset-2"
-                    : "border-gray-200 bg-white hover:border-indigo-300 hover:bg-gray-50 hover:shadow-sm",
+                    ? "border-primary bg-primary/10 shadow-md ring-2 ring-indigo-200 ring-offset-2"
+                    : "border-gray-200 bg-white hover:border-primary/40 hover:bg-gray-50 hover:shadow-sm",
                 disabled && "opacity-50 cursor-not-allowed"
             )}
         >
             <div className="flex items-center gap-4">
                 <div className={clsx(
                     "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors",
-                    isSelected ? "border-indigo-600 bg-indigo-600" : "border-gray-300 group-hover:border-indigo-400"
+                    isSelected ? "border-primary bg-primary" : "border-gray-300 group-hover:border-indigo-400"
                 )}>
                     {isSelected && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
                 </div>
 
                 <span className={clsx(
                     "text-lg font-medium",
-                    isSelected ? "text-indigo-900" : "text-gray-700"
+                    isSelected ? "text-primary" : "text-gray-700"
                 )}>
                     {option.label}
                 </span>

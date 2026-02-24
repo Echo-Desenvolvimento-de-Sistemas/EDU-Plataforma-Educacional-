@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
 export const success = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ success.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
 success.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ success.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
 success.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -30,7 +30,7 @@ success.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
 success.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -39,7 +39,7 @@ success.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
     const successForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -48,7 +48,7 @@ success.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
         successForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -56,7 +56,7 @@ success.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:267
+ * @see routes/web.php:273
  * @route '/pre-matricula/sucesso'
  */
         successForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

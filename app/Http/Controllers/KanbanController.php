@@ -16,10 +16,26 @@ class KanbanController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $boards = $user->kanbanBoards()->get();
+
+        if ($user->role === 'admin') {
+            $boards = KanbanBoard::with([
+                'users' => function ($query) {
+                    $query->select('users.id', 'users.name', 'users.email', 'kanban_board_user.permission');
+                }
+            ])->withCount(['columns'])->get();
+
+            $potentialUsers = \App\Models\User::whereIn('role', ['admin', 'secretaria', 'professor'])
+                ->select('id', 'name', 'role')
+                ->orderBy('name')
+                ->get();
+        } else {
+            $boards = $user->kanbanBoards()->withCount(['columns'])->get();
+            $potentialUsers = collect(); // Empty for non-admins
+        }
 
         return Inertia::render('Kanban/Index', [
-            'boards' => $boards
+            'boards' => $boards,
+            'potentialUsers' => $potentialUsers
         ]);
     }
 
@@ -91,6 +107,75 @@ class KanbanController extends Controller
         broadcast(new KanbanCardCreated($card))->toOthers();
 
         return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        abort_unless(auth()->user()->role === 'admin', 403);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $board = KanbanBoard::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'created_by' => auth()->id(),
+        ]);
+
+        // Default columns
+        $board->columns()->createMany([
+            ['name' => 'A Fazer', 'order' => 0, 'color' => '#ef4444'], // Red
+            ['name' => 'Em Andamento', 'order' => 1, 'color' => '#f59e0b'], // Amber
+            ['name' => 'Concluído', 'order' => 2, 'color' => '#22c55e'], // Green
+        ]);
+
+        return redirect()->back()->with('success', 'Quadro criado com sucesso!');
+    }
+
+    public function update(Request $request, KanbanBoard $kanbanBoard)
+    {
+        abort_unless(auth()->user()->role === 'admin', 403);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $kanbanBoard->update($request->only('name', 'description'));
+
+        return redirect()->back()->with('success', 'Quadro atualizado com sucesso!');
+    }
+
+    public function destroy(KanbanBoard $kanbanBoard)
+    {
+        abort_unless(auth()->user()->role === 'admin', 403);
+
+        $kanbanBoard->delete();
+        return redirect()->back()->with('success', 'Quadro excluído.');
+    }
+
+    public function storeUser(Request $request, KanbanBoard $kanbanBoard)
+    {
+        abort_unless(auth()->user()->role === 'admin', 403);
+
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'permission' => 'required|in:view,create_only,edit',
+        ]);
+
+        $kanbanBoard->users()->attach($request->user_id, ['permission' => $request->permission]);
+
+        return redirect()->back()->with('success', 'Usuário adicionado ao quadro.');
+    }
+
+    public function removeUser(KanbanBoard $kanbanBoard, \App\Models\User $user)
+    {
+        abort_unless(auth()->user()->role === 'admin', 403);
+
+        $kanbanBoard->users()->detach($user->id);
+        return redirect()->back()->with('success', 'Usuário removido.');
     }
 
     public function updateCard(Request $request, KanbanCard $card)
@@ -199,5 +284,24 @@ class KanbanController extends Controller
         broadcast(new KanbanCardMoved($card))->toOthers();
 
         return redirect()->back();
+    }
+
+    public function destroyCard(KanbanCard $card)
+    {
+        $board = $card->column->board;
+        $user = auth()->user();
+        $pivot = $board->users()->where('user_id', $user->id)->first();
+
+        if (!$pivot || $pivot->pivot->permission !== 'edit') {
+            abort(403, 'Sem permissão para excluir tarefas.');
+        }
+
+        $cardId = $card->id;
+        $card->delete();
+
+        // Broadcast the deletion so other clients remove it from their boards
+        broadcast(new \App\Events\KanbanCardDeleted($cardId, $board->id))->toOthers();
+
+        return redirect()->back()->with('success', 'Cartão excluído com sucesso.');
     }
 }

@@ -192,7 +192,7 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white" asChild>
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-white" asChild>
                                 <Link href={`/professor/classes/${classRoom.id}/attendance/create?subject_id=${currentSubjectId}`}>
                                     <Check className="mr-2 h-4 w-4" />
                                     Lançar Frequência
@@ -290,7 +290,7 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                                     </div>
                                                 </TableCell>
                                                 <TableCell className="text-right">
-                                                    <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 text-blue-600">
+                                                    <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 text-primary">
                                                         Ver Detalhes &rarr;
                                                     </Button>
                                                 </TableCell>
@@ -309,7 +309,7 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                     <CardTitle>Diário de Classe</CardTitle>
                                     <CardDescription>Lance as notas para as avaliações deste bimestre.</CardDescription>
                                 </div>
-                                <Button onClick={saveGrades} disabled={saving || loadingGrid || isPeriodClosed} className="gap-2 bg-blue-600 hover:bg-blue-700 text-white">
+                                <Button onClick={saveGrades} disabled={saving || loadingGrid || isPeriodClosed} className="gap-2 bg-primary hover:bg-primary/90 text-white">
                                     {saving && <Loader2 className="h-4 w-4 animate-spin" />}
                                     <Save className="h-4 w-4" />
                                     Salvar Alterações
@@ -426,7 +426,7 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                     <CardTitle>Histórico de Frequência</CardTitle>
                                     <CardDescription>Visualize e edite as chamadas realizadas.</CardDescription>
                                 </div>
-                                <Button asChild size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                                <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-white">
                                     <Link href={`/professor/classes/${classRoom.id}/attendance/create?subject_id=${currentSubjectId}`}>
                                         <Plus className="mr-2 h-4 w-4" />
                                         Lançar Nova Chamada
@@ -442,14 +442,14 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                                 href={`/professor/classes/${classRoom.id}/attendance/create?subject_id=${currentSubjectId}&date=${diary.date}`}
                                                 className="block group"
                                             >
-                                                <div className="flex items-center justify-between p-4 border rounded-lg bg-card hover:border-blue-500 transition-colors">
+                                                <div className="flex items-center justify-between p-4 border rounded-lg bg-card hover:border-primary/80 transition-colors">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="flex flex-col items-center justify-center h-12 w-12 rounded-lg bg-blue-50 text-blue-700 border border-blue-100">
+                                                        <div className="flex flex-col items-center justify-center h-12 w-12 rounded-lg bg-primary/10 text-primary/90 border border-primary/20">
                                                             <span className="text-xs font-bold uppercase">{new Date(diary.date).toLocaleString('default', { month: 'short' })}</span>
                                                             <span className="text-xl font-bold">{new Date(diary.date).getDate()}</span>
                                                         </div>
                                                         <div>
-                                                            <p className="font-semibold text-foreground group-hover:text-blue-600 transition-colors">
+                                                            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
                                                                 Aula de {new Date(diary.date).toLocaleDateString('pt-BR', { weekday: 'long' })}
                                                             </p>
                                                             <p className="text-sm text-muted-foreground truncate max-w-[300px] md:max-w-md">
@@ -457,7 +457,7 @@ export default function ClassRoomShow({ classRoom, subjects, selectedSubjectId, 
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <Button variant="ghost" size="icon" className="text-muted-foreground group-hover:text-blue-600">
+                                                    <Button variant="ghost" size="icon" className="text-muted-foreground group-hover:text-primary">
                                                         <Edit className="h-4 w-4" />
                                                     </Button>
                                                 </div>

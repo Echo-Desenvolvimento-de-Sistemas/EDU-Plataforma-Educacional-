@@ -12,7 +12,6 @@ import preRegistrations from './pre-registrations'
 import users from './users'
 import api from './api'
 import settings from './settings'
-import gamification from './gamification'
 import documentTemplates from './document-templates'
 import documents from './documents'
 import agenda from './agenda'
@@ -20,7 +19,6 @@ import ensalamento from './ensalamento'
 import studentGrades from './student-grades'
 import attendance from './attendance'
 import classSchedules from './class-schedules'
-import kanban from './kanban'
 import planning from './planning'
 import importMethod from './import'
 /**
@@ -116,7 +114,6 @@ preRegistrations: Object.assign(preRegistrations, preRegistrations),
 users: Object.assign(users, users),
 api: Object.assign(api, api),
 settings: Object.assign(settings, settings),
-gamification: Object.assign(gamification, gamification),
 documentTemplates: Object.assign(documentTemplates, documentTemplates),
 documents: Object.assign(documents, documents),
 agenda: Object.assign(agenda, agenda),
@@ -124,7 +121,6 @@ ensalamento: Object.assign(ensalamento, ensalamento),
 studentGrades: Object.assign(studentGrades, studentGrades),
 attendance: Object.assign(attendance, attendance),
 classSchedules: Object.assign(classSchedules, classSchedules),
-kanban: Object.assign(kanban, kanban),
 planning: Object.assign(planning, planning),
 import: Object.assign(importMethod, importMethod),
 }

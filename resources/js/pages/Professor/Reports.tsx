@@ -44,20 +44,20 @@ export default function Reports({ metrics, classPerformance, studentsAtRisk }: P
 
             <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-blue-900">Relatórios de Desempenho</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Relatórios de Desempenho</h1>
                     <p className="text-muted-foreground">Visão geral da frequência e alunos em risco.</p>
                 </div>
 
                 {/* KPI Grid */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-100">
+                    <Card className="bg-gradient-to-br from-primary to-primary/80 border-primary text-primary-foreground shadow-md">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium text-blue-800">Total de Alunos</CardTitle>
-                            <Users className="h-4 w-4 text-blue-600" />
+                            <CardTitle className="text-sm font-medium text-primary-foreground">Total de Alunos</CardTitle>
+                            <Users className="h-4 w-4 text-primary-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-blue-900">{metrics.total_students}</div>
-                            <p className="text-xs text-blue-600/80">Monitorados nas suas turmas</p>
+                            <div className="text-2xl font-bold text-primary-foreground">{metrics.total_students}</div>
+                            <p className="text-xs text-primary-foreground/80">Monitorados nas suas turmas</p>
                         </CardContent>
                     </Card>
 
@@ -112,7 +112,7 @@ export default function Reports({ metrics, classPerformance, studentsAtRisk }: P
                                     </div>
                                     <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                                         <div
-                                            className={`h-full rounded-full ${cls.attendance_rate >= 80 ? 'bg-blue-500' :
+                                            className={`h-full rounded-full ${cls.attendance_rate >= 80 ? 'bg-primary/100' :
                                                 cls.attendance_rate >= 70 ? 'bg-yellow-500' : 'bg-red-500'
                                                 }`}
                                             style={{ width: `${cls.attendance_rate}%` }}
@@ -159,7 +159,7 @@ export default function Reports({ metrics, classPerformance, studentsAtRisk }: P
                                             <TableCell className="text-right pr-6">
                                                 <Button size="sm" variant="ghost" asChild className="h-8 w-8 p-0">
                                                     <Link href={`/professor/classes/${student.class_room_id}/students/${student.id}?subject_id=${student.subject_id}`}>
-                                                        <ArrowRight className="h-4 w-4 text-slate-400 hover:text-blue-600" />
+                                                        <ArrowRight className="h-4 w-4 text-slate-400 hover:text-primary" />
                                                     </Link>
                                                 </Button>
                                             </TableCell>

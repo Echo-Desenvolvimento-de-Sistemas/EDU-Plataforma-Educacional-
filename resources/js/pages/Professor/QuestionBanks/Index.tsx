@@ -27,12 +27,12 @@ export default function Index({ banks }: Props) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight flex items-center gap-2">
-                            <Layers className="w-6 h-6 text-indigo-600" />
+                            <Layers className="w-6 h-6 text-primary" />
                             Meus Bancos de Questões
                         </h2>
                         <Link
                             href="/professor/question-banks/create"
-                            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
                         >
                             <Plus className="w-5 h-5" />
                             Novo Banco
@@ -49,8 +49,8 @@ export default function Index({ banks }: Props) {
                                 >
                                     <div className="p-6">
                                         <div className="flex items-start justify-between">
-                                            <div className="bg-indigo-50 dark:bg-indigo-900/50 p-3 rounded-lg">
-                                                <Layers className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                                            <div className="bg-primary/10 dark:bg-primary/30 p-3 rounded-lg">
+                                                <Layers className="w-6 h-6 text-primary dark:text-primary/80" />
                                             </div>
                                             <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
                                                 {new Date(bank.created_at).toLocaleDateString()}
@@ -77,7 +77,7 @@ export default function Index({ banks }: Props) {
                             <div className="mt-6">
                                 <Link
                                     href="/professor/question-banks/create"
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                                 >
                                     <Plus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                                     Criar Banco

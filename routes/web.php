@@ -58,10 +58,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // User Kanban
     Route::get('/kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
+    Route::post('/kanban', [\App\Http\Controllers\KanbanController::class, 'store'])->name('kanban.store');
+
     Route::get('/kanban/{kanbanBoard}', [\App\Http\Controllers\KanbanController::class, 'show'])->name('kanban.show');
+    Route::put('/kanban/{kanbanBoard}', [\App\Http\Controllers\KanbanController::class, 'update'])->name('kanban.update');
+    Route::delete('/kanban/{kanbanBoard}', [\App\Http\Controllers\KanbanController::class, 'destroy'])->name('kanban.destroy');
+
+    Route::post('/kanban/{kanbanBoard}/users', [\App\Http\Controllers\KanbanController::class, 'storeUser'])->name('kanban.users.store');
+    Route::delete('/kanban/{kanbanBoard}/users/{user}', [\App\Http\Controllers\KanbanController::class, 'removeUser'])->name('kanban.users.destroy');
+
     Route::post('/kanban/cards', [\App\Http\Controllers\KanbanController::class, 'storeCard'])->name('kanban.cards.store');
     Route::patch('/kanban/cards/{card}/move', [\App\Http\Controllers\KanbanController::class, 'moveCard'])->name('kanban.cards.move');
-    Route::put('/kanban/cards/{card}', [\App\Http\Controllers\KanbanController::class, 'updateCard'])->name('kanban.cards.update');
+    Route::get('/kanban/cards/{card}', [\App\Http\Controllers\KanbanController::class, 'updateCard'])->name('kanban.cards.update');
+    Route::delete('/kanban/cards/{card}', [\App\Http\Controllers\KanbanController::class, 'destroyCard'])->name('kanban.cards.destroy');
 
     Route::middleware('role:secretaria')->prefix('secretaria')->name('secretaria.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Secretaria\DashboardController::class, 'index'])->name('dashboard');
@@ -118,9 +127,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/classes/{classRoom}/grades/batch', [\App\Http\Controllers\Professor\GradeController::class, 'storeBatch'])->name('grades.batch');
 
         // Shortcuts / Placeholders
-        Route::get('/calendar', function () {
-            return Inertia::render('Professor/Calendar');
-        })->name('calendar');
         Route::get('/reports', [\App\Http\Controllers\Professor\ReportController::class, 'index'])->name('reports');
         Route::get('/manual', function () {
             return Inertia::render('Professor/Manual');
@@ -139,6 +145,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Pedagogical Planning
         Route::resource('planning', \App\Http\Controllers\Professor\LessonPlanController::class);
         Route::post('/planning/{plan}/submit', [\App\Http\Controllers\Professor\LessonPlanController::class, 'submit'])->name('planning.submit');
+
+        // Schedules
+        Route::get('/schedules', [\App\Http\Controllers\Professor\ClassScheduleController::class, 'index'])->name('schedules.index');
     });
 
     Route::middleware('role:aluno')->prefix('aluno')->name('aluno.')->group(function () {
@@ -198,9 +207,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/settings/whatsapp/status', [App\Http\Controllers\Admin\AgendaSettingController::class, 'checkWhatsappStatus'])->name('settings.whatsapp.status');
         Route::post('/settings/whatsapp/disconnect', [App\Http\Controllers\Admin\AgendaSettingController::class, 'disconnectWhatsapp'])->name('settings.whatsapp.disconnect');
 
-        // Gamification Test
-        Route::get('/gamification/test', [\App\Http\Controllers\Admin\GamificationTestController::class, 'index'])->name('gamification.test');
-        Route::get('/gamification/test/export', [\App\Http\Controllers\Admin\GamificationTestController::class, 'export'])->name('gamification.send');
+        // Settings Export Data (Gamification)
+        Route::get('/settings/export', [\App\Http\Controllers\Admin\SettingController::class, 'exportGamification'])->name('settings.export');
 
         // Status Toggling
         Route::patch('/users/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
@@ -248,11 +256,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/class-schedules', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'index'])->name('class-schedules.index');
         Route::get('/class-schedules/{classRoom}', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'getByClass'])->name('class-schedules.by-class');
         Route::post('/class-schedules', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'store'])->name('class-schedules.store');
+        Route::post('/class-schedules/reorder', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'reorder'])->name('class-schedules.reorder');
         Route::delete('/class-schedules/{schedule}', [\App\Http\Controllers\Admin\ClassScheduleController::class, 'destroy'])->name('class-schedules.destroy');
-        // Kanban Boards
-        Route::resource('kanban', \App\Http\Controllers\Admin\KanbanBoardController::class);
-        Route::post('/kanban/{kanbanBoard}/users', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'storeUser'])->name('kanban.users.store');
-        Route::delete('/kanban/{kanbanBoard}/users/{user}', [\App\Http\Controllers\Admin\KanbanBoardController::class, 'removeUser'])->name('kanban.users.destroy');
+
 
         // Pedagogical Planning Supervision
         Route::get('/planning', [\App\Http\Controllers\Admin\LessonPlanController::class, 'index'])->name('planning.index');

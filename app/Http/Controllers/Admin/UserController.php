@@ -66,7 +66,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'role' => 'required|string|in:admin,secretaria,professor,aluno',
             'cpf' => 'nullable|string|unique:users',
             'username' => 'nullable|string|unique:users',
@@ -80,7 +80,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => $request->password ? bcrypt($request->password) : bcrypt(\App\Models\Setting::where('key', 'default_user_password')->value('value') ?? 'mudar123'),
             'role' => $request->role,
             'cpf' => $request->cpf,
             'username' => $request->username,

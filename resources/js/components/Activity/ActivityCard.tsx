@@ -28,13 +28,13 @@ export default function ActivityCard({ activity, role }: Props) {
         >
             {/* Progress bar placeholder - can be dynamic later */}
             <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-100">
-                <div className="h-full bg-indigo-500 w-0 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+                <div className="h-full bg-primary/100 w-0 group-hover:w-full transition-all duration-700 ease-in-out"></div>
             </div>
 
             <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                    <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 transition-colors">
-                        <CheckCircle className="w-6 h-6 text-indigo-600" />
+                    <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                        <CheckCircle className="w-6 h-6 text-primary" />
                     </div>
                     {activity.deadline && (
                         <span className="text-xs font-medium px-2 py-1 bg-amber-50 text-amber-700 rounded-md border border-amber-100 flex items-center gap-1">
@@ -44,7 +44,7 @@ export default function ActivityCard({ activity, role }: Props) {
                     )}
                 </div>
 
-                <h3 className="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-indigo-600 transition-colors">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">
                     {activity.title}
                 </h3>
 
@@ -63,7 +63,7 @@ export default function ActivityCard({ activity, role }: Props) {
                         )}
                     </div>
 
-                    <span className="text-sm font-semibold text-indigo-600 group-hover:translate-x-1 transition-transform">
+                    <span className="text-sm font-semibold text-primary group-hover:translate-x-1 transition-transform">
                         {isStudent ? 'Iniciar' : 'Detalhes'} &rarr;
                     </span>
                 </div>

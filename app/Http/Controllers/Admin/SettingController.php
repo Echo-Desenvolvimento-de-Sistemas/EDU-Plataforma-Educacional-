@@ -48,6 +48,7 @@ class SettingController extends Controller
             'mail_from_name' => 'nullable|string|max:255',
             'gamification_url' => 'nullable|string|max:500',
             'gamification_secret' => 'nullable|string|max:500',
+            'default_user_password' => 'nullable|string|min:6|max:255',
         ]);
 
         $settings = $request->only([
@@ -73,7 +74,8 @@ class SettingController extends Controller
             'mail_from_address',
             'mail_from_name',
             'gamification_url',
-            'gamification_secret'
+            'gamification_secret',
+            'default_user_password'
         ]);
 
         foreach ($settings as $key => $value) {
@@ -135,5 +137,64 @@ class SettingController extends Controller
         $instanceName = 'educacional';
         $service->logoutInstance($instanceName);
         return back()->with('success', 'Desconectado com sucesso.');
+    }
+
+    public function exportGamification()
+    {
+        // 1. Coletar Dados
+        $users = \App\Models\User::all()->map(function ($user) {
+            return [
+                'external_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ];
+        });
+
+        $classRooms = \App\Models\ClassRoom::all()->map(function ($c) {
+            return [
+                'external_id' => $c->id,
+                'name' => $c->name,
+                'grade_id' => $c->grade_id,
+                'shift' => $c->shift,
+                'academic_year_id' => $c->academic_year_id,
+            ];
+        });
+
+        $allocations = \App\Models\Allocation::all()->map(function ($a) {
+            return [
+                'external_id' => $a->id,
+                'user_id' => $a->user_id,
+                'class_room_id' => $a->class_room_id,
+                'subject_id' => $a->subject_id,
+            ];
+        });
+
+        $students = \App\Models\Student::all()->map(function ($s) {
+            return [
+                'external_id' => $s->id,
+                'name' => $s->name,
+                'cpf' => $s->cpf,
+                'birth_date' => $s->birth_date,
+                'class_room_id' => $s->class_room_id,
+                'status' => $s->status,
+            ];
+        });
+
+        // 2. Montar Estrutura Final
+        $exportData = [
+            'users' => $users,
+            'students' => $students,
+            'class_rooms' => $classRooms,
+            'allocations' => $allocations,
+            'generated_at' => now()->toIso8601String(),
+        ];
+
+        // 3. Download do Arquivo
+        $fileName = 'migracao_gamificacao_' . date('Y-m-d_H-i') . '.json';
+
+        return response()->streamDownload(function () use ($exportData) {
+            echo json_encode($exportData, JSON_PRETTY_PRINT);
+        }, $fileName);
     }
 }

@@ -33,7 +33,16 @@ class QuestionBankController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $request->user()->questionBanks()->create($validated);
+        $bank = $request->user()->questionBanks()->create($validated);
+
+        if ($request->wantsJson()) {
+            // Include empty questions array to match the structure expected by the frontend
+            $bank->setAttribute('questions', []);
+            return response()->json([
+                'success' => true,
+                'bank' => $bank
+            ]);
+        }
 
         return redirect()->route('professor.question-banks.index')
             ->with('success', 'Banco de questões criado com sucesso!');

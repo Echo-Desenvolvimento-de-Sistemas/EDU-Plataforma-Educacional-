@@ -15,14 +15,12 @@ import PreRegistrationController from './PreRegistrationController'
 import UserController from './UserController'
 import SettingController from './SettingController'
 import AgendaSettingController from './AgendaSettingController'
-import GamificationTestController from './GamificationTestController'
 import StudentDocumentController from './StudentDocumentController'
 import DocumentTemplateController from './DocumentTemplateController'
 import DocumentController from './DocumentController'
 import EnsalamentoController from './EnsalamentoController'
 import StudentGradeController from './StudentGradeController'
 import ClassScheduleController from './ClassScheduleController'
-import KanbanBoardController from './KanbanBoardController'
 import ImportController from './ImportController'
 const Admin = {
     AttendanceController: Object.assign(AttendanceController, AttendanceController),
@@ -42,14 +40,12 @@ PreRegistrationController: Object.assign(PreRegistrationController, PreRegistrat
 UserController: Object.assign(UserController, UserController),
 SettingController: Object.assign(SettingController, SettingController),
 AgendaSettingController: Object.assign(AgendaSettingController, AgendaSettingController),
-GamificationTestController: Object.assign(GamificationTestController, GamificationTestController),
 StudentDocumentController: Object.assign(StudentDocumentController, StudentDocumentController),
 DocumentTemplateController: Object.assign(DocumentTemplateController, DocumentTemplateController),
 DocumentController: Object.assign(DocumentController, DocumentController),
 EnsalamentoController: Object.assign(EnsalamentoController, EnsalamentoController),
 StudentGradeController: Object.assign(StudentGradeController, StudentGradeController),
 ClassScheduleController: Object.assign(ClassScheduleController, ClassScheduleController),
-KanbanBoardController: Object.assign(KanbanBoardController, KanbanBoardController),
 ImportController: Object.assign(ImportController, ImportController),
 }
 

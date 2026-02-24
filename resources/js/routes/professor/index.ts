@@ -7,6 +7,7 @@ import activities from './activities'
 import questionBanks from './question-banks'
 import questions from './questions'
 import planning from './planning'
+import schedules from './schedules'
 /**
 * @see \App\Http\Controllers\Professor\DashboardController::dashboard
  * @see app/Http/Controllers/Professor/DashboardController.php:12
@@ -86,77 +87,6 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     dashboard.form = dashboardForm
 /**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-export const calendar = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: calendar.url(options),
-    method: 'get',
-})
-
-calendar.definition = {
-    methods: ["get","head"],
-    url: '/professor/calendar',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-calendar.url = (options?: RouteQueryOptions) => {
-    return calendar.definition.url + queryParams(options)
-}
-
-/**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-calendar.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: calendar.url(options),
-    method: 'get',
-})
-/**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-calendar.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: calendar.url(options),
-    method: 'head',
-})
-
-    /**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-    const calendarForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: calendar.url(options),
-        method: 'get',
-    })
-
-            /**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-        calendarForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: calendar.url(options),
-            method: 'get',
-        })
-            /**
- * @see routes/web.php:121
- * @route '/professor/calendar'
- */
-        calendarForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: calendar.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    calendar.form = calendarForm
-/**
 * @see \App\Http\Controllers\Professor\ReportController::reports
  * @see app/Http/Controllers/Professor/ReportController.php:14
  * @route '/professor/reports'
@@ -235,7 +165,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     reports.form = reportsForm
 /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
 export const manual = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -249,7 +179,7 @@ manual.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
 manual.url = (options?: RouteQueryOptions) => {
@@ -257,7 +187,7 @@ manual.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
 manual.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -265,7 +195,7 @@ manual.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
 manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -274,7 +204,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
     const manualForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -283,7 +213,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
         manualForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -291,7 +221,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:125
+ * @see routes/web.php:131
  * @route '/professor/manual'
  */
         manualForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -310,7 +240,6 @@ const professor = {
 classes: Object.assign(classes, classes),
 assessments: Object.assign(assessments, assessments),
 grades: Object.assign(grades, grades),
-calendar: Object.assign(calendar, calendar),
 reports: Object.assign(reports, reports),
 manual: Object.assign(manual, manual),
 agenda: Object.assign(agenda, agenda),
@@ -318,6 +247,7 @@ activities: Object.assign(activities, activities),
 questionBanks: Object.assign(questionBanks, questionBanks),
 questions: Object.assign(questions, questions),
 planning: Object.assign(planning, planning),
+schedules: Object.assign(schedules, schedules),
 }
 
 export default professor

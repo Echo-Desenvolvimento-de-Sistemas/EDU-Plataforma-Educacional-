@@ -20,7 +20,7 @@ class ClassRoomController extends Controller
         $user = Auth::user();
 
         $classes = $user->allocations()
-            ->with(['classRoom.grade', 'classRoom.academicYear', 'classRoom.students'])
+            ->with(['classRoom.grade', 'classRoom.academicYear', 'classRoom.students', 'subject'])
             ->get()
             ->groupBy('class_room_id')
             ->map(function ($allocs) {

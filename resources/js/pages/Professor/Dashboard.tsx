@@ -88,7 +88,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                     <Card className="p-4 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
                         <div className="flex items-center justify-between">
                             <span className="text-sm font-medium text-muted-foreground">Minhas Turmas</span>
-                            <Users className="w-4 h-4 text-blue-600" />
+                            <Users className="w-4 h-4 text-primary" />
                         </div>
                         <div className="mt-2">
                             <span className="text-2xl font-bold">{stats.totalClasses}</span>
@@ -157,7 +157,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                         <section>
                             <div className="flex items-center justify-between mb-4">
                                 <h2 className="text-lg font-semibold flex items-center">
-                                    <Clock className="w-5 h-5 mr-2 text-blue-600" />
+                                    <Clock className="w-5 h-5 mr-2 text-primary" />
                                     Cronograma do Dia
                                 </h2>
                             </div>
@@ -168,18 +168,18 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                         {processedSchedule.map((slot) => (
                                             <div key={slot.id} className="mb-6 relative pl-6 last:mb-0 group">
                                                 <div className={`absolute -left-[21px] top-1 h-3 w-3 rounded-full border-2 border-background ${slot.status === 'done' ? 'bg-muted-foreground' :
-                                                    slot.status === 'current' ? 'bg-blue-600 ring-4 ring-blue-600/20 scale-125' : 'bg-muted'
+                                                    slot.status === 'current' ? 'bg-primary ring-4 ring-blue-600/20 scale-125' : 'bg-muted'
                                                     }`} />
 
-                                                <div className={`flex flex-col p-4 rounded-lg border transition-all hover:shadow-md ${slot.status === 'current' ? 'bg-background border-blue-600 shadow-sm' :
-                                                    slot.status === 'done' ? 'bg-zinc-50 border-transparent opacity-75' : 'bg-card'
+                                                <div className={`flex flex-col p-4 rounded-lg border transition-all hover:shadow-md ${slot.status === 'current' ? 'bg-background border-primary shadow-sm' :
+                                                    slot.status === 'done' ? 'bg-zinc-100 dark:bg-zinc-800 border-transparent opacity-75' : 'bg-card'
                                                     }`}>
                                                     <div className="flex justify-between items-center mb-2">
                                                         <span className="text-sm font-mono font-bold text-gray-900 dark:text-gray-100">
                                                             {slot.time}
                                                         </span>
-                                                        {slot.status === 'current' && <Badge className="bg-blue-600">Agora</Badge>}
-                                                        {slot.status === 'done' && <Badge variant="secondary">Concluída</Badge>}
+                                                        {slot.status === 'current' && <Badge className="bg-primary">Agora</Badge>}
+                                                        {slot.status === 'done' && <Badge className="bg-white text-black hover:bg-gray-100 border border-gray-200">Concluída</Badge>}
                                                     </div>
 
                                                     <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">{slot.class}</h3>
@@ -188,7 +188,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                                     <div className="mt-3 flex justify-end">
                                                         <Link
                                                             href={`/professor/classes/${slot.class_room_id}/attendance/create`}
-                                                            className="text-blue-600 text-sm font-medium flex items-center hover:underline group-hover:translate-x-1 transition-transform"
+                                                            className="text-primary text-sm font-medium flex items-center hover:underline group-hover:translate-x-1 transition-transform"
                                                         >
                                                             {slot.status === 'done' ? 'Ver Chamada' : 'Gerenciar Aula'} &rarr;
                                                         </Link>
@@ -211,13 +211,23 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                         <section>
                             <h2 className="text-lg font-semibold mb-4">Acesso Rápido</h2>
                             <div className="grid gap-3">
-                                <Link href="/professor/classes" className="flex items-center p-3 bg-card border rounded-lg hover:border-blue-500 hover:shadow-sm transition-all group">
-                                    <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                <Link href="/professor/classes" className="flex items-center p-3 bg-card border rounded-lg hover:border-primary/80 hover:shadow-sm transition-all group">
+                                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary mr-3 group-hover:bg-primary group-hover:text-white transition-colors">
                                         <Users className="h-5 w-5" />
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-gray-900 dark:text-gray-100">Minhas Turmas</h3>
                                         <p className="text-xs text-muted-foreground">Lançar notas e faltas</p>
+                                    </div>
+                                </Link>
+
+                                <Link href="/professor/schedules" className="flex items-center p-3 bg-card border rounded-lg hover:border-green-500 hover:shadow-sm transition-all group">
+                                    <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                                        <Clock className="h-5 w-5" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Meus Horários</h3>
+                                        <p className="text-xs text-muted-foreground">Ver grade semanal</p>
                                     </div>
                                 </Link>
 
@@ -251,7 +261,7 @@ export default function Dashboard({ allocations, dailySchedule, stats }: Props) 
                                     <CardDescription className="text-blue-100">Dúvidas sobre o sistema?</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <Button variant="secondary" className="w-full text-blue-700 font-semibold" asChild>
+                                    <Button variant="secondary" className="w-full text-primary/90 font-semibold" asChild>
                                         <Link href="/professor/manual">Acessar Manual</Link>
                                     </Button>
                                 </CardContent>
