@@ -49,7 +49,7 @@ Application URL: https://app.colegiorosadesharom.com.br
 ssh user@echo.dev.br
 
 # Navigate to your projects directory
-cd /opt/apps
+cd clientes/rosa/app
 
 # Clone the repository
 git clone https://github.com/Echo-Desenvolvimento-de-Sistemas/EDU-Plataforma-Educacional.git edu
@@ -147,6 +147,38 @@ docker stack deploy -c docker-compose.yml --with-registry-auth edu
 # 5. Check status
 docker stack services edu
 ```
+
+### Emergency Manual Deployment (GitHub Actions Failure)
+
+If the GitHub Actions pipeline fails and you need to build and deploy locally on the VPS, follow these steps to bypass Docker Swarm's default image caching (which always prioritizes the remote registry):
+
+```bash
+# 1. Pull the latest code
+cd /opt/apps/edu
+git pull origin main
+
+# 2. Build the image locally without cache
+docker build --no-cache -t ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest .
+
+# 3. Tag the image as a local-only image
+# This forces Swarm to use the local image instead of checking the registry
+docker tag ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest edu-local:v1
+
+# 4. Temporarily update docker-compose.yml to use the local image
+sed -i 's|ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest|edu-local:v1|g' docker-compose.yml
+
+# 5. Deploy the stack (without registry auth)
+docker stack deploy -c docker-compose.yml edu
+
+# 6. Force the service to update
+docker service update --force edu_app
+```
+
+> [!TIP]
+> **Restore Normal Deployment:** Once GitHub Actions is fixed and you want to return to automated remote deployments, revert your `docker-compose.yml` file back to the remote image:
+> ```bash
+> git checkout docker-compose.yml
+> ```
 
 ---
 
