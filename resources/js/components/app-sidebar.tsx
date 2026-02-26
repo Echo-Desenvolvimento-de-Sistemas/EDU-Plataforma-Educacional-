@@ -34,6 +34,7 @@ import secretaria from '@/routes/secretaria/index';
 
 export function AppSidebar() {
     const user = usePage<SharedData>().props.auth.user;
+    const version = usePage<SharedData>().props.version;
     const settings = usePage<SharedData>().props.settings as Record<string, string>;
     const gamificationUrl = settings?.gamification_url || '';
 
@@ -562,6 +563,9 @@ export function AppSidebar() {
             <SidebarFooter>
                 <NavFooter items={footerItems} className="mt-auto" />
                 <NavUser />
+                <div className="px-3 py-2 text-xs text-center text-muted-foreground">
+                    v{version || '1.0.0'}
+                </div>
             </SidebarFooter>
         </Sidebar>
     );
