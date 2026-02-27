@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-STACK_NAME="edu"
+STACK_NAME="edu_demo"
 IMAGE_NAME="ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest"
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
@@ -68,7 +68,7 @@ fi
 
 # Create database if it doesn't exist
 echo -e "${YELLOW}Checking database...${NC}"
-docker exec $(docker ps -q -f name=database_mariadb) mysql -uroot -pAkio2604* -e "CREATE DATABASE IF NOT EXISTS edu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" || true
+docker exec $(docker ps -q -f name=database_mariadb) mysql -uroot -pAkio2604* -e "CREATE DATABASE IF NOT EXISTS edu_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" || true
 
 # Deploy the stack
 echo -e "${YELLOW}Deploying stack...${NC}"
@@ -89,6 +89,6 @@ docker service logs ${STACK_NAME}_app --tail 50
 echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}Deployment Complete!${NC}"
 echo -e "${GREEN}========================================${NC}"
-echo -e "${YELLOW}Access your application at: https://app.colegiorosadesharom.com.br${NC}"
+echo -e "${YELLOW}Access your application at: https://edu.echo.dev.br${NC}"
 echo -e "${YELLOW}To view logs: docker service logs ${STACK_NAME}_app -f${NC}"
 echo -e "${YELLOW}To check status: docker stack services ${STACK_NAME}${NC}"

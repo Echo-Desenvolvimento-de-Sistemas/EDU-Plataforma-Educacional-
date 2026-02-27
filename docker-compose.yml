@@ -8,8 +8,8 @@ services:
     networks:
       - echonet
     volumes:
-      - storage_data:/var/www/html/storage/app
-      - cache_data:/var/www/html/bootstrap/cache
+      - demo_storage_data:/var/www/html/storage/app
+      - demo_cache_data:/var/www/html/bootstrap/cache
     deploy:
       mode: replicated
       replicas: 1
@@ -23,14 +23,14 @@ services:
         order: start-first
       labels:
         - "traefik.enable=true"
-        - "traefik.http.services.edu.loadbalancer.server.port=80"
-        - "traefik.http.routers.edu.rule=Host(`app.colegiorosadesharom.com.br`)"
-        - "traefik.http.routers.edu.entrypoints=websecure"
-        - "traefik.http.routers.edu.tls.certresolver=myresolver"
+        - "traefik.http.services.edu_demo.loadbalancer.server.port=80"
+        - "traefik.http.routers.edu_demo.rule=Host(`edu.echo.dev.br`)"
+        - "traefik.http.routers.edu_demo.entrypoints=websecure"
+        - "traefik.http.routers.edu_demo.tls.certresolver=myresolver"
         # WebSocket support for Reverb
-        - "traefik.http.routers.edu-ws.rule=Host(`app.colegiorosadesharom.com.br`) && PathPrefix(`/app`)"
-        - "traefik.http.routers.edu-ws.entrypoints=websecure"
-        - "traefik.http.routers.edu-ws.tls.certresolver=myresolver"
+        - "traefik.http.routers.edu-ws_demo.rule=Host(`edu.echo.dev.br`) && PathPrefix(`/app`)"
+        - "traefik.http.routers.edu-ws_demo.entrypoints=websecure"
+        - "traefik.http.routers.edu-ws_demo.tls.certresolver=myresolver"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost/api/health" ]
       interval: 30s
@@ -43,7 +43,7 @@ services:
     networks:
       - echonet
     volumes:
-      - redis_data:/data
+      - demo_redis_data:/data
     deploy:
       mode: replicated
       replicas: 1
@@ -57,11 +57,11 @@ services:
       retries: 3
 
 volumes:
-  storage_data:
+  demo_storage_data:
     driver: local
-  cache_data:
+  demo_cache_data:
     driver: local
-  redis_data:
+  demo_redis_data:
     driver: local
 
 networks:
