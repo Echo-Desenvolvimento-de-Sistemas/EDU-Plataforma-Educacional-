@@ -2,15 +2,12 @@ import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import AppLogo from '@/components/app-logo';
 import {
-    GraduationCap,
-    BookOpen,
     Users,
     MessageSquare,
     CheckCircle2,
     ArrowRight,
     LayoutDashboard,
     Banknote,
-    FileSignature,
     CalendarDays,
     Bell,
     Check,
@@ -21,8 +18,15 @@ import {
     Medal,
     Star
 } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function Landing() {
+    const { scrollYProgress } = useScroll();
+
+    // Parallax values for mockups
+    const yLaptop = useTransform(scrollYProgress, [0, 1], [0, -400]);
+    const yPhone = useTransform(scrollYProgress, [0, 1], [0, 200]);
+
     return (
         <div className="min-h-screen font-sans bg-slate-50 text-slate-900">
             <Head>
@@ -84,22 +88,47 @@ export default function Landing() {
                     <div className="absolute top-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-slate-50 to-slate-50 -z-20"></div>
                     <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-indigo-500/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
-                    <div className="container mx-auto px-4 md:px-8 text-center relative z-10 max-w-5xl">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="container mx-auto px-4 md:px-8 text-center relative z-10 max-w-5xl"
+                    >
 
-                        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white border border-slate-200 text-indigo-700 font-bold mb-8 text-sm shadow-sm">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            className="inline-flex items-center px-4 py-2 rounded-full bg-white border border-slate-200 text-indigo-700 font-bold mb-8 text-sm shadow-sm"
+                        >
                             <span className="flex h-2 w-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
                             A plataforma definitiva para escolas inovadoras
-                        </div>
+                        </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1] mb-8 text-slate-900 drop-shadow-sm">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+                            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1] mb-8 text-slate-900 drop-shadow-sm"
+                        >
                             Transforme a Gestão Escolar e Engaje Alunos em <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">uma Única Plataforma</span>
-                        </h1>
+                        </motion.h1>
 
-                        <p className="text-xl md:text-2xl max-w-3xl mx-auto font-medium mb-12 text-slate-600 leading-relaxed">
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.6, duration: 0.8 }}
+                            className="text-xl md:text-2xl max-w-3xl mx-auto font-medium mb-12 text-slate-600 leading-relaxed"
+                        >
                             Automatize a secretaria, facilite a rotina dos professores e traga a inovação para a sala de aula.
-                        </p>
+                        </motion.p>
 
-                        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.8, duration: 0.5 }}
+                            className="flex flex-col sm:flex-row justify-center gap-4 mb-20"
+                        >
                             <Link href="/demo-access">
                                 <Button size="lg" className="h-14 px-8 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all w-full sm:w-auto">
                                     Acessar Sandbox
@@ -110,7 +139,7 @@ export default function Landing() {
                                     Agendar Demonstração
                                 </Button>
                             </Link>
-                        </div>
+                        </motion.div>
 
                         {/* Isometric Mockup Section (Bleeding out into the next section) */}
                         <div className="relative w-full max-w-5xl mx-auto h-[400px] md:h-[600px] -mb-48 md:-mb-64 pointer-events-none z-30 perspective-[1000px]">
@@ -119,7 +148,10 @@ export default function Landing() {
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-400/20 blur-[100px] rounded-full"></div>
 
                             {/* Laptop Mockup Placeholder */}
-                            <div className="absolute top-0 left-[5%] md:left-[10%] w-[80%] md:w-[70%] aspect-[16/10] bg-slate-800 rounded-t-2xl shadow-2xl border-4 border-slate-700 flex flex-col overflow-hidden transform rotate-x-[15deg] rotate-y-[-10deg] rotate-z-[5deg] transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-5deg]">
+                            <motion.div
+                                style={{ y: yLaptop }}
+                                className="absolute top-0 left-[5%] md:left-[10%] w-[80%] md:w-[70%] aspect-[16/10] bg-slate-800 rounded-t-2xl shadow-2xl border-4 border-slate-700 flex flex-col overflow-hidden transform rotate-x-[15deg] rotate-y-[-10deg] rotate-z-[5deg] transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-5deg]"
+                            >
                                 {/* Browser Bar */}
                                 <div className="w-full h-6 bg-slate-900 flex items-center px-4 gap-1.5 flex-shrink-0">
                                     <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
@@ -139,10 +171,13 @@ export default function Landing() {
                                 </div>
                                 {/* Laptop Base */}
                                 <div className="absolute -bottom-8 left-[-5%] w-[110%] h-8 bg-slate-400 rounded-b-3xl"></div>
-                            </div>
+                            </motion.div>
 
                             {/* Phone Mockup Placeholder */}
-                            <div className="absolute bottom-10 right-[10%] md:right-[15%] w-[30%] md:w-[25%] aspect-[9/19] bg-slate-900 rounded-[3rem] shadow-2xl border-8 border-slate-800 overflow-hidden transform rotate-x-[15deg] rotate-y-[-20deg] rotate-z-[8deg] -translate-y-12 md:-translate-y-24 transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-15deg]">
+                            <motion.div
+                                style={{ y: yPhone }}
+                                className="absolute bottom-10 right-[10%] md:right-[15%] w-[30%] md:w-[25%] aspect-[9/19] bg-slate-900 rounded-[3rem] shadow-2xl border-8 border-slate-800 overflow-hidden transform rotate-x-[15deg] rotate-y-[-20deg] rotate-z-[8deg] -translate-y-12 md:-translate-y-24 transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-15deg]"
+                            >
                                 {/* Notch */}
                                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-5 bg-slate-800 rounded-b-xl z-10"></div>
                                 {/* Fake Student Mobile App */}
@@ -154,10 +189,10 @@ export default function Landing() {
                                     <div className="w-full h-16 bg-white rounded-xl shadow-sm border border-slate-100"></div>
                                     <div className="w-full flex-1 bg-white rounded-t-xl shadow-sm border-t border-slate-100 mt-2"></div>
                                 </div>
-                            </div>
+                            </motion.div>
 
                         </div>
-                    </div>
+                    </motion.div>
                 </section>
 
                 {/* Interactive Showcase Section */}
@@ -194,7 +229,14 @@ export default function Landing() {
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-[100px] -z-10"></div>
 
                         {/* Left Tilted Card (Background) */}
-                        <div className="absolute left-[5%] md:left-[15%] top-10 transform -rotate-6 md:-rotate-12 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 w-80 p-6 z-10 hidden md:block opacity-90 hover:opacity-100 transition-opacity">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50, rotate: -12 }}
+                            whileInView={{ opacity: 0.9, x: 0, rotate: -6 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.8 }}
+                            whileHover={{ opacity: 1, scale: 1.05 }}
+                            className="absolute left-[5%] md:left-[15%] top-10 transform -rotate-6 md:-rotate-12 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 w-80 p-6 z-10 hidden md:block transition-opacity"
+                        >
                             <div className="flex items-center gap-2 font-bold text-slate-700 mb-6">
                                 <Users className="h-5 w-5 text-indigo-500" /> Quem deve participar?
                             </div>
@@ -230,10 +272,17 @@ export default function Landing() {
                                     <Button variant="outline" className="w-1/2 pointer-events-none">Voltar</Button>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Right Tilted Card (Background) */}
-                        <div className="absolute right-[5%] md:right-[15%] top-16 transform rotate-6 md:rotate-12 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 w-80 p-6 z-10 hidden md:block opacity-90 hover:opacity-100 transition-opacity">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50, rotate: 12 }}
+                            whileInView={{ opacity: 0.9, x: 0, rotate: 6 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.8 }}
+                            whileHover={{ opacity: 1, scale: 1.05 }}
+                            className="absolute right-[5%] md:right-[15%] top-16 transform rotate-6 md:rotate-12 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 w-80 p-6 z-10 hidden md:block transition-opacity"
+                        >
                             <div className="flex items-center justify-between mb-4">
                                 <div className="font-bold text-slate-700 text-sm">Cronograma da Banca</div>
                             </div>
@@ -259,7 +308,7 @@ export default function Landing() {
                                     <div className="flex-1 border border-slate-200 text-xs text-slate-400 p-2 rounded bg-white"></div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Center Main Modal */}
                         <div className="relative bg-white rounded-[1.5rem] shadow-2xl shadow-slate-300/60 border border-slate-100 w-full max-w-2xl z-30 transform md:scale-110 flex flex-col pt-4 overflow-hidden -mt-8">
@@ -725,9 +774,15 @@ export default function Landing() {
                                 </div>
 
                                 {/* Floating Coin Decoration */}
-                                <div className="absolute -top-6 right-10 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-200 shadow-xl flex items-center justify-center transform rotate-12 z-20 animate-[pulse_3s_infinite]">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 10 }}
+                                    className="absolute -top-6 right-10 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-200 shadow-xl flex items-center justify-center transform rotate-12 z-20 animate-[pulse_3s_infinite]"
+                                >
                                     <span className="text-white font-black text-2xl drop-shadow-md">E</span>
-                                </div>
+                                </motion.div>
 
                             </div>
                         </div>
@@ -935,6 +990,6 @@ export default function Landing() {
                     </div>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 }
