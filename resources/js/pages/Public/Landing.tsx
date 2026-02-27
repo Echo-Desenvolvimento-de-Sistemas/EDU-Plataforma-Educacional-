@@ -50,59 +50,83 @@ export default function Landing() {
             </header>
 
             {/* Hero Section */}
-            <main className="container mx-auto px-4 md:px-8 pt-16 pb-24 relative overflow-hidden">
-                <div className="text-center relative z-10 max-w-5xl mx-auto">
-                    {/* Decorative Background Blob */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[100px] rounded-full -z-10 pointer-events-none"></div>
+            <main className="pt-20 pb-32 relative overflow-visible">
+                {/* Background Decorators */}
+                <div className="absolute top-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-slate-50 to-slate-50 -z-20"></div>
+                <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-indigo-500/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
-                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 font-bold mb-8 text-sm">
+                <div className="container mx-auto px-4 md:px-8 text-center relative z-10 max-w-5xl">
+
+                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-white border border-slate-200 text-indigo-700 font-bold mb-8 text-sm shadow-sm">
                         <span className="flex h-2 w-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
                         A plataforma definitiva para escolas inovadoras
                     </div>
 
-                    <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.95] mb-8 text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-800" style={{ textShadow: "0px 4px 20px rgba(0,0,0,0.05)" }}>
-                        GROWING WITH <br />
-                        KNOWLEDGE
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1] mb-8 text-slate-900 drop-shadow-sm">
+                        Transforme a Gestão Escolar e Engaje Alunos em <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">uma Única Plataforma</span>
                     </h1>
 
                     <p className="text-xl md:text-2xl max-w-3xl mx-auto font-medium mb-12 text-slate-600 leading-relaxed">
-                        Sistema de Gestão Escolar completo para automatizar sua secretaria, capacitar seus professores e conectar escola e família. Tudo em um só lugar.
+                        Automatize a secretaria, facilite a rotina dos professores e traga a inovação para a sala de aula.
                     </p>
 
-                    <div className="flex justify-center gap-4">
+                    <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
                         <Link href="/demo-access">
-                            <Button size="lg" className="h-14 px-8 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all">
-                                Testar Plataforma
+                            <Button size="lg" className="h-14 px-8 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all w-full sm:w-auto">
+                                Acessar Sandbox
+                            </Button>
+                        </Link>
+                        <Link href="#planos">
+                            <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-200 rounded-full font-bold shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full sm:w-auto">
+                                Agendar Demonstração
                             </Button>
                         </Link>
                     </div>
-                </div>
 
-                {/* Hero Feature Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-30 max-w-6xl mx-auto mt-20">
-                    <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 hover:shadow-md transition-shadow group">
-                        <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <Users className="text-indigo-600 h-7 w-7" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-slate-800 mb-2">Secretaria Digital</h3>
-                        <p className="text-slate-500 font-medium">Matrículas, histórico, controle de faltas e declarações com zero papelada.</p>
-                    </div>
+                    {/* Isometric Mockup Section (Bleeding out into the next section) */}
+                    <div className="relative w-full max-w-5xl mx-auto h-[400px] md:h-[600px] -mb-48 md:-mb-64 pointer-events-none z-30 perspective-[1000px]">
 
-                    <div className="bg-indigo-600 p-8 rounded-[2rem] shadow-xl shadow-indigo-600/10 text-white transform md:-translate-y-4 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                        <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <BookOpen className="text-white h-7 w-7" />
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2">Portal do Professor</h3>
-                        <p className="text-indigo-100 font-medium">Diário de classe fácil, banco de questões e planejamento alinhado à BNCC.</p>
-                    </div>
+                        {/* Glow Behind Mockups */}
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-400/20 blur-[100px] rounded-full"></div>
 
-                    <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 hover:shadow-md transition-shadow group">
-                        <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <MessageSquare className="text-orange-600 h-7 w-7" />
+                        {/* Laptop Mockup Placeholder */}
+                        <div className="absolute top-0 left-[5%] md:left-[10%] w-[80%] md:w-[70%] aspect-[16/10] bg-slate-800 rounded-t-2xl shadow-2xl border-4 border-slate-700 flex flex-col overflow-hidden transform rotate-x-[15deg] rotate-y-[-10deg] rotate-z-[5deg] transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-5deg]">
+                            {/* Browser Bar */}
+                            <div className="w-full h-6 bg-slate-900 flex items-center px-4 gap-1.5 flex-shrink-0">
+                                <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                                <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                            </div>
+                            {/* Fake Admin Dashboard */}
+                            <div className="flex-1 bg-slate-100 p-4 flex gap-4 opacity-90">
+                                <div className="w-1/4 h-full bg-white rounded-lg shadow-sm"></div>
+                                <div className="w-3/4 h-full flex flex-col gap-4">
+                                    <div className="w-full h-1/3 bg-white rounded-lg shadow-sm"></div>
+                                    <div className="w-full h-2/3 bg-white rounded-lg shadow-sm flex pt-8 px-4 gap-4">
+                                        <div className="w-1/2 h-full bg-indigo-50 rounded-t-lg"></div>
+                                        <div className="w-1/2 h-full bg-indigo-100 rounded-t-lg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Laptop Base */}
+                            <div className="absolute -bottom-8 left-[-5%] w-[110%] h-8 bg-slate-400 rounded-b-3xl"></div>
                         </div>
-                        <h3 className="text-2xl font-bold text-slate-800 mb-2">Agenda Digital</h3>
-                        <p className="text-slate-500 font-medium">Aproximando os responsáveis com comunicados e acompanhamento em tempo real.</p>
+
+                        {/* Phone Mockup Placeholder */}
+                        <div className="absolute bottom-10 right-[10%] md:right-[15%] w-[30%] md:w-[25%] aspect-[9/19] bg-slate-900 rounded-[3rem] shadow-2xl border-8 border-slate-800 overflow-hidden transform rotate-x-[15deg] rotate-y-[-20deg] rotate-z-[8deg] -translate-y-12 md:-translate-y-24 transition-transform duration-700 hover:rotate-x-[10deg] hover:rotate-y-[-15deg]">
+                            {/* Notch */}
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-5 bg-slate-800 rounded-b-xl z-10"></div>
+                            {/* Fake Student Mobile App */}
+                            <div className="w-full h-full bg-slate-50 flex flex-col pt-8 px-4 pb-4 gap-3 opacity-95">
+                                <div className="w-full h-24 bg-indigo-600 rounded-2xl flex flex-col items-center justify-center pt-2">
+                                    <div className="w-10 h-10 bg-white/20 rounded-full mb-2"></div>
+                                </div>
+                                <div className="w-full h-16 bg-white rounded-xl shadow-sm border border-slate-100"></div>
+                                <div className="w-full h-16 bg-white rounded-xl shadow-sm border border-slate-100"></div>
+                                <div className="w-full flex-1 bg-white rounded-t-xl shadow-sm border-t border-slate-100 mt-2"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>
