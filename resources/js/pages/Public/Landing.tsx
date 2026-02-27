@@ -109,7 +109,7 @@ export default function Landing() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1] mb-8 text-slate-900 drop-shadow-sm"
+                            className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1] mb-8 text-slate-900 drop-shadow-sm"
                         >
                             Transforme a Gestão Escolar e Engaje Alunos em <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">uma Única Plataforma</span>
                         </motion.h1>
@@ -142,7 +142,7 @@ export default function Landing() {
                         </motion.div>
 
                         {/* Isometric Mockup Section (Bleeding out into the next section) */}
-                        <div className="relative w-full max-w-5xl mx-auto h-[400px] md:h-[600px] -mb-48 md:-mb-64 pointer-events-none z-30 perspective-[1000px]">
+                        <div className="relative w-full max-w-5xl mx-auto h-[300px] sm:h-[400px] md:h-[600px] -mb-24 md:-mb-64 pointer-events-none z-30 perspective-[1000px]">
 
                             {/* Glow Behind Mockups */}
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-400/20 blur-[100px] rounded-full"></div>
@@ -196,7 +196,7 @@ export default function Landing() {
                 </section>
 
                 {/* Interactive Showcase Section */}
-                <section className="py-24 relative bg-slate-50 overflow-hidden flex flex-col items-center justify-center min-h-[800px] border-t border-slate-200">
+                <section className="py-24 relative bg-slate-50 overflow-hidden flex flex-col items-center justify-center min-h-[600px] md:min-h-[800px] border-t border-slate-200">
                     {/* Small Top Badge */}
                     <div className="mb-12 bg-white px-6 py-2 rounded-full shadow-sm border border-slate-200 font-bold text-indigo-700 z-20">
                         Sistemas Interconectados
@@ -224,7 +224,7 @@ export default function Landing() {
                         <MessageSquare className="text-emerald-400 h-6 w-6" />
                     </div>
 
-                    <div className="relative w-full max-w-5xl flex items-center justify-center h-[500px]">
+                    <div className="relative w-full max-w-5xl flex items-center justify-center h-[400px] md:h-[500px]">
                         {/* Radial Glow */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-[100px] -z-10"></div>
 
@@ -438,7 +438,7 @@ export default function Landing() {
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-100/50 rounded-full blur-[60px] -z-10"></div>
 
                                     {/* Revenue Chart Card */}
-                                    <div className="absolute top-10 right-4 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 transform rotate-3 hover:rotate-0 transition-transform duration-500 z-20">
+                                    <div className="absolute top-10 right-4 w-56 sm:w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 transform rotate-3 hover:rotate-0 transition-transform duration-500 z-20">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
                                                 <Banknote size={16} />
@@ -456,7 +456,7 @@ export default function Landing() {
                                     </div>
 
                                     {/* Kanban Card */}
-                                    <div className="absolute bottom-10 left-4 w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 transform -rotate-2 hover:rotate-0 transition-transform duration-500 z-10">
+                                    <div className="absolute bottom-2 sm:bottom-10 left-2 sm:left-4 w-64 sm:w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 sm:p-5 transform -rotate-2 hover:rotate-0 transition-transform duration-500 z-10">
                                         <h4 className="text-slate-800 font-bold mb-4 flex items-center gap-2"><LayoutDashboard size={18} className="text-indigo-500" /> Fila de Matrículas</h4>
                                         <div className="space-y-3">
                                             <div className="w-full p-3 bg-slate-50 border border-slate-100 rounded-lg flex items-center gap-3">
@@ -487,7 +487,7 @@ export default function Landing() {
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-100/50 rounded-full blur-[60px] -z-10"></div>
 
                                     {/* Grades Grid Card */}
-                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-1 z-10">
+                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] sm:w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-1 z-10">
                                         <div className="bg-slate-50 w-full h-12 rounded-t-xl flex items-center px-4 border-b border-slate-100 justify-between">
                                             <span className="font-bold text-slate-700 text-sm">Matemática - 1º Ano A</span>
                                             <div className="w-16 h-6 bg-white border border-slate-200 rounded flex items-center justify-center text-[10px] text-slate-500 font-bold">1º Bim</div>
@@ -524,7 +524,7 @@ export default function Landing() {
                                     </div>
 
                                     {/* Animated Success Toast */}
-                                    <div className="absolute bottom-16 -right-4 w-48 bg-slate-900 text-white rounded-full shadow-2xl p-2.5 pr-4 flex items-center gap-3 transform rotate-3 animate-bounce z-30">
+                                    <div className="absolute bottom-16 right-0 sm:-right-4 w-48 bg-slate-900 text-white rounded-full shadow-2xl p-2.5 pr-4 flex items-center gap-3 transform rotate-3 animate-bounce z-30">
                                         <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
                                             <Check size={16} strokeWidth={4} />
                                         </div>
@@ -691,7 +691,7 @@ export default function Landing() {
                             <div className="w-full lg:w-1/2 relative flex justify-center lg:justify-end h-[400px]">
 
                                 {/* Main App Window */}
-                                <div className="relative w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden z-10 border border-indigo-100">
+                                <div className="relative w-[95%] sm:w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden z-10 border border-indigo-100">
                                     {/* Header */}
                                     <div className="bg-indigo-600 p-5 pb-8 relative overflow-hidden">
                                         <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500 rounded-full opacity-50"></div>
@@ -750,7 +750,7 @@ export default function Landing() {
                                 </div>
 
                                 {/* Floating Rank Item */}
-                                <div className="absolute top-1/2 -left-12 lg:-left-20 transform -translate-y-1/2 bg-white rounded-2xl p-4 shadow-2xl border border-slate-100 z-30 animate-[bounce_4s_infinite]">
+                                <div className="absolute top-1/2 left-0 sm:-left-12 lg:-left-20 transform -translate-y-1/2 scale-90 sm:scale-100 origin-left bg-white rounded-2xl p-4 shadow-2xl border border-slate-100 z-30 animate-[bounce_4s_infinite]">
                                     <h5 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Ranking da Turma</h5>
                                     <div className="space-y-3 w-48">
                                         <div className="flex items-center justify-between">
@@ -779,7 +779,7 @@ export default function Landing() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 10 }}
-                                    className="absolute -top-6 right-10 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-200 shadow-xl flex items-center justify-center transform rotate-12 z-20 animate-[pulse_3s_infinite]"
+                                    className="absolute -top-6 right-2 sm:right-10 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-200 shadow-xl flex items-center justify-center transform rotate-12 z-20 animate-[pulse_3s_infinite]"
                                 >
                                     <span className="text-white font-black text-2xl drop-shadow-md">E</span>
                                 </motion.div>
