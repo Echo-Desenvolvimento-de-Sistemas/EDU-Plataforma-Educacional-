@@ -165,7 +165,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     reports.form = reportsForm
 /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
 export const manual = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -179,7 +179,7 @@ manual.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
 manual.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ manual.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
 manual.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -195,7 +195,7 @@ manual.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
 manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -204,7 +204,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
     const manualForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -213,7 +213,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
         manualForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -221,7 +221,7 @@ manual.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:131
+ * @see routes/web.php:135
  * @route '/professor/manual'
  */
         manualForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

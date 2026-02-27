@@ -13,7 +13,10 @@ import {
     FileSignature,
     CalendarDays,
     Bell,
-    Check
+    Check,
+    PieChart,
+    ClipboardCheck,
+    Smartphone
 } from 'lucide-react';
 
 export default function Landing() {
@@ -318,78 +321,250 @@ export default function Landing() {
                 </div>
             </section>
 
-            {/* Comprehensive Modules Section */}
-            <section id="modulos" className="py-24 bg-white border-t border-slate-200">
+            {/* Apresentação de Módulos (Visão por Perfil) */}
+            <section id="modulos" className="py-24 bg-white border-t border-slate-200 overflow-hidden">
                 <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-                    <div className="text-center mb-16">
-                        <div className="text-indigo-600 font-bold tracking-wider uppercase mb-2">Entenda a Plataforma</div>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">Módulos que resolvem o seu dia a dia</h2>
+                    <div className="text-center mb-20">
+                        <div className="text-indigo-600 font-bold tracking-wider uppercase mb-2">Plataforma Completa</div>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">Feito para cada parte da sua escola</h2>
                         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                            O EDU foi construído pensando nas dores de escolas de pequeno e médio porte, agrupando ferramentas poderosas em uma interface simples e moderna.
+                            Soluções específicas para resolver as dores reais da diretoria, dos professores e das famílias.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
-                        {/* Module 1 */}
-                        <div className="flex gap-6">
-                            <div className="flex-shrink-0 mt-1">
-                                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
-                                    <LayoutDashboard size={28} />
+                    <div className="space-y-32">
+                        {/* Perfil 1: Secretaria e Direção */}
+                        <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-24">
+                            <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+                                <div className="inline-flex items-center justify-center p-3 bg-blue-50 text-blue-600 rounded-xl mb-6">
+                                    <PieChart size={28} />
                                 </div>
-                            </div>
-                            <div>
-                                <h3 className="text-2xl font-bold text-slate-800 mb-3">Dashboard Administrativo</h3>
-                                <p className="text-slate-600 leading-relaxed">
-                                    Visão macro da instituição. Gráficos de inadimplência, desempenho de turmas, alunos críticos e fluxo de caixa, permitindo à diretoria tomar decisões baseadas em dados em vez de intuição.
+                                <h3 className="text-3xl font-bold text-slate-900 mb-4">Para a Secretaria e Direção</h3>
+                                <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                                    Tenha visão estratégica em tempo real. Controle o faturamento, automatize a emissão de boletos e acabe com a papelada graças à nossa Secretaria Digital Automática.
                                 </p>
+                                <ul className="space-y-3 mb-8">
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Dashboard de Receitas e Inadimplência
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Geração em lote de Históricos e Declarações
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Kanban Integrado para Fluxo de Matrículas
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="w-full md:w-1/2 relative h-[400px]">
+                                {/* Abstract Background Blob */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-100/50 rounded-full blur-[60px] -z-10"></div>
+
+                                {/* Revenue Chart Card */}
+                                <div className="absolute top-10 right-4 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 transform rotate-3 hover:rotate-0 transition-transform duration-500 z-20">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                                            <Banknote size={16} />
+                                        </div>
+                                        <span className="text-xs font-bold text-emerald-500 bg-emerald-50 px-2 py-1 rounded-full">+12.5%</span>
+                                    </div>
+                                    <h4 className="text-slate-500 text-sm font-semibold mb-1">Receita Mensal</h4>
+                                    <p className="text-2xl font-black text-slate-900 mb-4">R$ 145.200,00</p>
+                                    <div className="flex items-end gap-2 h-16 pt-2">
+                                        <div className="w-1/4 bg-slate-100 rounded-t-sm h-[40%]"></div>
+                                        <div className="w-1/4 bg-slate-100 rounded-t-sm h-[60%]"></div>
+                                        <div className="w-1/4 bg-indigo-500 rounded-t-sm h-[90%] relative"><div className="absolute -top-1 left-1.5 w-2 h-2 rounded-full bg-indigo-300 animate-ping"></div></div>
+                                        <div className="w-1/4 bg-slate-100 rounded-t-sm h-[70%]"></div>
+                                    </div>
+                                </div>
+
+                                {/* Kanban Card */}
+                                <div className="absolute bottom-10 left-4 w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 transform -rotate-2 hover:rotate-0 transition-transform duration-500 z-10">
+                                    <h4 className="text-slate-800 font-bold mb-4 flex items-center gap-2"><LayoutDashboard size={18} className="text-indigo-500" /> Fila de Matrículas</h4>
+                                    <div className="space-y-3">
+                                        <div className="w-full p-3 bg-slate-50 border border-slate-100 rounded-lg flex items-center gap-3">
+                                            <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold">MS</div>
+                                            <div className="flex-1">
+                                                <div className="h-3 w-3/4 bg-slate-200 rounded mb-1"></div>
+                                                <div className="h-2 w-1/2 bg-slate-100 rounded"></div>
+                                            </div>
+                                        </div>
+                                        <div className="w-full p-3 bg-white border border-indigo-100 shadow-sm rounded-lg flex items-center gap-3 relative overflow-hidden">
+                                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                                            <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-[10px] font-bold">JP</div>
+                                            <div className="flex-1">
+                                                <div className="h-3 w-5/6 bg-slate-700 rounded mb-1"></div>
+                                                <div className="h-2 w-1/3 bg-slate-200 rounded"></div>
+                                            </div>
+                                            <div className="w-16 h-5 bg-indigo-50 rounded text-indigo-600 text-[10px] flex items-center justify-center font-bold">Faturar</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Module 2 */}
-                        <div className="flex gap-6">
-                            <div className="flex-shrink-0 mt-1">
-                                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
-                                    <FileSignature size={28} />
+                        {/* Perfil 2: Professor */}
+                        <div className="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-24">
+                            <div className="w-full md:w-1/2 relative h-[400px]">
+                                {/* Abstract Background Blob */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-100/50 rounded-full blur-[60px] -z-10"></div>
+
+                                {/* Grades Grid Card */}
+                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-1 z-10">
+                                    <div className="bg-slate-50 w-full h-12 rounded-t-xl flex items-center px-4 border-b border-slate-100 justify-between">
+                                        <span className="font-bold text-slate-700 text-sm">Matemática - 1º Ano A</span>
+                                        <div className="w-16 h-6 bg-white border border-slate-200 rounded flex items-center justify-center text-[10px] text-slate-500 font-bold">1º Bim</div>
+                                    </div>
+                                    <div className="p-3">
+                                        <div className="grid grid-cols-4 gap-2 mb-2 px-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                            <div className="col-span-2">Aluno</div>
+                                            <div className="text-center">P1</div>
+                                            <div className="text-center">Média</div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="grid grid-cols-4 gap-2 items-center bg-white border border-slate-100 rounded-md p-2">
+                                                <div className="col-span-2 flex items-center gap-2">
+                                                    <div className="w-5 h-5 rounded-full bg-slate-200"></div>
+                                                    <div className="h-2.5 w-16 bg-slate-300 rounded"></div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="w-8 h-6 bg-slate-50 border border-slate-200 rounded mx-auto flex items-center justify-center text-xs font-bold text-slate-700">8.5</div>
+                                                </div>
+                                                <div className="text-center font-bold text-emerald-500 text-xs">8.5</div>
+                                            </div>
+                                            <div className="grid grid-cols-4 gap-2 items-center bg-indigo-50 border border-indigo-100 rounded-md p-2 relative ring-1 ring-indigo-500">
+                                                <div className="col-span-2 flex items-center gap-2">
+                                                    <div className="w-5 h-5 rounded-full bg-slate-200"></div>
+                                                    <div className="h-2.5 w-12 bg-slate-400 rounded"></div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="w-8 h-6 bg-white border border-indigo-300 rounded mx-auto flex items-center justify-center text-xs font-bold text-indigo-700">9.0|</div>
+                                                </div>
+                                                <div className="text-center font-bold text-emerald-500 text-xs">-</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Animated Success Toast */}
+                                <div className="absolute bottom-16 -right-4 w-48 bg-slate-900 text-white rounded-full shadow-2xl p-2.5 pr-4 flex items-center gap-3 transform rotate-3 animate-bounce z-30">
+                                    <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
+                                        <Check size={16} strokeWidth={4} />
+                                    </div>
+                                    <span className="text-sm font-bold">Nota salva com sucesso!</span>
                                 </div>
                             </div>
-                            <div>
-                                <h3 className="text-2xl font-bold text-slate-800 mb-3">Gestão Documental Automática</h3>
-                                <p className="text-slate-600 leading-relaxed">
-                                    Chega de malotes e pranchetas. A secretaria pode gerar históricos, atestados, declarações de passe escolar e relatórios do Censo em formatos padronizados automaticamente com um clique.
+
+                            <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+                                <div className="inline-flex items-center justify-center p-3 bg-purple-50 text-purple-600 rounded-xl mb-6">
+                                    <ClipboardCheck size={28} />
+                                </div>
+                                <h3 className="text-3xl font-bold text-slate-900 mb-4">Para o Professor</h3>
+                                <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                                    Devolva o tempo livre para os professores. O Diário de Classe Digital simplifica o registro rápido de frequência e o lançamento de notas com cálculo totalmente automático.
                                 </p>
+                                <ul className="space-y-3 mb-8">
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Planilha de Notas Inteligente
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Chamada Nominal em poucos cliques
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Fechamento de Bimestre Automático
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
-                        {/* Module 3 */}
-                        <div className="flex gap-6">
-                            <div className="flex-shrink-0 mt-1">
-                                <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
-                                    <BookOpen size={28} />
+                        {/* Perfil 3: Família e Aluno */}
+                        <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-24">
+                            <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+                                <div className="inline-flex items-center justify-center p-3 bg-orange-50 text-orange-600 rounded-xl mb-6">
+                                    <Smartphone size={28} />
+                                </div>
+                                <h3 className="text-3xl font-bold text-slate-900 mb-4">Para a Famíla e o Aluno</h3>
+                                <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                                    Mostre transparência e melhore a comunicação em tempo real. Os pais visualizam o espelho de faltas e o portal de boletos enquanto o aluno recebe os avisos da escola no celular.
+                                </p>
+                                <ul className="space-y-3 mb-8">
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Notificações push de Comunicados
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Portal de Boletos com código PIX
+                                    </li>
+                                    <li className="flex items-center text-slate-700 font-medium">
+                                        <div className="mr-3 p-1 bg-green-100 text-green-600 rounded-full"><Check size={14} strokeWidth={3} /></div>
+                                        Boletim e Espelho de Faltas ao vivo
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="w-full md:w-1/2 relative h-[450px] flex justify-center">
+                                {/* Abstract Background Blob */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-orange-100/40 rounded-full blur-[60px] -z-10"></div>
+
+                                {/* Responsive Smartphone Mockup */}
+                                <div className="relative w-64 h-[420px] bg-slate-900 rounded-[2.5rem] shadow-2xl border-[6px] border-slate-800 overflow-hidden transform rotate-2 z-10">
+                                    {/* Notch */}
+                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-2xl z-20"></div>
+
+                                    {/* App Header */}
+                                    <div className="w-full h-24 bg-indigo-600 flex flex-col justify-end px-4 pb-4">
+                                        <p className="text-indigo-200 text-xs font-medium">Olá, João!</p>
+                                        <h4 className="text-white font-bold text-lg">Resumo Escolar</h4>
+                                    </div>
+
+                                    {/* App Body */}
+                                    <div className="bg-slate-50 flex-1 h-full p-4 space-y-4">
+                                        <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-3">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-slate-500">Próxima Aula</span>
+                                                <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">09:30</span>
+                                            </div>
+                                            <div className="h-3 w-1/2 bg-slate-800 rounded mb-1"></div>
+                                            <div className="h-2 w-1/3 bg-slate-300 rounded"></div>
+                                        </div>
+
+                                        <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-3">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-slate-500">Boletos</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded bg-red-50 text-red-500 flex items-center justify-center">
+                                                    <Banknote size={14} />
+                                                </div>
+                                                <div>
+                                                    <div className="h-2.5 w-16 bg-slate-800 rounded mb-1"></div>
+                                                    <div className="h-2 w-10 bg-red-400 rounded"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Notification Bell Popup */}
+                                    <div className="absolute top-28 right-2 lg:-right-8 w-48 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] border border-slate-100 p-3 z-30 transform -rotate-3 hover:rotate-0 transition-transform cursor-pointer">
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0 relative">
+                                                <Bell size={14} fill="currentColor" />
+                                                <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+                                            </div>
+                                            <div>
+                                                <h5 className="text-xs font-bold text-slate-800 mb-0.5">Novo Comunicado</h5>
+                                                <p className="text-[10px] text-slate-500 leading-tight">A feira de ciências foi remarcada para o dia 15/05.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <h3 className="text-2xl font-bold text-slate-800 mb-3">Planejamento Pedagógico Integrado</h3>
-                                <p className="text-slate-600 leading-relaxed">
-                                    Professores desenham aulas consultando a BNCC diretamente na tela. O processo é submetido para aprovação do supervisor pedagógico e sincronizado automaticamente com o diário de classe.
-                                </p>
-                            </div>
                         </div>
-
-                        {/* Module 4 */}
-                        <div className="flex gap-6">
-                            <div className="flex-shrink-0 mt-1">
-                                <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
-                                    <CalendarDays size={28} />
-                                </div>
-                            </div>
-                            <div>
-                                <h3 className="text-2xl font-bold text-slate-800 mb-3">Ensalamento e Horários de Aula</h3>
-                                <p className="text-slate-600 leading-relaxed">
-                                    Motor inteligente para montar o horário das aulas evitando o choque de de horários dos professores entre diferentes turmas. Acesso via portal do aluno sobre qual é a próxima aula.
-                                </p>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>
