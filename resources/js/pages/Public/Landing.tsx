@@ -12,7 +12,8 @@ import {
     Banknote,
     FileSignature,
     CalendarDays,
-    Bell
+    Bell,
+    Check
 } from 'lucide-react';
 
 export default function Landing() {
@@ -30,7 +31,7 @@ export default function Landing() {
                     <nav className="hidden md:flex items-center gap-8 font-semibold text-slate-600">
                         <Link href="#funcionalidades" className="hover:text-indigo-600 transition-colors">Funcionalidades</Link>
                         <Link href="#modulos" className="hover:text-indigo-600 transition-colors">Módulos</Link>
-                        <Link href="#precos" className="hover:text-indigo-600 transition-colors">Preços</Link>
+                        <Link href="#planos" className="hover:text-indigo-600 transition-colors">Preços</Link>
                     </nav>
 
                     <div className="flex items-center gap-4">
@@ -369,72 +370,177 @@ export default function Landing() {
                 </div>
             </section>
 
-            {/* Pricing Section */}
-            <section id="precos" className="py-24 bg-slate-900 text-white relative">
-                {/* Decorative fade */}
-                <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
-                <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-                    <div className="text-center mb-16">
-                        <div className="text-indigo-400 font-bold tracking-wider uppercase mb-2">Transparência</div>
-                        <h2 className="text-4xl md:text-5xl font-black mb-4">Planos que cabem no bolso</h2>
-                        <p className="text-xl text-slate-400 max-w-2xl mx-auto">Valores justos e proporcionais ao tamanho da sua instituição educacional, garantindo escalabilidade.</p>
+            {/* Pricing Section (New Layout) */}
+            <section id="planos" className="py-24 bg-slate-50 relative border-t border-slate-200">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+                            Escolha o plano ideal!
+                        </h2>
+                        <p className="text-lg text-slate-500 mb-10">
+                            Selecione entre os melhores planos para garantir a combinação perfeita. Precisa de mais ou menos?
+                            Personalize sua assinatura para um ajuste ideal!
+                        </p>
+
+                        {/* Toggle Switch */}
+                        <div className="inline-flex bg-white rounded-full p-1 border border-slate-200 shadow-sm mx-auto">
+                            <button className="px-8 py-3 rounded-full bg-indigo-500 text-white font-medium text-sm transition-all shadow-md">
+                                Mensal
+                            </button>
+                            <button className="px-8 py-3 rounded-full text-slate-500 hover:text-slate-800 font-medium text-sm transition-all">
+                                Anual (economize 10%)
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div className="grid md:grid-cols-3 gap-8 items-stretch pt-4">
+
                         {/* Plan 1 */}
-                        <div className="bg-slate-800 text-slate-100 p-8 rounded-[2rem] flex flex-col border border-slate-700">
-                            <h3 className="text-2xl font-bold mb-2">Pequeno Porte</h3>
-                            <p className="text-slate-400 mb-6">Até 200 Alunos Ativos</p>
-                            <div className="text-4xl font-black mb-8 border-b border-slate-700 pb-8 flex items-baseline gap-1">
-                                R$ 299 <span className="text-lg font-normal text-slate-400">/mês</span>
+                        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 flex flex-col h-full hover:shadow-xl transition-all duration-300">
+                            <div className="mb-6">
+                                <span className="inline-block px-4 py-1.5 bg-indigo-500 text-white text-sm font-semibold rounded-full mb-4">
+                                    Básico
+                                </span>
+                                <p className="text-sm text-slate-500 mb-8 min-h-[60px]">
+                                    Ideal para escolas que estão começando sua digitalização e buscam o sistema já funcionando para agilizar tarefas básicas.
+                                </p>
+                                <div className="flex items-baseline gap-1 text-slate-900">
+                                    <span className="text-5xl font-extrabold tracking-tight">R$490</span>
+                                    <span className="text-slate-400 font-medium">/mês</span>
+                                </div>
                             </div>
+
+                            <div className="border-t border-slate-100 my-6"></div>
+
                             <ul className="space-y-4 mb-8 flex-1">
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Usuários Adicionais Ilimitados</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Diário Escolar e Histórico</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Portal do Aluno Web e App</li>
-                                <li className="flex items-center gap-3 text-slate-500"><CheckCircle2 size={20} /> Financeiro Completo</li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Implantação em 3-5 dias</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Painel dedicado de Professor</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Gestão de Matriculas Básica</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Acesso a Agenda Escolar</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Atualizações via Dashboard</span>
+                                </li>
                             </ul>
-                            <Link href="/demo-access">
-                                <Button className="w-full bg-slate-700 hover:bg-slate-600 text-white rounded-full h-12 font-bold">Avaliar Grátis</Button>
+
+                            <Link href="/demo-access" className="w-full">
+                                <Button className="w-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-sm rounded-xl py-6 font-semibold">
+                                    Começar agora
+                                </Button>
                             </Link>
                         </div>
 
-                        {/* Plan 2 */}
-                        <div className="bg-indigo-600 text-white p-8 rounded-[2rem] transform md:-translate-y-4 shadow-2xl shadow-indigo-900/50 flex flex-col relative ring-4 ring-indigo-500/30">
-                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-1 rounded-full text-xs font-bold tracking-widest uppercase shadow-lg">
-                                Mais Escolhido
+                        {/* Plan 2 (Highlighted) */}
+                        <div className="bg-white rounded-[2rem] p-8 shadow-md border border-slate-200 flex flex-col h-full relative transform md:-translate-y-4 hover:shadow-xl transition-all duration-300">
+                            <div className="mb-6">
+                                <span className="inline-block px-4 py-1.5 bg-indigo-500 text-white text-sm font-semibold rounded-full mb-4">
+                                    Pro Master
+                                </span>
+                                <p className="text-sm text-slate-500 mb-8 min-h-[60px]">
+                                    Ideal se você quer escalar sua gestão escolar rapidamente, com todas as ferramentas táticas ativadas.
+                                </p>
+                                <div className="flex items-baseline gap-1 text-slate-900">
+                                    <span className="text-5xl font-extrabold tracking-tight">R$990</span>
+                                    <span className="text-slate-400 font-medium">/mês</span>
+                                </div>
                             </div>
-                            <h3 className="text-2xl font-bold mb-2">Médio Porte</h3>
-                            <p className="text-indigo-200 mb-6">Até 600 Alunos Ativos</p>
-                            <div className="text-4xl font-black mb-8 border-b border-indigo-500 pb-8 flex items-baseline gap-1">
-                                R$ 599 <span className="text-lg font-normal text-indigo-300">/mês</span>
-                            </div>
+
+                            <div className="border-t border-slate-100 my-6"></div>
+
                             <ul className="space-y-4 mb-8 flex-1">
-                                <li className="flex items-center gap-3"><CheckCircle2 size={20} className="text-indigo-200" /> Tudo do Plano Pequeno</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 size={20} className="text-white bg-indigo-500/50 rounded-full" /> Módulo Financeiro Integrado</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 size={20} className="text-white bg-indigo-500/50 rounded-full" /> Integração com WhatsApp Mensal</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 size={20} className="text-white bg-indigo-500/50 rounded-full" /> Assinatura Digital de Documentos</li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Implantação Expressa 1-3 dias</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Reuniões mensais estratégicas</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Planejamento Pedagógico Inteligente</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Ensalamento Automático</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Portal dos Pais/Alunos completo</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Secretaria Digital Integrada</span>
+                                </li>
                             </ul>
-                            <Link href="/demo-access">
-                                <Button className="w-full bg-white hover:bg-slate-100 text-indigo-700 rounded-full h-12 font-bold shadow-lg">Falar com Consultor</Button>
+
+                            <Link href="/demo-access" className="w-full">
+                                <Button className="w-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-sm rounded-xl py-6 font-semibold">
+                                    Começar agora
+                                </Button>
                             </Link>
                         </div>
 
-                        {/* Plan 3 */}
-                        <div className="bg-slate-800 text-slate-100 p-8 rounded-[2rem] flex flex-col border border-slate-700">
-                            <h3 className="text-2xl font-bold mb-2">Grande Porte</h3>
-                            <p className="text-slate-400 mb-6">Mais de 600 Alunos</p>
-                            <div className="text-4xl font-black mb-8 border-b border-slate-700 pb-8 flex items-center h-10 w-full">
-                                <span className="text-3xl text-slate-300">Sob Medida</span>
+                        {/* Plan 3 (Gradient Background) */}
+                        <div className="rounded-[2rem] p-8 shadow-lg border border-indigo-100 flex flex-col h-full bg-gradient-to-br from-indigo-50 via-purple-50 to-white hover:shadow-xl transition-all duration-300">
+                            <div className="mb-6">
+                                <span className="inline-block px-4 py-1.5 bg-white text-slate-800 shadow-sm text-sm font-semibold rounded-full mb-4">
+                                    Customizado
+                                </span>
+                                <p className="text-sm text-slate-500 mb-8">
+                                    Se esses planos não se encaixam, vamos criar um que sirva perfeitamente. Personalize sua assinatura maior ou menor!
+                                </p>
+                                <div className="flex items-baseline gap-1 text-slate-900 mt-6">
+                                    <span className="text-4xl font-extrabold tracking-tight">Fale com</span>
+                                </div>
+                                <div className="text-4xl font-extrabold tracking-tight text-slate-900 mt-1">Especialistas!</div>
                             </div>
+
+                            <div className="border-t border-indigo-100/50 my-6"></div>
+
                             <ul className="space-y-4 mb-8 flex-1">
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-indigo-400" size={20} /> Tudo do Plano Médio Porte</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-indigo-400" size={20} /> Servidor Dedicado / Auto Hospedado</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-indigo-400" size={20} /> Migração de Dados Pós-Contrato</li>
-                                <li className="flex items-center gap-3"><CheckCircle2 className="text-indigo-400" size={20} /> API Aberta e Treinamento VIP</li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Tudo presente no design e dev</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Workshop de estratégia inicial</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Suporte prioritário 24/7</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Múltiplas requisições simultâneas</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Testes A/B autônomos</span>
+                                </li>
+                                <li className="flex gap-3 items-start">
+                                    <Check className="h-5 w-5 text-slate-800 shrink-0 mt-0.5" />
+                                    <span className="text-slate-600 text-sm">Desenvolvimento avançado sob medida</span>
+                                </li>
                             </ul>
-                            <Link href="/demo-access">
-                                <Button className="w-full bg-slate-700 hover:bg-slate-600 text-white rounded-full h-12 font-bold">Agendar Reunião</Button>
+
+                            <Link href="/demo-access" className="w-full">
+                                <Button className="w-full bg-slate-800 hover:bg-slate-900 text-white shadow-xl rounded-xl py-6 font-semibold border-none">
+                                    Agendar Reunião
+                                </Button>
                             </Link>
                         </div>
                     </div>
