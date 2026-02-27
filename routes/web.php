@@ -16,7 +16,7 @@ Route::get('/', function () {
         return redirect()->route($role . '.dashboard');
     }
 
-    return Inertia::render('auth/login', [
+    return Inertia::render('Public/Landing', [
         'canResetPassword' => Features::enabled(Features::resetPasswords()),
         'canRegister' => Features::enabled(Features::registration()),
         'status' => session('status'),
