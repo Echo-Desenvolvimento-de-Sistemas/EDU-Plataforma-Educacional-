@@ -1,248 +1,255 @@
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import AppLogo from '@/components/app-logo';
 import {
     GraduationCap,
-    Users,
     BookOpen,
-    CalendarCheck,
-    FileText,
-    MessageCircle,
+    Users,
+    BarChart3,
+    MessageSquare,
+    CheckCircle2,
     ArrowRight
 } from 'lucide-react';
 
 export default function Landing() {
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-            <Head title="Plataforma Educacional EDU - Demonstração" />
+        <div className="min-h-screen font-sans" style={{ backgroundColor: '#fce169', color: '#4d3d19' }}>
+            <Head title="Plataforma Educacional EDU - Gestão Inteligente" />
 
-            {/* Navigation / Header */}
-            <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-                <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <div className="flex items-center gap-2 font-bold text-xl text-indigo-700">
-                        <GraduationCap className="h-6 w-6" />
-                        <span>EDU</span>
+            {/* Header */}
+            <header className="w-full py-6 px-4 md:px-8">
+                <div className="container mx-auto flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <AppLogo className="h-8 max-w-[150px]" />
                     </div>
-                    <div>
+
+                    <nav className="hidden md:flex items-center gap-8 font-medium">
+                        <Link href="#funcionalidades" className="hover:opacity-80 transition-opacity">Funcionalidades</Link>
+                        <Link href="#precos" className="hover:opacity-80 transition-opacity">Preços</Link>
+                        <Link href="#contato" className="hover:opacity-80 transition-opacity">Contato</Link>
+                    </nav>
+
+                    <div className="flex items-center gap-4">
                         <Link href="/login">
-                            <Button className="bg-indigo-600 hover:bg-indigo-700">
-                                Acessar Plataforma <ArrowRight className="ml-2 h-4 w-4" />
+                            <button className="hidden md:block font-medium hover:opacity-80 transition-opacity">
+                                Entrar
+                            </button>
+                        </Link>
+                        <Link href="/login">
+                            <Button className="bg-[#4d3d19] hover:bg-[#3d3014] text-white rounded-full px-6">
+                                Agendar Demo
                             </Button>
                         </Link>
                     </div>
                 </div>
             </header>
 
-            <main className="container mx-auto px-4 py-12 md:py-24 space-y-24">
-
-                {/* Hero Section */}
-                <section className="text-center space-y-6 max-w-4xl mx-auto">
-                    <div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-800 mb-4">
-                        <span className="flex h-2 w-2 rounded-full bg-indigo-600 mr-2"></span>
-                        Ambiente de Demonstração
+            {/* Hero Section */}
+            <main className="container mx-auto px-4 md:px-8 pt-12 pb-24 h-full relative overflow-hidden">
+                <div className="text-center relative z-10 max-w-5xl mx-auto">
+                    {/* Decorative Elements */}
+                    <div className="absolute -top-10 -left-10 md:left-10 bg-white p-3 rounded-2xl shadow-sm rotate-[-12deg] z-20 hidden md:block">
+                        <BookOpen className="h-8 w-8 text-[#f97316]" />
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900">
-                        O sistema de gestão escolar <span className="text-indigo-600">simples e inteligente.</span>
+                    <div className="absolute top-20 right-0 md:right-20 bg-white p-3 rounded-2xl shadow-sm rotate-[12deg] z-20 hidden md:block">
+                        <GraduationCap className="h-8 w-8 text-blue-500" />
+                    </div>
+
+                    <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] text-[#4d3d19] mb-8">
+                        GROWING WITH <br />
+                        KNOWLEDGE
                     </h1>
-                    <p className="text-xl text-slate-600 leading-relaxed">
-                        Bem-vindo ao ambiente de testes da Plataforma Educacional EDU.
-                        Explore todas as funcionalidades do sistema como secretaria, professor ou aluno.
+
+                    <p className="text-xl md:text-2xl max-w-2xl mx-auto font-medium mb-16 opacity-80 leading-relaxed">
+                        A gestão inteligente que sua escola merece. Inspire curiosidade, construa confiança e torne cada dia uma nova experiência de aprendizado.
                     </p>
-                    <div className="pt-8 flex flex-col sm:flex-row justify-center gap-4">
-                        <Link href="/login">
-                            <Button size="lg" className="w-full sm:w-auto h-12 px-8 text-base bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-1">
-                                Testar Agora
-                            </Button>
-                        </Link>
-                        <Link href="#credenciais">
-                            <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-8 text-base">
-                                Ver Credenciais de Acesso
-                            </Button>
-                        </Link>
-                    </div>
-                </section>
+                </div>
 
-                {/* Features Carousel/Cards */}
-                <section className="grid md:grid-cols-3 gap-8">
-                    <Card className="border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                        <CardHeader>
-                            <div className="h-12 w-12 rounded-lg bg-emerald-100 flex items-center justify-center mb-4">
-                                <Users className="h-6 w-6 text-emerald-600" />
+                {/* Hero Grid / Image Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end relative z-30 max-w-6xl mx-auto">
+
+                    {/* Left Column */}
+                    <div className="md:col-span-3 space-y-6">
+                        <div className="bg-[#4d3d19] text-white p-6 rounded-[2rem] h-64 flex flex-col justify-between">
+                            <h3 className="text-2xl font-bold leading-tight">Gestão de<br />Secretaria<br />Simplificada</h3>
+                            <div className="flex justify-between items-end opacity-20">
+                                <Users className="h-16 w-16" />
                             </div>
-                            <CardTitle>Gestão da Secretaria</CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-slate-600">
-                            Controle total sobre matrículas, enturmação, histórico escolar, declarações e relatórios administrativos de forma rápida.
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                        <CardHeader>
-                            <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center mb-4">
-                                <BookOpen className="h-6 w-6 text-blue-600" />
-                            </div>
-                            <CardTitle>Portal do Professor</CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-slate-600">
-                            Diário de classe simplificado: chamadas, lançamento de notas, planejamento de aulas integrado à BNCC e banco de questões.
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                        <CardHeader>
-                            <div className="h-12 w-12 rounded-lg bg-orange-100 flex items-center justify-center mb-4">
-                                <GraduationCap className="h-6 w-6 text-orange-600" />
-                            </div>
-                            <CardTitle>Portal do Aluno</CardTitle>
-                        </CardHeader>
-                        <CardContent className="text-slate-600">
-                            Acompanhamento em tempo real de notas, faltas, boletim inteligente e resolução de atividades gamificadas diretamente pela plataforma.
-                        </CardContent>
-                    </Card>
-                </section>
-
-                {/* Additional Modules */}
-                <section className="bg-slate-900 rounded-3xl p-8 md:p-12 text-white">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold mb-4">Muito mais que um diário escolar</h2>
-                        <p className="text-slate-400">Ferramentas integradas para facilitar a comunicação e organização do dia a dia.</p>
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-8 text-center">
-                        <div className="space-y-3 flex flex-col items-center">
-                            <MessageCircle className="h-8 w-8 text-indigo-400" />
-                            <h3 className="font-semibold text-lg">Agenda Digital</h3>
-                            <p className="text-slate-400 text-sm">Comunicação direta com pais e responsáveis via portal ou WhatsApp.</p>
                         </div>
-                        <div className="space-y-3 flex flex-col items-center">
-                            <CalendarCheck className="h-8 w-8 text-indigo-400" />
-                            <h3 className="font-semibold text-lg">Horários de Aula</h3>
-                            <p className="text-slate-400 text-sm">Organização da grade curricular e horários dos professores sem conflitos.</p>
-                        </div>
-                        <div className="space-y-3 flex flex-col items-center">
-                            <FileText className="h-8 w-8 text-indigo-400" />
-                            <h3 className="font-semibold text-lg">Documentos</h3>
-                            <p className="text-slate-400 text-sm">Geração automática de boletins, atas, contratos com validade digital.</p>
+                        <div className="bg-white p-6 rounded-[2rem] text-center aspect-square flex flex-col justify-center items-center">
+                            <div className="text-[#f97316] text-5xl font-black mb-2">50+</div>
+                            <div className="text-[#4d3d19] font-medium leading-tight">Relatórios<br />Gerenciais</div>
                         </div>
                     </div>
-                </section>
 
-                {/* Credentials Section */}
-                <section id="credenciais" className="max-w-4xl mx-auto pt-8">
-                    <div className="text-center space-y-4 mb-10">
-                        <h2 className="text-3xl font-bold">Acesse e Experimente</h2>
-                        <p className="text-slate-600">Utilize as credenciais abaixo para testar diferentes perfis do sistema. Fique à vontade para criar, editar ou apagar dados neste ambiente de demonstração.</p>
+                    {/* Center Column (Image Placeholder) */}
+                    <div className="md:col-span-6 h-[500px] bg-[#e6c846] rounded-[3rem] relative overflow-hidden hidden md:block shadow-inner border-4 border-[#fce169]">
+                        {/* Placeholder for the smiling kid/manager */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-[#4d3d19] opacity-50">
+                            <Users className="h-32 w-32 mb-4" />
+                            <span className="font-bold text-xl uppercase tracking-widest">[ Imagem Principal ]</span>
+                        </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {/* Admin Credential */}
-                        <Card className="border-indigo-100 bg-white">
-                            <CardHeader className="pb-2">
-                                <CardTitle className="flex items-center gap-2 text-indigo-700">
-                                    <Users className="h-5 w-5" />
-                                    Admin / Secretaria
-                                </CardTitle>
-                                <CardDescription>Acesso total às configurações e matrículas.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="bg-slate-50 p-4 rounded-md space-y-2 border border-slate-100 font-mono text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Login:</span>
-                                        <span className="font-semibold text-slate-800">admin@admin.com</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Senha:</span>
-                                        <span className="font-semibold text-slate-800">admin123</span>
-                                    </div>
+                    {/* Right Column */}
+                    <div className="md:col-span-3 space-y-6">
+                        <div className="bg-white p-6 rounded-[2rem] h-64 flex flex-col justify-center text-center">
+                            <div className="text-[#f97316] text-5xl font-black mb-2">20+</div>
+                            <div className="text-[#4d3d19] font-medium leading-tight mb-6">Módulos de<br />Aprendizado</div>
+                            <Link href="/login" className="font-bold border-b-2 border-[#4d3d19] inline-block pb-1 mx-auto hover:text-[#f97316] hover:border-[#f97316] transition-colors">
+                                Conheça a Plataforma
+                            </Link>
+                        </div>
+                        <div className="bg-[#4d3d19] text-white p-6 rounded-[2rem] text-center aspect-square flex flex-col justify-center items-center">
+                            <div className="flex justify-center mb-4">
+                                {/* Avatars placeholder */}
+                                <div className="flex -space-x-3">
+                                    <div className="w-10 h-10 rounded-full bg-slate-300 border-2 border-[#4d3d19]"></div>
+                                    <div className="w-10 h-10 rounded-full bg-slate-400 border-2 border-[#4d3d19]"></div>
+                                    <div className="w-10 h-10 rounded-full bg-slate-500 border-2 border-[#4d3d19]"></div>
                                 </div>
-                            </CardContent>
-                        </Card>
-
-                        {/* Professor Credential */}
-                        <Card className="border-indigo-100 bg-white">
-                            <CardHeader className="pb-2">
-                                <CardTitle className="flex items-center gap-2 text-blue-700">
-                                    <BookOpen className="h-5 w-5" />
-                                    Professor
-                                </CardTitle>
-                                <CardDescription>Acesso ao diário de classe e avaliações.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="bg-slate-50 p-4 rounded-md space-y-2 border border-slate-100 font-mono text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Login:</span>
-                                        <span className="font-semibold text-slate-800">professor@demo.com</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Senha:</span>
-                                        <span className="font-semibold text-slate-800">password</span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        {/* Student Credential */}
-                        <Card className="border-indigo-100 bg-white">
-                            <CardHeader className="pb-2">
-                                <CardTitle className="flex items-center gap-2 text-orange-700">
-                                    <GraduationCap className="h-5 w-5" />
-                                    Aluno
-                                </CardTitle>
-                                <CardDescription>Visão do aluno, notas e boletim.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="bg-slate-50 p-4 rounded-md space-y-2 border border-slate-100 font-mono text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Login:</span>
-                                        <span className="font-semibold text-slate-800">aluno@demo.com</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Senha:</span>
-                                        <span className="font-semibold text-slate-800">password</span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        {/* Guardian Credential */}
-                        <Card className="border-indigo-100 bg-white">
-                            <CardHeader className="pb-2">
-                                <CardTitle className="flex items-center gap-2 text-emerald-700">
-                                    <Users className="h-5 w-5" />
-                                    Responsável
-                                </CardTitle>
-                                <CardDescription>Acesso às informações dos dependentes.</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="bg-slate-50 p-4 rounded-md space-y-2 border border-slate-100 font-mono text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Login:</span>
-                                        <span className="font-semibold text-slate-800">responsavel@demo.com</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-500">Senha:</span>
-                                        <span className="font-semibold text-slate-800">password</span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
+                            </div>
+                            <div className="text-3xl font-black mb-1">500+</div>
+                            <div className="text-sm opacity-80 font-medium">Escolas Satisfeitas</div>
+                        </div>
                     </div>
-
-                    <div className="mt-12 text-center pb-8 border-b">
-                        <Link href="/login">
-                            <Button size="lg" className="h-12 px-8 text-base bg-indigo-600 hover:bg-indigo-700">
-                                Acessar Plataforma <ArrowRight className="ml-2 h-4 w-4" />
-                            </Button>
-                        </Link>
-                    </div>
-                </section>
-
+                </div>
             </main>
 
-            <footer className="py-8 text-center text-slate-500 text-sm">
-                <p>&copy; {new Date().getFullYear()} Echo Desenvolvimento de Sistemas. Todos os direitos reservados.</p>
+            {/* Features Section */}
+            <section id="funcionalidades" className="py-24 bg-white rounded-t-[4rem]">
+                <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-5xl font-black uppercase text-[#4d3d19] mb-4">Feito para Gestores</h2>
+                        <p className="text-xl opacity-70 max-w-2xl mx-auto">Tudo que uma escola de médio porte precisa para funcionar com eficiência, desde a portaria até a sala dos professores.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {/* Feature 1 */}
+                        <div className="p-8 rounded-[2rem] bg-[#fce169] bg-opacity-30 border border-[#fce169]">
+                            <div className="w-14 h-14 rounded-2xl bg-[#4d3d19] flex items-center justify-center mb-6 text-white">
+                                <Users size={28} />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-4">Secretaria Ágil</h3>
+                            <p className="opacity-80 leading-relaxed">Controle de matrículas, emissão de documentos, histórico escolar e relatórios do Censo Escolar com poucos cliques. Diga adeus ao papel.</p>
+                        </div>
+
+                        {/* Feature 2 */}
+                        <div className="p-8 rounded-[2rem] bg-orange-50 border border-orange-100">
+                            <div className="w-14 h-14 rounded-2xl bg-[#f97316] flex items-center justify-center mb-6 text-white">
+                                <BookOpen size={28} />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-4">Diário do Professor</h3>
+                            <p className="opacity-80 leading-relaxed">Notas, faltas, plano de ensino integrado à BNCC e banco de questões. Tudo via celular ou computador, com interface amigável.</p>
+                        </div>
+
+                        {/* Feature 3 */}
+                        <div className="p-8 rounded-[2rem] bg-indigo-50 border border-indigo-100">
+                            <div className="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center mb-6 text-white">
+                                <MessageSquare size={28} />
+                            </div>
+                            <h3 className="text-2xl font-bold mb-4">Agenda Digital</h3>
+                            <p className="opacity-80 leading-relaxed">Aproxime os pais da escola. Envie comunicados, boletos e acompanhamento de rotina diretamente pelo app ou WhatsApp integrado.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Pricing Section */}
+            <section id="precos" className="py-24 bg-[#4d3d19] text-white">
+                <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 text-[#fce169]">Planos e Preços</h2>
+                        <p className="text-xl opacity-80 max-w-2xl mx-auto">Valores justos e proporcionais ao tamanho da sua instituição.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        {/* Plan 1 */}
+                        <div className="bg-white text-[#4d3d19] p-8 rounded-[2rem] flex flex-col">
+                            <h3 className="text-2xl font-bold mb-2">Pequeno Porte</h3>
+                            <p className="opacity-70 mb-6">Até 200 Alunos</p>
+                            <div className="text-4xl font-black mb-8 border-b pb-8">
+                                R$ 299 <span className="text-lg font-normal opacity-70">/mês</span>
+                            </div>
+                            <ul className="space-y-4 mb-8 flex-1">
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Usuários Ilimitados</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Diário Escolar</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Portal do Aluno</li>
+                                <li className="flex items-center gap-3 opacity-40"><CheckCircle2 size={20} /> App Agenda e WhatsApp</li>
+                            </ul>
+                            <Button className="w-full bg-[#4d3d19] hover:bg-[#3d3014] text-white rounded-full h-12">Teste Grátis</Button>
+                        </div>
+
+                        {/* Plan 2 */}
+                        <div className="bg-[#fce169] text-[#4d3d19] p-8 rounded-[2rem] transform md:-translate-y-4 shadow-xl border-4 border-[#e6c846] flex flex-col relative">
+                            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-4 py-1 rounded-full text-sm font-bold tracking-wider">
+                                MAIS ESCOLHIDO
+                            </div>
+                            <h3 className="text-2xl font-bold mb-2">Médio Porte</h3>
+                            <p className="opacity-70 mb-6">Até 600 Alunos</p>
+                            <div className="text-4xl font-black mb-8 border-b border-[#4d3d19]/20 pb-8">
+                                R$ 599 <span className="text-lg font-normal opacity-70">/mês</span>
+                            </div>
+                            <ul className="space-y-4 mb-8 flex-1">
+                                <li className="flex items-center gap-3"><CheckCircle2 size={20} /> Tudo do Pequeno Porte</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 size={20} /> App Agenda Digital</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 size={20} /> Integração com WhatsApp</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 size={20} /> Cobrança Recorrente</li>
+                            </ul>
+                            <Button className="w-full bg-[#4d3d19] hover:bg-[#3d3014] text-white rounded-full h-12">Falar com Consultor</Button>
+                        </div>
+
+                        {/* Plan 3 */}
+                        <div className="bg-white text-[#4d3d19] p-8 rounded-[2rem] flex flex-col">
+                            <h3 className="text-2xl font-bold mb-2">Grande Porte</h3>
+                            <p className="opacity-70 mb-6">Mais de 600 Alunos</p>
+                            <div className="text-4xl font-black mb-8 border-b pb-8">
+                                Sob Consulta
+                            </div>
+                            <ul className="space-y-4 mb-8 flex-1">
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Tudo do Médio Porte</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Servidor Dedicado</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> Migração de Dados Inclusa</li>
+                                <li className="flex items-center gap-3"><CheckCircle2 className="text-[#f97316]" size={20} /> API Aberta e Treinamento</li>
+                            </ul>
+                            <Button className="w-full bg-[#4d3d19] hover:bg-[#3d3014] text-white rounded-full h-12">Agendar Reunião</Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Demo Credentials Footer */}
+            <footer id="contato" className="py-24 bg-white text-center">
+                <div className="container mx-auto px-4 max-w-4xl">
+                    <h2 className="text-3xl font-bold mb-8 text-[#4d3d19]">Acesse o Ambiente de Demonstração</h2>
+                    <p className="text-lg opacity-70 mb-12 max-w-2xl mx-auto">
+                        Você está no domínio de testes. Use as credenciais abaixo para ver a plataforma por dentro sem compromisso.
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-4 mb-12">
+                        <div className="bg-slate-100 px-6 py-4 rounded-xl text-left border border-slate-200">
+                            <div className="text-sm font-bold text-slate-500 mb-1 uppercase tracking-wider">Acesso Diretor/Secretaria</div>
+                            <div className="font-mono font-medium text-[#4d3d19]">admin@admin.com</div>
+                            <div className="font-mono text-slate-500">admin123</div>
+                        </div>
+                        <div className="bg-slate-100 px-6 py-4 rounded-xl text-left border border-slate-200">
+                            <div className="text-sm font-bold text-slate-500 mb-1 uppercase tracking-wider">Acesso Professor</div>
+                            <div className="font-mono font-medium text-[#4d3d19]">professor@demo.com</div>
+                            <div className="font-mono text-slate-500">password</div>
+                        </div>
+                    </div>
+
+                    <Link href="/login">
+                        <Button size="lg" className="bg-[#f97316] hover:bg-[#d96614] text-white rounded-full h-14 px-10 text-lg font-bold">
+                            Entrar no Sistema <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                    </Link>
+                </div>
             </footer>
+            {/* Copyright */}
+            <div className="bg-slate-100 py-6 text-center text-sm font-medium opacity-60">
+                &copy; {new Date().getFullYear()} EDU - Gestão Escolar. Todos os direitos reservados.
+            </div>
         </div>
     );
 }
-
