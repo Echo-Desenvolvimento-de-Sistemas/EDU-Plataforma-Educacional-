@@ -23,6 +23,10 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/demo-access', function () {
+    return Inertia::render('Public/DemoAccess');
+})->name('demo.access');
+
 Route::get('/magic-login/{user}', [\App\Http\Controllers\Auth\MagicLoginController::class, 'verify'])
     ->name('magic-login.verify')
     ->middleware('signed');
