@@ -24,11 +24,11 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.http.services.edu.loadbalancer.server.port=80"
-        - "traefik.http.routers.edu.rule=Host(`app.colegiorosadesharom.com.br`)"
+        - "traefik.http.routers.edu.rule=Host(`edu.echo.dev.br`)"
         - "traefik.http.routers.edu.entrypoints=websecure"
         - "traefik.http.routers.edu.tls.certresolver=myresolver"
         # WebSocket support for Reverb
-        - "traefik.http.routers.edu-ws.rule=Host(`app.colegiorosadesharom.com.br`) && PathPrefix(`/app`)"
+        - "traefik.http.routers.edu-ws.rule=Host(`edu.echo.dev.br`) && PathPrefix(`/app`)"
         - "traefik.http.routers.edu-ws.entrypoints=websecure"
         - "traefik.http.routers.edu-ws.tls.certresolver=myresolver"
     healthcheck:
