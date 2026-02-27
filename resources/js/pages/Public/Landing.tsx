@@ -16,7 +16,10 @@ import {
     Check,
     PieChart,
     ClipboardCheck,
-    Smartphone
+    Smartphone,
+    Trophy,
+    Medal,
+    Star
 } from 'lucide-react';
 
 export default function Landing() {
@@ -564,6 +567,145 @@ export default function Landing() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* O Grande Diferencial: Gamificação Escolar */}
+            <section className="py-24 bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 relative overflow-hidden border-t-4 border-indigo-500">
+                {/* Background Decorators */}
+                <div className="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div className="container mx-auto px-4 md:px-8 max-w-6xl relative z-10">
+                    <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+                        {/* Text Content */}
+                        <div className="w-full lg:w-1/2 text-center lg:text-left">
+                            <div className="inline-flex items-center justify-center px-4 py-1.5 bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 rounded-full font-bold text-sm mb-6 uppercase tracking-wider">
+                                <Star className="w-4 h-4 mr-2" fill="currentColor" />
+                                O Grande Diferencial
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                                Engaje os alunos através da <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">Gamificação</span>
+                            </h2>
+                            <p className="text-lg md:text-xl text-indigo-100/80 mb-8 leading-relaxed">
+                                Transforme o comportamento positivo e o rendimento acadêmico em uma jornada divertida. O sistema recompensa os alunos com moedas digitais e emblemas de conquista, estimulando a participação ativa e reduzindo a indisciplina.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4">
+                                    <div className="w-10 h-10 rounded-full bg-yellow-400/20 text-yellow-400 flex items-center justify-center flex-shrink-0">
+                                        <Trophy size={20} />
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-xs text-indigo-200">Recompensas por</p>
+                                        <p className="text-sm font-bold text-white">Notas e Assiduidade</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4">
+                                    <div className="w-10 h-10 rounded-full bg-orange-400/20 text-orange-400 flex items-center justify-center flex-shrink-0">
+                                        <Medal size={20} />
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-xs text-indigo-200">Recompensas por</p>
+                                        <p className="text-sm font-bold text-white">Bom Comportamento</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Interactive UI Illustration */}
+                        <div className="w-full lg:w-1/2 relative flex justify-center lg:justify-end h-[400px]">
+
+                            {/* Main App Window */}
+                            <div className="relative w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden z-10 border border-indigo-100">
+                                {/* Header */}
+                                <div className="bg-indigo-600 p-5 pb-8 relative overflow-hidden">
+                                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500 rounded-full opacity-50"></div>
+                                    <div className="relative z-10 flex items-center gap-4">
+                                        <div className="w-14 h-14 bg-indigo-200 rounded-full border-2 border-white overflow-hidden flex items-center justify-center text-indigo-700 font-bold text-xl">L</div>
+                                        <div>
+                                            <p className="text-indigo-100 text-sm font-medium">Nível 12</p>
+                                            <h4 className="text-white font-bold text-xl">Lucas Silva</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Content Body */}
+                                <div className="bg-slate-50 p-5 -mt-4 rounded-t-2xl relative z-20 space-y-4">
+                                    {/* Coins Card */}
+                                    <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex items-center justify-between transform transition hover:-translate-y-1">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
+                                                <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center text-white border-2 border-yellow-200 shadow-sm text-xs font-bold">E</div>
+                                            </div>
+                                            <div>
+                                                <h5 className="text-slate-800 font-bold text-sm">EduCoins</h5>
+                                                <p className="text-slate-400 text-[10px]">Saldo Atual</p>
+                                            </div>
+                                        </div>
+                                        <span className="text-xl font-black text-slate-800">1.450</span>
+                                    </div>
+
+                                    {/* Badges Label */}
+                                    <h5 className="text-slate-600 font-bold text-sm mt-4">Últimas Conquistas</h5>
+
+                                    {/* Badges List */}
+                                    <div className="flex gap-3">
+                                        <div className="bg-white border text-center border-slate-100 rounded-xl p-3 shadow-sm flex-1 flex flex-col items-center">
+                                            <div className="w-12 h-12 mb-2 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-inner relative">
+                                                <Star className="text-white w-6 h-6" fill="currentColor" />
+                                                <span className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[8px] font-bold text-slate-800 shadow-sm">+5</span>
+                                            </div>
+                                            <span className="text-[10px] font-bold text-slate-700">Gabarito</span>
+                                        </div>
+                                        <div className="bg-white border text-center border-slate-100 rounded-xl p-3 shadow-sm flex-1 flex flex-col items-center">
+                                            <div className="w-12 h-12 mb-2 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center shadow-inner relative">
+                                                <ClipboardCheck className="text-white w-6 h-6" />
+                                                <span className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[8px] font-bold text-slate-800 shadow-sm">+2</span>
+                                            </div>
+                                            <span className="text-[10px] font-bold text-slate-700">100% Freq.</span>
+                                        </div>
+                                        <div className="bg-white border text-center border-slate-100 rounded-xl p-3 shadow-sm flex-1 flex flex-col items-center opacity-50 grayscale">
+                                            <div className="w-12 h-12 mb-2 bg-gradient-to-br from-slate-200 to-slate-300 rounded-full flex items-center justify-center shadow-inner relative">
+                                                <Trophy className="text-slate-400 w-6 h-6" />
+                                            </div>
+                                            <span className="text-[10px] font-bold text-slate-500">Mês Perfeito</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Floating Rank Item */}
+                            <div className="absolute top-1/2 -left-12 lg:-left-20 transform -translate-y-1/2 bg-white rounded-2xl p-4 shadow-2xl border border-slate-100 z-30 animate-[bounce_4s_infinite]">
+                                <h5 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Ranking da Turma</h5>
+                                <div className="space-y-3 w-48">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs font-bold w-4 text-emerald-500">1º</span>
+                                            <div className="w-6 h-6 bg-indigo-100 text-indigo-700 font-bold text-[10px] rounded-full flex items-center justify-center">M</div>
+                                            <span className="text-sm font-semibold text-slate-700">Mariana</span>
+                                        </div>
+                                        <span className="text-xs font-bold text-slate-400">2.1K</span>
+                                    </div>
+                                    <div className="flex items-center justify-between bg-indigo-50 -mx-2 px-2 py-1.5 rounded-lg border border-indigo-100 relative">
+                                        <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-indigo-500 rounded-l-lg"></div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs font-bold w-4 text-slate-400">2º</span>
+                                            <div className="w-6 h-6 bg-indigo-600 text-white font-bold text-[10px] rounded-full flex items-center justify-center border border-indigo-300">L</div>
+                                            <span className="text-sm font-bold text-indigo-700">Lucas</span>
+                                        </div>
+                                        <span className="text-xs font-bold text-indigo-700">1.4K</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Floating Coin Decoration */}
+                            <div className="absolute -top-6 right-10 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-200 shadow-xl flex items-center justify-center transform rotate-12 z-20 animate-[pulse_3s_infinite]">
+                                <span className="text-white font-black text-2xl drop-shadow-md">E</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
