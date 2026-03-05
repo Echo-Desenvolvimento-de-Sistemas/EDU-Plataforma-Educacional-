@@ -25,7 +25,6 @@ Complete guide for deploying the EDU educational platform to the VPS at `echo.de
 ### Access Requirements
 - SSH access to VPS
 - GitHub account with access to the repository
-- GitHub Personal Access Token (PAT) with `read:packages` permission
 
 ### Infrastructure Details
 ```
@@ -79,22 +78,7 @@ nano .env
 chmod +x deploy.sh
 ```
 
-### 4. Login to GitHub Container Registry
-
-```bash
-# Login with your GitHub username and Personal Access Token
-docker login ghcr.io
-# Username: your-github-username
-# Password: your-github-personal-access-token
-```
-
-**To create a GitHub PAT:**
-1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Click "Generate new token (classic)"
-3. Select scope: `read:packages`
-4. Copy the token and use it as password
-
-### 5. Verify Network
+### 4. Verify Network
 
 ```bash
 # Check if echonet network exists
@@ -117,68 +101,32 @@ docker network create --driver overlay echonet
 ```
 
 The script will:
-1. Login to GitHub Container Registry
-2. Pull the latest Docker image
-3. Create `.env` file if not exists
-4. Generate `APP_KEY` if missing
-5. Create the database if not exists
-6. Deploy the stack to Docker Swarm
-7. Show service status and logs
+1. Build the Docker image locally
+2. Create `.env` file if not exists
+3. Generate `APP_KEY` if missing
+4. Create the database if not exists
+5. Deploy the stack to Docker Swarm
+6. Show service status and logs
 
 ### Manual Deployment
 
 If you prefer manual control:
 
 ```bash
-# 1. Login to GHCR
-docker login ghcr.io
+# 1. Build the image locally
+docker build -t edu-plataforma-educacional:latest .
 
-# 2. Pull the latest image
-docker pull ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
-
-# 3. Create database
+# 2. Create database
 docker exec $(docker ps -q -f name=database_mariadb) \
   mysql -uroot -pAkio2604* \
   -e "CREATE DATABASE IF NOT EXISTS edu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-# 4. Deploy the stack
-docker stack deploy -c docker-compose.yml --with-registry-auth edu
-
-# 5. Check status
-docker stack services edu
-```
-
-### Emergency Manual Deployment (GitHub Actions Failure)
-
-If the GitHub Actions pipeline fails and you need to build and deploy locally on the VPS, follow these steps to bypass Docker Swarm's default image caching (which always prioritizes the remote registry):
-
-```bash
-# 1. Pull the latest code
-cd /opt/apps/edu
-git pull origin main
-
-# 2. Build the image locally without cache
-docker build --no-cache -t ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest .
-
-# 3. Tag the image as a local-only image
-# This forces Swarm to use the local image instead of checking the registry
-docker tag ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest edu-local:v1
-
-# 4. Temporarily update docker-compose.yml to use the local image
-sed -i 's|ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest|edu-local:v1|g' docker-compose.yml
-
-# 5. Deploy the stack (without registry auth)
+# 3. Deploy the stack
 docker stack deploy -c docker-compose.yml edu
 
-# 6. Force the service to update
-docker service update --force edu_app
+# 4. Check status
+docker stack services edu
 ```
-
-> [!TIP]
-> **Restore Normal Deployment:** Once GitHub Actions is fixed and you want to return to automated remote deployments, revert your `docker-compose.yml` file back to the remote image:
-> ```bash
-> git checkout docker-compose.yml
-> ```
 
 ---
 
@@ -251,7 +199,7 @@ docker exec $(docker ps -q -f name=edu_app) chown -R www-data:www-data /var/www/
 
 ### Updating the Application
 
-Always run a manual update to ensure your host files (like scripts and `docker-compose.yml`) are in sync before pulling the latest image.
+Always run a manual update to ensure your host files (like scripts and `docker-compose.yml`) are in sync before building the latest image.
 
 1. Navigate to your project directory:
 ```bash
@@ -263,7 +211,7 @@ cd /opt/apps/edu
 # Pull latest code
 git pull origin main
 
-# Run the deployment script (which pulls the image and updates the stack)
+# Run the deployment script (which builds the image and updates the stack)
 ./deploy.sh
 ```
 
@@ -272,11 +220,11 @@ git pull origin main
 # Pull latest code
 git pull origin main
 
-# Pull latest image
-docker pull ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
+# Build latest image
+docker build -t edu-plataforma-educacional:latest .
 
 # Update the stack
-docker stack deploy -c docker-compose.yml --with-registry-auth edu
+docker stack deploy -c docker-compose.yml edu
 ```
 
 ### Database Backups
@@ -438,8 +386,8 @@ docker exec $(docker ps -q -f name=edu_app) php artisan view:cache
 # Find previous image SHA
 docker images | grep edu-plataforma-educacional
 
-# Update service to use specific image
-docker service update --image ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:sha-<commit-sha> edu_app
+# Update service to use specific image hash/tag
+docker service update --image edu-plataforma-educacional:<tag> edu_app
 ```
 
 ---

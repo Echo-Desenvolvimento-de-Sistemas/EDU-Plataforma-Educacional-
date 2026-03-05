@@ -12,8 +12,13 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
+<<<<<<< Updated upstream
 STACK_NAME="edu_demo"
 IMAGE_NAME="ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest"
+=======
+STACK_NAME="edu"
+IMAGE_NAME="edu-plataforma-educacional:latest"
+>>>>>>> Stashed changes
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
 ENV_PRODUCTION_FILE=".env.production"
@@ -42,14 +47,9 @@ if ! docker network ls | grep -q "echonet"; then
     exit 1
 fi
 
-# Login to GitHub Container Registry
-echo -e "${YELLOW}Logging in to GitHub Container Registry...${NC}"
-echo -e "${YELLOW}You may need to provide your GitHub Personal Access Token${NC}"
-docker login ghcr.io
-
-# Pull the latest image
-echo -e "${YELLOW}Pulling latest image...${NC}"
-docker pull $IMAGE_NAME
+# Build the image locally
+echo -e "${YELLOW}Building the Docker image locally (this may take a few minutes)...${NC}"
+docker build -t $IMAGE_NAME .
 
 # Create .env file if it doesn't exist
 if [ ! -f "$ENV_FILE" ]; then
@@ -72,7 +72,7 @@ docker exec $(docker ps -q -f name=database_mariadb) mysql -uroot -pAkio2604* -e
 
 # Deploy the stack
 echo -e "${YELLOW}Deploying stack...${NC}"
-docker stack deploy -c $COMPOSE_FILE --with-registry-auth $STACK_NAME
+docker stack deploy -c $COMPOSE_FILE $STACK_NAME
 
 # Wait for services to be ready
 echo -e "${YELLOW}Waiting for services to start...${NC}"
