@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\StudentController::update
- * @see app/Http/Controllers/Admin/StudentController.php:362
+ * @see app/Http/Controllers/Admin/StudentController.php:429
  * @route '/admin/students/{student}/reset-password'
  */
 export const update = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\StudentController::update
- * @see app/Http/Controllers/Admin/StudentController.php:362
+ * @see app/Http/Controllers/Admin/StudentController.php:429
  * @route '/admin/students/{student}/reset-password'
  */
 update.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ update.url = (args: { student: number | { id: number } } | [student: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\StudentController::update
- * @see app/Http/Controllers/Admin/StudentController.php:362
+ * @see app/Http/Controllers/Admin/StudentController.php:429
  * @route '/admin/students/{student}/reset-password'
  */
 update.post = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ update.post = (args: { student: number | { id: number } } | [student: number | {
 
     /**
 * @see \App\Http\Controllers\Admin\StudentController::update
- * @see app/Http/Controllers/Admin/StudentController.php:362
+ * @see app/Http/Controllers/Admin/StudentController.php:429
  * @route '/admin/students/{student}/reset-password'
  */
     const updateForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ update.post = (args: { student: number | { id: number } } | [student: number | {
 
             /**
 * @see \App\Http\Controllers\Admin\StudentController::update
- * @see app/Http/Controllers/Admin/StudentController.php:362
+ * @see app/Http/Controllers/Admin/StudentController.php:429
  * @route '/admin/students/{student}/reset-password'
  */
         updateForm.post = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

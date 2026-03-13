@@ -22,17 +22,39 @@ interface AllowedChannel {
     name: string;
 }
 
+interface ClassRoom {
+    id: number;
+    name: string;
+    grade?: { name: string };
+}
+
+interface Student {
+    id: number;
+    name: string;
+    class_room_id?: number;
+}
+
 interface Props {
     channels: Channel[];
     allowedChannels?: AllowedChannel[];
     canConfigure?: boolean;
+    classes?: ClassRoom[];
+    students?: Student[];
 }
 
-export default function Inbox({ channels, allowedChannels = [], canConfigure = false }: Props) {
+export default function Inbox({ channels, allowedChannels = [], canConfigure = false, classes = [], students = [] }: Props) {
     const [isComposeOpen, setIsComposeOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const { appearance, updateAppearance } = useAppearance();
-    const { settings } = usePage<any>().props;
+    const { data: pageData, settings } = usePage<any>().props;
+    const userRole = pageData?.user?.role || 'aluno';
+
+    // Staff roles use specific admin/professor routes
+    // Students/Guardians use the default /admin/agenda/message (which is common)
+    // or we can adjust based on role if needed. Actually the store() in AgendaController is for replies.
+    // sendMessage() is in Admin\AgendaController.
+    const submitUrl = canConfigure ? '/admin/agenda/message' : 
+                      (userRole === 'professor' ? '/professor/agenda/message' : '/admin/agenda/message');
 
     const toggleTheme = () => {
         updateAppearance(appearance === 'dark' ? 'light' : 'dark');
@@ -74,10 +96,21 @@ export default function Inbox({ channels, allowedChannels = [], canConfigure = f
         setTimeout(() => setIsRefreshing(false), 500);
     };
 
-    // Poll every 5 seconds
+    // Poll every 15 seconds (optimized from 5s)
     useEffect(() => {
-        const interval = setInterval(refreshInbox, 5000);
-        return () => clearInterval(interval);
+        const poll = () => {
+            if (document.visibilityState === 'visible') {
+                refreshInbox();
+            }
+        };
+
+        const interval = setInterval(poll, 15000);
+        document.addEventListener('visibilitychange', poll);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', poll);
+        };
     }, []);
 
     const filteredChannels = localChannels.filter(channel =>
@@ -134,7 +167,7 @@ export default function Inbox({ channels, allowedChannels = [], canConfigure = f
                             )}
                         </Button>
                         {canConfigure && (
-                            <Link href="/admin/agenda/settings">
+                            <Link href="/admin/agenda">
                                 <Button
                                     size="icon"
                                     variant="ghost"
@@ -234,7 +267,9 @@ export default function Inbox({ channels, allowedChannels = [], canConfigure = f
                 isOpen={isComposeOpen}
                 onClose={() => setIsComposeOpen(false)}
                 channels={allowedChannels}
-                submitUrl={canConfigure ? '/admin/agenda/message' : '/professor/agenda/message'}
+                classes={classes}
+                students={students}
+                submitUrl={submitUrl}
             />
         </div>
     );

@@ -117,6 +117,12 @@ export default function Index({ students, classRooms, filters }: Props) {
             });
     };
 
+    const getStatusBadgeColor = (status: string) => {
+        return status === 'active' 
+            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+            : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800';
+    };
+
     const handlePrint = () => {
         window.print();
     };
@@ -208,7 +214,7 @@ export default function Index({ students, classRooms, filters }: Props) {
                                     CPF: {student.cpf || '-'}
                                 </div>
                                 <div className="mb-4">
-                                    <Badge variant={student.status === 'active' ? 'secondary' : 'destructive'}>
+                                    <Badge variant="outline" className={getStatusBadgeColor(student.status)}>
                                         {student.status === 'active' ? 'Ativo' : 'Cancelado'}
                                     </Badge>
                                 </div>
@@ -291,7 +297,7 @@ export default function Index({ students, classRooms, filters }: Props) {
                                             {student.cpf || '-'}
                                         </td>
                                         <td className="whitespace-nowrap px-6 py-4 text-sm">
-                                            <Badge variant={student.status === 'active' ? 'secondary' : 'destructive'}>
+                                            <Badge variant="outline" className={getStatusBadgeColor(student.status)}>
                                                 {student.status === 'active' ? 'Ativo' : 'Cancelado'}
                                             </Badge>
                                         </td>

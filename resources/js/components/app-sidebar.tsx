@@ -395,6 +395,14 @@ export function AppSidebar() {
                                                 </Link>
                                             </SidebarMenuButton>
                                         </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton asChild tooltip="Agenda Digital">
+                                                <Link href="/admin/agenda">
+                                                    <MessageCircle />
+                                                    <span>Agenda Digital</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
                                     </SidebarMenu>
                                 </CollapsibleContent>
                             </SidebarGroup>

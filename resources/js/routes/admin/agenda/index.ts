@@ -80,7 +80,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:88
+ * @see app/Http/Controllers/Admin/AgendaController.php:123
  * @route '/admin/agenda'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -95,7 +95,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:88
+ * @see app/Http/Controllers/Admin/AgendaController.php:123
  * @route '/admin/agenda'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:88
+ * @see app/Http/Controllers/Admin/AgendaController.php:123
  * @route '/admin/agenda'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:88
+ * @see app/Http/Controllers/Admin/AgendaController.php:123
  * @route '/admin/agenda'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:88
+ * @see app/Http/Controllers/Admin/AgendaController.php:123
  * @route '/admin/agenda'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -135,7 +135,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:120
+ * @see app/Http/Controllers/Admin/AgendaController.php:156
  * @route '/admin/agenda/message'
  */
 export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -150,7 +150,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:120
+ * @see app/Http/Controllers/Admin/AgendaController.php:156
  * @route '/admin/agenda/message'
  */
 send.url = (options?: RouteQueryOptions) => {
@@ -159,7 +159,7 @@ send.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:120
+ * @see app/Http/Controllers/Admin/AgendaController.php:156
  * @route '/admin/agenda/message'
  */
 send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -169,7 +169,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:120
+ * @see app/Http/Controllers/Admin/AgendaController.php:156
  * @route '/admin/agenda/message'
  */
     const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -179,7 +179,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:120
+ * @see app/Http/Controllers/Admin/AgendaController.php:156
  * @route '/admin/agenda/message'
  */
         sendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -189,8 +189,8 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     
     send.form = sendForm
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
 export const settings = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -199,13 +199,13 @@ export const settings = (options?: RouteQueryOptions): RouteDefinition<'get'> =>
 })
 
 settings.definition = {
-    methods: ["get","head"],
+    methods: ["get","head","post","put","patch","delete","options"],
     url: '/admin/agenda/settings',
-} satisfies RouteDefinition<["get","head"]>
+} satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
 settings.url = (options?: RouteQueryOptions) => {
@@ -213,8 +213,8 @@ settings.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
 settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -222,18 +222,63 @@ settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
 settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: settings.url(options),
     method: 'head',
 })
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+settings.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: settings.url(options),
+    method: 'post',
+})
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+settings.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: settings.url(options),
+    method: 'put',
+})
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+settings.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: settings.url(options),
+    method: 'patch',
+})
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+settings.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: settings.url(options),
+    method: 'delete',
+})
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+settings.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
+    url: settings.url(options),
+    method: 'options',
+})
 
     /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
     const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -242,8 +287,8 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
         settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -251,8 +296,8 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::settings
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
  * @route '/admin/agenda/settings'
  */
         settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -264,8 +309,175 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
+            /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+        settingsForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: settings.url(options),
+            method: 'post',
+        })
+            /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+        settingsForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: settings.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PUT',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+            /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+        settingsForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: settings.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+            /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+        settingsForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: settings.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'DELETE',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+            /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+ * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+ * @route '/admin/agenda/settings'
+ */
+        settingsForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: settings.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'OPTIONS',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
     
     settings.form = settingsForm
+/**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+export const direct = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: direct.url(args, options),
+    method: 'get',
+})
+
+direct.definition = {
+    methods: ["get","head"],
+    url: '/admin/agenda/direct/{student}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+direct.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { student: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { student: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    student: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        student: typeof args.student === 'object'
+                ? args.student.id
+                : args.student,
+                }
+
+    return direct.definition.url
+            .replace('{student}', parsedArgs.student.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+direct.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: direct.url(args, options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+direct.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: direct.url(args, options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+    const directForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: direct.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+        directForm.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: direct.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Admin\AgendaController::direct
+ * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @route '/admin/agenda/direct/{student}'
+ */
+        directForm.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: direct.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    direct.form = directForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
@@ -449,6 +661,7 @@ const agenda = {
 store: Object.assign(store, store),
 send: Object.assign(send, send),
 settings: Object.assign(settings, settings),
+direct: Object.assign(direct, direct),
 update: Object.assign(update, update),
 destroy: Object.assign(destroy, destroy),
 users: Object.assign(users, users),

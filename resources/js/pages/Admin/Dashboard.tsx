@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Users, GraduationCap, School, FileText, ArrowUpRight, Clock, UserPlus, Building } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { cn } from '@/lib/utils';
 
 interface DashboardStats {
     totalStudents: number;
@@ -168,9 +169,17 @@ export default function Dashboard({ stats, charts, recent }: Props) {
                                 {/* Genre Stats (Mini) */}
                                 <div className="grid grid-cols-3 gap-2 text-center">
                                     {charts.studentsByGender.map((g) => (
-                                        <div key={g.name} className="flex flex-col items-center p-2 bg-secondary/50 rounded-lg">
+                                        <div 
+                                            key={g.name} 
+                                            className={cn(
+                                                "flex flex-col items-center p-2 rounded-lg border transition-colors",
+                                                g.name === 'Masculino' ? "bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400" :
+                                                g.name === 'Feminino' ? "bg-pink-500/10 border-pink-500/20 text-pink-600 dark:text-pink-400" :
+                                                "bg-secondary/50 border-transparent text-muted-foreground"
+                                            )}
+                                        >
                                             <span className="text-2xl font-bold">{g.total}</span>
-                                            <span className="text-xs text-muted-foreground">{g.name}</span>
+                                            <span className="text-xs font-medium opacity-80">{g.name}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -182,7 +191,10 @@ export default function Dashboard({ stats, charts, recent }: Props) {
                                         charts.studentsByGrade.map((item, index) => (
                                             <div key={item.name} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
                                                 <div className="flex items-center gap-2">
-                                                    <div className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ${index === 0 ? 'bg-blue-100 text-blue-700' : 'bg-secondary text-muted-foreground'}`}>
+                                                    <div className={cn(
+                                                        "flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold",
+                                                        index === 0 ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-secondary text-muted-foreground'
+                                                    )}>
                                                         {index + 1}
                                                     </div>
                                                     <span className="text-sm font-medium">{item.name}</span>

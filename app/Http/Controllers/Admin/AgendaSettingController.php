@@ -40,7 +40,7 @@ class AgendaSettingController extends Controller
                 'series' => $gradeName,
                 'letter' => ($classRoom->name !== $gradeName) ? $classRoom->name : '',
                 'channel' => $classRoom->channel,
-                'professors' => $classRoom->allocations->map(fn($a) => $a->user),
+                'professors' => $classRoom->allocations->map(fn($a) => $a->user)->unique('id')->values(),
             ];
         });
 
@@ -177,5 +177,31 @@ class AgendaSettingController extends Controller
         $instanceName = $this->getInstanceName();
         $service->logoutInstance($instanceName);
         return back()->with('success', 'Desconectado com sucesso.');
+    }
+
+    /**
+     * Get WhatsApp send interval setting
+     */
+    public function getWhatsappInterval()
+    {
+        $value = \App\Models\Setting::where('key', 'whatsapp_send_interval')->value('value');
+        return response()->json(['value' => $value ?? '3']);
+    }
+
+    /**
+     * Update WhatsApp send interval setting
+     */
+    public function setWhatsappInterval(Request $request)
+    {
+        $validated = $request->validate([
+            'value' => 'required|integer|min:1|max:30',
+        ]);
+
+        \App\Models\Setting::updateOrCreate(
+            ['key' => 'whatsapp_send_interval'],
+            ['value' => $validated['value']]
+        );
+
+        return response()->json(['success' => true]);
     }
 }

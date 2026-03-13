@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -20,6 +21,13 @@ class SendWhatsAppNotification implements ShouldQueue
 
     protected $messageId;
     protected $recipientIds;
+
+    /**
+     * Retry configuration for anti-blocking.
+     */
+    public $tries = 3;
+    public $backoff = [10, 30, 60];
+    public $timeout = 600; // 10 minutes max for large batches
 
     /**
      * Create a new job instance.
@@ -51,7 +59,23 @@ class SendWhatsAppNotification implements ShouldQueue
             return;
         }
 
+        // Get configurable delay between sends (default: 3 seconds)
+        $sendInterval = (int) (Setting::where('key', 'whatsapp_send_interval')->value('value') ?: 3);
+        $sendInterval = max(1, min($sendInterval, 30)); // Clamp between 1-30 seconds
+
+        // If more than 50 recipients, split into sub-batches
+        if (count($this->recipientIds) > 50) {
+            $batches = array_chunk($this->recipientIds, 50);
+            foreach ($batches as $index => $batch) {
+                // Dispatch each sub-batch with increasing delay
+                self::dispatch($this->messageId, $batch)
+                    ->delay(now()->addSeconds($index * 50 * $sendInterval));
+            }
+            return;
+        }
+
         $users = User::whereIn('id', $this->recipientIds)->get();
+        $sentCount = 0;
 
         foreach ($users as $user) {
             // Resolve Phone Number
@@ -91,6 +115,14 @@ class SendWhatsAppNotification implements ShouldQueue
 
             // Send
             $evolutionService->sendTextMessage($instanceName, $phone, $text);
+            $sentCount++;
+
+            // Anti-blocking delay between sends
+            if ($sentCount < count($users)) {
+                sleep($sendInterval);
+            }
         }
+
+        Log::info("WhatsApp batch completed: {$sentCount} messages sent for message #{$this->messageId}");
     }
 }

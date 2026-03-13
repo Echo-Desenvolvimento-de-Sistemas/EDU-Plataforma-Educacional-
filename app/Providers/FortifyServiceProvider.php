@@ -47,7 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
                 'password' => 'required|string',
             ]);
 
-            $login = $validated['email']; // The field is named 'email' in the form, but acts as login
+            $login = $validated['email'];
             $password = $validated['password'];
 
             $user = \App\Models\User::where('email', $login)
@@ -55,11 +55,19 @@ class FortifyServiceProvider extends ServiceProvider
                 ->orWhere('cpf', preg_replace('/[^0-9]/', '', $login))
                 ->first();
 
-            if ($user && \Illuminate\Support\Facades\Hash::check($password, $user->password)) {
-                return $user;
+            if (!$user) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'email' => ['Este usuário não foi encontrado em nossa base de dados.'],
+                ]);
             }
 
-            return null;
+            if (!\Illuminate\Support\Facades\Hash::check($password, $user->password)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'password' => ['A senha informada está incorreta. Verifique e tente novamente.'],
+                ]);
+            }
+
+            return $user;
         });
     }
 

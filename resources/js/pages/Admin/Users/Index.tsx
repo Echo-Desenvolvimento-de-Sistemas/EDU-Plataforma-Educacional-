@@ -64,6 +64,12 @@ export default function Index({ users, filters }: Props) {
         }
     };
 
+    const getStatusBadgeColor = (active: boolean) => {
+        return active 
+            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+            : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800';
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Gerenciar Usuários" />
@@ -118,7 +124,7 @@ export default function Index({ users, filters }: Props) {
                                     <Badge variant="outline" className={getRoleBadgeColor(user.role)}>
                                         {user.role}
                                     </Badge>
-                                    <Badge variant={user.active ? 'secondary' : 'destructive'}>
+                                    <Badge variant="outline" className={getStatusBadgeColor(user.active)}>
                                         {user.active ? 'Ativo' : 'Inativo'}
                                     </Badge>
                                 </div>
@@ -188,7 +194,7 @@ export default function Index({ users, filters }: Props) {
                                         </Badge>
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm">
-                                        <Badge variant={user.active ? 'secondary' : 'destructive'}>
+                                        <Badge variant="outline" className={getStatusBadgeColor(user.active)}>
                                             {user.active ? 'Ativo' : 'Inativo'}
                                         </Badge>
                                     </td>

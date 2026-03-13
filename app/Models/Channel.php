@@ -14,6 +14,7 @@ class Channel extends Model
         'type',
         'icon',
         'is_active',
+        'can_reply',
         'related_type',
         'related_id',
     ];
@@ -50,5 +51,10 @@ class Channel extends Model
     public function speakers()
     {
         return $this->belongsToMany(User::class, 'channel_user');
+    }
+
+    public function recipients()
+    {
+        return $this->hasManyThrough(MessageRecipient::class, Message::class);
     }
 }

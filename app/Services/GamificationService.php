@@ -39,7 +39,7 @@ class GamificationService
         }
 
         try {
-            $response = Http::timeout(3) // 3 second timeout
+            $response = Http::timeout(1) // 1 second timeout
                 ->withHeaders([
                     'Authorization' => 'Bearer ' . $this->secret,
                     'Accept' => 'application/json',
@@ -153,7 +153,7 @@ class GamificationService
         }
 
         try {
-            $response = Http::timeout(3) // 3 second timeout
+            $response = Http::timeout(1) // 1 second timeout
                 ->withHeaders([
                     'Authorization' => 'Bearer ' . $this->secret,
                     'Accept' => 'application/json',

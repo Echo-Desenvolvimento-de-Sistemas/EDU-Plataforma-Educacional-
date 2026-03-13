@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\StudentController::store
- * @see app/Http/Controllers/Admin/StudentController.php:352
+ * @see app/Http/Controllers/Admin/StudentController.php:419
  * @route '/admin/students/{student}/user'
  */
 export const store = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\StudentController::store
- * @see app/Http/Controllers/Admin/StudentController.php:352
+ * @see app/Http/Controllers/Admin/StudentController.php:419
  * @route '/admin/students/{student}/user'
  */
 store.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { student: number | { id: number } } | [student: number | { i
 
 /**
 * @see \App\Http\Controllers\Admin\StudentController::store
- * @see app/Http/Controllers/Admin/StudentController.php:352
+ * @see app/Http/Controllers/Admin/StudentController.php:419
  * @route '/admin/students/{student}/user'
  */
 store.post = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { student: number | { id: number } } | [student: number | { 
 
     /**
 * @see \App\Http\Controllers\Admin\StudentController::store
- * @see app/Http/Controllers/Admin/StudentController.php:352
+ * @see app/Http/Controllers/Admin/StudentController.php:419
  * @route '/admin/students/{student}/user'
  */
     const storeForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ store.post = (args: { student: number | { id: number } } | [student: number | { 
 
             /**
 * @see \App\Http\Controllers\Admin\StudentController::store
- * @see app/Http/Controllers/Admin/StudentController.php:352
+ * @see app/Http/Controllers/Admin/StudentController.php:419
  * @route '/admin/students/{student}/user'
  */
         storeForm.post = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

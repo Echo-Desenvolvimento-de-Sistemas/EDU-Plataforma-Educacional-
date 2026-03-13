@@ -20,6 +20,7 @@ interface Channel {
     id: number;
     name: string;
     icon?: string;
+    can_reply?: boolean;
 }
 
 interface Props {
@@ -31,9 +32,25 @@ interface Props {
 }
 
 export default function Chat({ channel, messages: initialMessages }: Props) {
+    const { data, setData, post, processing, reset } = useForm({
+        body: '',
+    });
+
     const [messages, setMessages] = useState(initialMessages.data.slice().reverse());
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [firstLoad, setFirstLoad] = useState(true);
+
+    const handleSend = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!data.body.trim()) return;
+
+        post(`/agenda/channels/${channel.id}/reply`, {
+            onSuccess: () => {
+                reset();
+                refreshMessages();
+            },
+        });
+    };
 
     useEffect(() => {
         setMessages(initialMessages.data.slice().reverse());
@@ -160,18 +177,39 @@ export default function Chat({ channel, messages: initialMessages }: Props) {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Placeholder */}
+            {/* Input Placeholder / Active Input */}
             <div className="p-4 bg-transparent safe-area-bottom z-10">
                 <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-[2rem] shadow-sm p-2 px-3 flex items-center gap-2 border border-white/20 dark:border-white/5">
-                    <input
-                        type="text"
-                        placeholder="Não é possível responder..."
-                        disabled
-                        className="flex-1 bg-transparent border-none py-3 px-4 text-sm focus:ring-0 text-gray-500 dark:text-gray-400 placeholder:text-gray-400 dark:placeholder:text-gray-600 italic h-12"
-                    />
-                    <button disabled className="h-10 w-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-full shrink-0">
-                        <Send size={18} />
-                    </button>
+                    {channel.can_reply ? (
+                        <form onSubmit={handleSend} className="flex-1 flex items-center gap-2">
+                            <input
+                                type="text"
+                                placeholder="Digite sua mensagem..."
+                                value={data.body}
+                                onChange={(e) => setData('body', e.target.value)}
+                                className="flex-1 bg-transparent border-none py-3 px-4 text-sm focus:ring-0 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-600 h-12"
+                            />
+                            <button 
+                                type="submit" 
+                                disabled={processing || !data.body.trim()}
+                                className="h-10 w-10 flex items-center justify-center bg-blue-600 text-white rounded-full shrink-0 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-500"
+                            >
+                                <Send size={18} />
+                            </button>
+                        </form>
+                    ) : (
+                        <>
+                            <input
+                                type="text"
+                                placeholder="Não é possível responder..."
+                                disabled
+                                className="flex-1 bg-transparent border-none py-3 px-4 text-sm focus:ring-0 text-gray-500 dark:text-gray-400 placeholder:text-gray-400 dark:placeholder:text-gray-600 italic h-12"
+                            />
+                            <button disabled className="h-10 w-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-full shrink-0">
+                                <Send size={18} />
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

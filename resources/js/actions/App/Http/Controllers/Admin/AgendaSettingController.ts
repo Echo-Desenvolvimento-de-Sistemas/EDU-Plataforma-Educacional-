@@ -188,74 +188,74 @@ disconnectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
     
     disconnectWhatsapp.form = disconnectWhatsappForm
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
+export const getWhatsappInterval = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: getWhatsappInterval.url(options),
     method: 'get',
 })
 
-index.definition = {
+getWhatsappInterval.definition = {
     methods: ["get","head"],
-    url: '/admin/agenda/settings',
+    url: '/admin/settings/whatsapp/interval',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-index.url = (options?: RouteQueryOptions) => {
-    return index.definition.url + queryParams(options)
+getWhatsappInterval.url = (options?: RouteQueryOptions) => {
+    return getWhatsappInterval.definition.url + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
+getWhatsappInterval.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: getWhatsappInterval.url(options),
     method: 'get',
 })
 /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: index.url(options),
+getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: getWhatsappInterval.url(options),
     method: 'head',
 })
 
     /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: index.url(options),
+    const getWhatsappIntervalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: getWhatsappInterval.url(options),
         method: 'get',
     })
 
             /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url(options),
+        getWhatsappIntervalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: getWhatsappInterval.url(options),
             method: 'get',
         })
             /**
-* @see \App\Http\Controllers\Admin\AgendaSettingController::index
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:14
- * @route '/admin/agenda/settings'
+* @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @route '/admin/settings/whatsapp/interval'
  */
-        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url({
+        getWhatsappIntervalForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: getWhatsappInterval.url({
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
                             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -264,7 +264,62 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
     
-    index.form = indexForm
+    getWhatsappInterval.form = getWhatsappIntervalForm
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @route '/admin/settings/whatsapp/interval'
+ */
+export const setWhatsappInterval = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: setWhatsappInterval.url(options),
+    method: 'post',
+})
+
+setWhatsappInterval.definition = {
+    methods: ["post"],
+    url: '/admin/settings/whatsapp/interval',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @route '/admin/settings/whatsapp/interval'
+ */
+setWhatsappInterval.url = (options?: RouteQueryOptions) => {
+    return setWhatsappInterval.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @route '/admin/settings/whatsapp/interval'
+ */
+setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: setWhatsappInterval.url(options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @route '/admin/settings/whatsapp/interval'
+ */
+    const setWhatsappIntervalForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: setWhatsappInterval.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @route '/admin/settings/whatsapp/interval'
+ */
+        setWhatsappIntervalForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: setWhatsappInterval.url(options),
+            method: 'post',
+        })
+    
+    setWhatsappInterval.form = setWhatsappIntervalForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
@@ -608,6 +663,6 @@ detachUser.delete = (args: { channel: number | { id: number }, user: number | { 
         })
     
     detachUser.form = detachUserForm
-const AgendaSettingController = { connectWhatsapp, checkWhatsappStatus, disconnectWhatsapp, index, update, destroy, attachUser, detachUser }
+const AgendaSettingController = { connectWhatsapp, checkWhatsappStatus, disconnectWhatsapp, getWhatsappInterval, setWhatsappInterval, update, destroy, attachUser, detachUser }
 
 export default AgendaSettingController

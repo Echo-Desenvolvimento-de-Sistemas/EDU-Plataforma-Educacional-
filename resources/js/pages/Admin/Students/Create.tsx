@@ -6,10 +6,23 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
+import { Plus, Trash2, UserPlus, Shield } from 'lucide-react';
+
+interface GuardianEntry {
+    name: string;
+    cpf: string;
+    phone: string;
+    email: string;
+    kinship: string;
+    is_financial_responsible: boolean;
+    is_pedagogic_responsible: boolean;
+    resides_with: boolean;
+}
 
 interface ClassRoom {
     id: number;
@@ -99,9 +112,15 @@ export default function Create({ classRooms }: Props) {
         class_room_id: '',
 
         // Security
-        authorized_pickups: [], // Not implemented UI yet
+        authorized_pickups: [] as any[],
         exit_authorization: false,
         transport_info: '',
+
+        // User Generation
+        create_student_user: true,
+
+        // Guardians
+        guardians: [] as GuardianEntry[],
     });
 
     const handleCepBlur = async () => {
@@ -135,6 +154,30 @@ export default function Create({ classRooms }: Props) {
 
     const [activeTab, setActiveTab] = useState('identification');
 
+    // Guardian management
+    const addGuardian = () => {
+        setData('guardians', [...data.guardians, {
+            name: '',
+            cpf: '',
+            phone: '',
+            email: '',
+            kinship: '',
+            is_financial_responsible: false,
+            is_pedagogic_responsible: false,
+            resides_with: false,
+        }]);
+    };
+
+    const removeGuardian = (index: number) => {
+        setData('guardians', data.guardians.filter((_, i) => i !== index));
+    };
+
+    const updateGuardian = (index: number, field: keyof GuardianEntry, value: any) => {
+        const updated = [...data.guardians];
+        updated[index] = { ...updated[index], [field]: value };
+        setData('guardians', updated);
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(admin.students.store.url());
@@ -143,7 +186,7 @@ export default function Create({ classRooms }: Props) {
     const tabs = [
         { id: 'identification', label: 'Identificação' },
         { id: 'docs', label: 'Documentos' },
-        { id: 'family', label: 'Família' },
+        { id: 'guardians', label: 'Responsáveis' },
         { id: 'address', label: 'Endereço' },
         { id: 'health', label: 'Saúde' },
         { id: 'academic', label: 'Acadêmico' },
@@ -343,26 +386,51 @@ export default function Create({ classRooms }: Props) {
                             </div>
                         )}
 
-                        {/* Família */}
-                        {activeTab === 'family' && (
+                        {/* Responsáveis */}
+                        {activeTab === 'guardians' && (
                             <div className="space-y-4">
-                                <div>
-                                    <Label htmlFor="mother_name">Nome da Mãe *</Label>
-                                    <Input
-                                        id="mother_name"
-                                        value={data.mother_name}
-                                        onChange={(e) => setData('mother_name', e.target.value)}
-                                        required
-                                    />
-                                    <InputError message={errors.mother_name} />
+                                {/* User Generation Toggle */}
+                                <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                                    <div className="flex items-center space-x-3">
+                                        <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                        <div className="flex-1">
+                                            <div className="flex items-center space-x-2">
+                                                <Checkbox
+                                                    id="create_student_user"
+                                                    checked={data.create_student_user}
+                                                    onCheckedChange={(checked) => setData('create_student_user', checked as boolean)}
+                                                />
+                                                <Label htmlFor="create_student_user" className="text-sm font-medium text-blue-800 dark:text-blue-200 cursor-pointer">
+                                                    Gerar acesso de usuário para o aluno
+                                                </Label>
+                                            </div>
+                                            <p className="text-xs text-blue-600 dark:text-blue-400 mt-1 ml-6">
+                                                Login: CPF do aluno | Senha inicial: CPF (somente números)
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <Label htmlFor="father_name">Nome do Pai</Label>
-                                    <Input
-                                        id="father_name"
-                                        value={data.father_name}
-                                        onChange={(e) => setData('father_name', e.target.value)}
-                                    />
+
+                                {/* Mother/Father (backward compat) */}
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                    <div>
+                                        <Label htmlFor="mother_name">Nome da Mãe *</Label>
+                                        <Input
+                                            id="mother_name"
+                                            value={data.mother_name}
+                                            onChange={(e) => setData('mother_name', e.target.value)}
+                                            required
+                                        />
+                                        <InputError message={errors.mother_name} />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="father_name">Nome do Pai</Label>
+                                        <Input
+                                            id="father_name"
+                                            value={data.father_name}
+                                            onChange={(e) => setData('father_name', e.target.value)}
+                                        />
+                                    </div>
                                 </div>
                                 <div>
                                     <Label htmlFor="parents_marital_status">Estado Civil dos Pais</Label>
@@ -377,6 +445,88 @@ export default function Create({ classRooms }: Props) {
                                             <SelectItem value="Viúvos">Viúvos</SelectItem>
                                         </SelectContent>
                                     </Select>
+                                </div>
+
+                                {/* Dynamic Guardians List */}
+                                <div className="border-t pt-4 mt-4">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h3 className="text-sm font-semibold">Responsáveis</h3>
+                                            <p className="text-xs text-muted-foreground">Adicione os responsáveis. O acesso de usuário será gerado automaticamente a partir do CPF.</p>
+                                        </div>
+                                        <Button type="button" variant="outline" size="sm" onClick={addGuardian}>
+                                            <Plus className="mr-1 h-3.5 w-3.5" />
+                                            Adicionar
+                                        </Button>
+                                    </div>
+
+                                    {data.guardians.length === 0 ? (
+                                        <div className="flex flex-col items-center justify-center py-8 border rounded-lg border-dashed text-muted-foreground">
+                                            <UserPlus className="h-8 w-8 mb-2 opacity-40" />
+                                            <p className="text-sm">Nenhum responsável adicionado.</p>
+                                            <p className="text-xs">Clique em "Adicionar" acima.</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {data.guardians.map((guardian: GuardianEntry, index: number) => (
+                                                <div key={index} className="p-4 border rounded-lg bg-card relative">
+                                                    <div className="absolute top-2 right-2">
+                                                        <Button type="button" variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive" onClick={() => removeGuardian(index)}>
+                                                            <Trash2 className="h-3.5 w-3.5" />
+                                                        </Button>
+                                                    </div>
+                                                    <Badge variant="outline" className="mb-3 text-xs">Responsável {index + 1}</Badge>
+                                                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                                        <div>
+                                                            <Label>Nome Completo *</Label>
+                                                            <Input value={guardian.name} onChange={(e) => updateGuardian(index, 'name', e.target.value)} placeholder="Nome completo" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>CPF *</Label>
+                                                            <Input value={guardian.cpf} onChange={(e) => updateGuardian(index, 'cpf', e.target.value)} placeholder="000.000.000-00" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Telefone</Label>
+                                                            <Input value={guardian.phone} onChange={(e) => updateGuardian(index, 'phone', e.target.value)} placeholder="(00) 00000-0000" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>E-mail</Label>
+                                                            <Input type="email" value={guardian.email} onChange={(e) => updateGuardian(index, 'email', e.target.value)} placeholder="email@exemplo.com" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Parentesco</Label>
+                                                            <Select value={guardian.kinship} onValueChange={(value) => updateGuardian(index, 'kinship', value)}>
+                                                                <SelectTrigger><SelectValue placeholder="Selecione" /></SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="Mãe">Mãe</SelectItem>
+                                                                    <SelectItem value="Pai">Pai</SelectItem>
+                                                                    <SelectItem value="Avó">Avó/Avô</SelectItem>
+                                                                    <SelectItem value="Tio(a)">Tio(a)</SelectItem>
+                                                                    <SelectItem value="Irmão(ã)">Irmão(ã)</SelectItem>
+                                                                    <SelectItem value="Padrasto">Padrasto/Madrasta</SelectItem>
+                                                                    <SelectItem value="Outro">Outro</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-wrap gap-4 mt-3 pt-3 border-t">
+                                                        <div className="flex items-center space-x-2">
+                                                            <Checkbox id={`fin-${index}`} checked={guardian.is_financial_responsible} onCheckedChange={(checked) => updateGuardian(index, 'is_financial_responsible', !!checked)} />
+                                                            <Label htmlFor={`fin-${index}`} className="text-xs cursor-pointer">Resp. Financeiro</Label>
+                                                        </div>
+                                                        <div className="flex items-center space-x-2">
+                                                            <Checkbox id={`ped-${index}`} checked={guardian.is_pedagogic_responsible} onCheckedChange={(checked) => updateGuardian(index, 'is_pedagogic_responsible', !!checked)} />
+                                                            <Label htmlFor={`ped-${index}`} className="text-xs cursor-pointer">Resp. Pedagógico</Label>
+                                                        </div>
+                                                        <div className="flex items-center space-x-2">
+                                                            <Checkbox id={`res-${index}`} checked={guardian.resides_with} onCheckedChange={(checked) => updateGuardian(index, 'resides_with', !!checked)} />
+                                                            <Label htmlFor={`res-${index}`} className="text-xs cursor-pointer">Reside com o Aluno</Label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}

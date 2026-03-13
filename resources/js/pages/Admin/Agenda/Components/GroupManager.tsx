@@ -11,6 +11,7 @@ import { Check } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"; // Added Dialog
 import { Input } from "@/components/ui/input"; // Added Input
 import { Label } from "@/components/ui/label"; // Added Label
+import { toast } from 'sonner';
 
 interface User {
     id: number;
@@ -33,6 +34,7 @@ interface Props {
 export function GroupManager({ group, staff }: Props) {
     const [open, setOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false); // Edit Modal State
+    const [searchQuery, setSearchQuery] = useState(''); // Search State
 
     // Edit Form
     const editForm = useForm({
@@ -59,12 +61,25 @@ export function GroupManager({ group, staff }: Props) {
     };
 
     const handleAddUser = (userId: number) => {
-        router.post(`/admin/agenda/${group.id}/users`, {
-            user_id: userId,
-        }, {
-            preserveScroll: true,
-            onSuccess: () => setOpen(false),
-        });
+        toast.promise(
+            new Promise((resolve, reject) => {
+                router.post(`/admin/agenda/${group.id}/users`, {
+                    user_id: userId,
+                }, {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        setOpen(false);
+                        resolve(true);
+                    },
+                    onError: () => reject(false),
+                });
+            }),
+            {
+                loading: 'Adicionando...',
+                success: 'Usuário adicionado!',
+                error: 'Erro ao adicionar usuário.',
+            }
+        );
     };
 
     const handleRemoveUser = (userId: number) => {
@@ -139,46 +154,75 @@ export function GroupManager({ group, staff }: Props) {
                     <p className="text-xs font-medium text-muted-foreground mb-2">Quem pode enviar:</p>
                     <div className="flex flex-wrap gap-2">
                         {group.speakers.map((speaker) => (
-                            <Badge key={speaker.id} variant="secondary" className="pr-1">
+                            <Badge 
+                                key={speaker.id} 
+                                variant="secondary" 
+                                className="pr-1 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50 border-none px-3"
+                            >
                                 {speaker.name}
                                 <button
                                     onClick={() => handleRemoveUser(speaker.id)}
-                                    className="ml-1 rounded-full hover:bg-destructive hover:text-destructive-foreground p-0.5"
+                                    className="ml-2 rounded-full hover:bg-destructive hover:text-white p-0.5 transition-colors"
                                 >
                                     <X className="h-3 w-3" />
                                 </button>
                             </Badge>
                         ))}
-                        <Popover open={open} onOpenChange={setOpen}>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" size="sm" className="h-6 rounded-full border-dashed">
-                                    <UserPlus className="mr-1 h-3 w-3" />
-                                    Adicionar
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" side="right" align="start">
-                                <Command>
-                                    <CommandInput placeholder="Buscar usuário..." />
-                                    <CommandList>
-                                        <CommandEmpty>Nenhum usuário encontrado.</CommandEmpty>
-                                        <CommandGroup>
-                                            {availableStaff.map((user) => (
-                                                <CommandItem
-                                                    key={user.id}
-                                                    value={user.name}
-                                                    onSelect={() => handleAddUser(user.id)}
-                                                >
-                                                    <div className="flex flex-col">
-                                                        <span>{user.name}</span>
-                                                        <span className="text-[10px] text-muted-foreground capitalize">{user.role}</span>
-                                                    </div>
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="h-7 rounded-full border-dashed bg-transparent hover:bg-secondary dark:hover:bg-gray-800 text-xs font-normal"
+                                onClick={() => setOpen(true)}
+                            >
+                                <UserPlus className="mr-1 h-3.5 w-3.5" />
+                                Adicionar
+                            </Button>
+                            <DialogContent className="max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle>Adicionar pessoa autorizada</DialogTitle>
+                                    <DialogDescription>Selecione um funcionário ou professor para enviar mensagens em {group.name}.</DialogDescription>
+                                </DialogHeader>
+                                <div className="space-y-4 py-4">
+                                    <div className="relative">
+                                        <Users className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                        <Input 
+                                            placeholder="Buscar por nome..." 
+                                            className="pl-9"
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="max-h-[300px] overflow-y-auto space-y-1 pr-2">
+                                        {availableStaff
+                                            .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                            .length === 0 ? (
+                                                <p className="text-center py-8 text-sm text-muted-foreground">Nenhum resultado encontrado.</p>
+                                            ) : (
+                                                availableStaff
+                                                    .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                    .map((user) => (
+                                                        <button
+                                                            key={user.id}
+                                                            onClick={() => handleAddUser(user.id)}
+                                                            className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-secondary transition-colors text-left border border-transparent hover:border-border group"
+                                                        >
+                                                            <div className="flex flex-col">
+                                                                <span className="font-medium text-sm">{user.name}</span>
+                                                                <span className="text-xs text-muted-foreground capitalize">{user.role}</span>
+                                                            </div>
+                                                            <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                <Check className="h-4 w-4" />
+                                                            </div>
+                                                        </button>
+                                                    ))
+                                            )}
+                                    </div>
+                                </div>
+                                <DialogFooter>
+                                    <Button variant="ghost" onClick={() => setOpen(false)}>Fechar</Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
             </CardContent>

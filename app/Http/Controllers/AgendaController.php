@@ -61,22 +61,18 @@ class AgendaController extends Controller
                 $query->latest()->limit(1);
             }
         ])
+            ->withCount(['recipients as unread_count' => function ($q) use ($user) {
+                $q->where('recipient_id', $user->id)
+                    ->whereNull('read_at');
+            }])
             ->get()
             ->sortByDesc(function ($channel) {
                 $lastMessage = $channel->messages->first();
                 return $lastMessage ? $lastMessage->created_at->timestamp : 0;
             })
             ->values()
-            ->map(function ($channel) use ($user) {
+            ->map(function ($channel) {
                 $lastMessage = $channel->messages->first();
-                $unreadCount = 0;
-
-                if ($lastMessage) {
-                    $unreadCount = MessageRecipient::where('message_id', $lastMessage->id)
-                        ->where('recipient_id', $user->id)
-                        ->whereNull('read_at')
-                        ->count();
-                }
 
                 return [
                     'id' => $channel->id,
@@ -84,7 +80,7 @@ class AgendaController extends Controller
                     'icon' => $channel->icon,
                     'last_message' => $lastMessage ? $lastMessage->body : null,
                     'last_message_at' => $lastMessage ? $lastMessage->created_at->diffForHumans() : null,
-                    'unread_count' => $unreadCount,
+                    'unread_count' => $channel->unread_count,
                 ];
             });
 
@@ -109,6 +105,34 @@ class AgendaController extends Controller
                 return ['id' => $c->id, 'name' => $c->name];
             });
             $allowedChannels = $allowedChannels->merge($broadcasts);
+        } elseif ($user->role === 'aluno') {
+            // Students can only start messages in interactive channels (can_reply = true) 
+            // of their own class
+            $student = $user->student;
+            if ($student && $student->class_room_id) {
+                $classChannels = Channel::where('related_type', ClassRoom::class)
+                    ->where('related_id', $student->class_room_id)
+                    ->where('can_reply', true)
+                    ->get()
+                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->name]);
+                $allowedChannels = $allowedChannels->merge($classChannels);
+            }
+        } elseif ($user->role === 'responsavel') {
+            // Guardians can start messages in interactive channels of their children's classes
+            $guardian = $user->guardian;
+            if ($guardian) {
+                $studentClassIds = $guardian->students()
+                    ->whereNotNull('class_room_id')
+                    ->pluck('class_room_id')
+                    ->unique();
+
+                $classChannels = Channel::where('related_type', ClassRoom::class)
+                    ->whereIn('related_id', $studentClassIds)
+                    ->where('can_reply', true)
+                    ->get()
+                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->name]);
+                $allowedChannels = $allowedChannels->merge($classChannels);
+            }
         }
 
         // 3. Add explicit speaking channels (from settings)
@@ -118,6 +142,30 @@ class AgendaController extends Controller
         });
 
         $allowedChannels = $allowedChannels->merge($explicitChannels)->unique('id');
+
+        // 4. Fetch classes and students for ComposeModal
+        $classes = collect([]);
+        $students = collect([]);
+
+        if (in_array($user->role, ['admin', 'secretaria'])) {
+            $classes = ClassRoom::with('grade')->get()->map(fn($c) => [
+                'id' => $c->id,
+                'name' => $c->name,
+                'grade' => $c->grade ? ['name' => $c->grade->name] : null,
+            ]);
+            $students = \App\Models\Student::where('status', 'active')
+                ->get(['id', 'name', 'class_room_id']);
+        } elseif ($user->role === 'professor') {
+            $classIds = $user->allocations()->pluck('class_room_id')->unique();
+            $classes = ClassRoom::whereIn('id', $classIds)->with('grade')->get()->map(fn($c) => [
+                'id' => $c->id,
+                'name' => $c->name,
+                'grade' => $c->grade ? ['name' => $c->grade->name] : null,
+            ]);
+            $students = \App\Models\Student::where('status', 'active')
+                ->whereIn('class_room_id', $classIds)
+                ->get(['id', 'name', 'class_room_id']);
+        }
 
         if (request()->wantsJson()) {
             return response()->json([
@@ -129,6 +177,8 @@ class AgendaController extends Controller
             'channels' => $conversations,
             'allowedChannels' => $allowedChannels->values(),
             'canConfigure' => $user->role === 'admin',
+            'classes' => $classes->values(),
+            'students' => $students,
         ]);
     }
 
@@ -147,6 +197,7 @@ class AgendaController extends Controller
                 'id' => $channel->id,
                 'name' => $channel->name,
                 'icon' => $channel->icon,
+                'can_reply' => $channel->can_reply,
             ],
             'messages' => $messages,
         ]);
@@ -235,5 +286,49 @@ class AgendaController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function store(Request $request, Channel $channel)
+    {
+        if (!$channel->can_reply) {
+            abort(403, 'Este canal não permite respostas.');
+        }
+
+        $validated = $request->validate([
+            'body' => 'required|string',
+        ]);
+
+        $sender = auth()->user();
+
+        $message = Message::create([
+            'channel_id' => $channel->id,
+            'sender_id' => $sender->id,
+            'body' => $validated['body'],
+            'type' => 'TEXT',
+            'metadata' => [],
+        ]);
+
+        // Recipients for a reply are the staff members (speakers) of this channel
+        // or a default admin/secretaria group if no speakers defined
+        $speakers = $channel->speakers()->pluck('users.id');
+        
+        if ($speakers->isEmpty()) {
+            // Fallback to admins/secretaria
+            $speakers = \App\Models\User::whereIn('role', ['admin', 'secretaria'])->pluck('id');
+        }
+
+        $recipientData = $speakers->map(function ($userId) use ($message) {
+            return [
+                'message_id' => $message->id,
+                'recipient_id' => $userId,
+                'status' => 'DELIVERED',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        })->toArray();
+
+        MessageRecipient::insert($recipientData);
+
+        return back()->with('success', 'Mensagem enviada.');
     }
 }

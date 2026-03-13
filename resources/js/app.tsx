@@ -13,6 +13,8 @@ configureEcho({
 
 const appName = import.meta.env.VITE_APP_NAME || 'Edu';
 
+import { Toaster } from '@/components/ui/sonner';
+
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) =>
@@ -26,6 +28,7 @@ createInertiaApp({
         root.render(
             <StrictMode>
                 <App {...props} />
+                <Toaster />
             </StrictMode>,
         );
     },

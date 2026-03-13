@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
 use App\Models\Student;
+use App\Models\Guardian;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -108,6 +109,18 @@ class StudentController extends Controller
             'health.health_plan' => 'nullable|string',
             'health.health_unit' => 'nullable|string',
             'health.vaccination_updated' => 'boolean',
+
+            // Guardians
+            'create_student_user' => 'boolean',
+            'guardians' => 'nullable|array',
+            'guardians.*.name' => 'required_with:guardians|string|max:255',
+            'guardians.*.cpf' => 'required_with:guardians|string|max:14',
+            'guardians.*.phone' => 'nullable|string|max:20',
+            'guardians.*.email' => 'nullable|email|max:255',
+            'guardians.*.kinship' => 'nullable|string|max:50',
+            'guardians.*.is_financial_responsible' => 'boolean',
+            'guardians.*.is_pedagogic_responsible' => 'boolean',
+            'guardians.*.resides_with' => 'boolean',
         ]);
 
         \DB::transaction(function () use ($request, $validated, $accessService) {
@@ -151,18 +164,72 @@ class StudentController extends Controller
                 $student->health()->create($request->input('health'));
             }
 
-            // Create Access automatically
-            try {
-                $accessService->createAccess($student);
-            } catch (\Exception $e) {
-                // Log error or ignore? User requirement is "shall be created".
-                // If we fail here, transaction rolls back.
-                // Re-throwing exception to stop registration and alert user.
-                throw $e;
+            // Create Student User Access (if toggle on)
+            $shouldCreateStudentUser = $request->boolean('create_student_user', true);
+            if ($shouldCreateStudentUser) {
+                try {
+                    $accessService->createAccess($student);
+                } catch (\Exception $e) {
+                    // Log but don't block the entire flow
+                    \Log::warning('Failed to create student access: ' . $e->getMessage());
+                }
+            }
+
+            // Create/Link Guardians
+            if ($request->has('guardians')) {
+                foreach ($request->input('guardians') as $guardianData) {
+                    $cpf = preg_replace('/[^0-9]/', '', $guardianData['cpf'] ?? '');
+                    
+                    // Find existing guardian by CPF or create new
+                    $guardian = Guardian::where(\DB::raw("REPLACE(REPLACE(REPLACE(cpf, '.', ''), '-', ''), '/', '')"), $cpf)->first();
+                    
+                    if (!$guardian) {
+                        $guardian = Guardian::create([
+                            'name' => $guardianData['name'],
+                            'cpf' => $guardianData['cpf'],
+                            'phone' => $guardianData['phone'] ?? null,
+                            'email' => $guardianData['email'] ?? null,
+                            'active' => true,
+                        ]);
+                    }
+
+                    // Attach to student with pivot data
+                    if (!$student->guardians()->where('guardian_id', $guardian->id)->exists()) {
+                        $student->guardians()->attach($guardian->id, [
+                            'kinship' => $guardianData['kinship'] ?? null,
+                            'is_financial_responsible' => $guardianData['is_financial_responsible'] ?? false,
+                            'is_pedagogic_responsible' => $guardianData['is_pedagogic_responsible'] ?? false,
+                            'resides_with' => $guardianData['resides_with'] ?? false,
+                        ]);
+                    }
+
+                    // Auto-create guardian user access
+                    try {
+                        $accessService->createAccess($guardian);
+                    } catch (\Exception $e) {
+                        \Log::warning('Failed to create guardian access for ' . $guardian->name . ': ' . $e->getMessage());
+                    }
+                }
+
+                // Auto-fill mother/father from first two guardians
+                $guardiansList = $request->input('guardians');
+                $motherGuardian = collect($guardiansList)->first(fn($g) => in_array($g['kinship'] ?? '', ['Mãe', 'Mae']));
+                $fatherGuardian = collect($guardiansList)->first(fn($g) => ($g['kinship'] ?? '') === 'Pai');
+                
+                $updates = [];
+                if ($motherGuardian && empty($student->mother_name)) {
+                    $updates['mother_name'] = $motherGuardian['name'];
+                }
+                if ($fatherGuardian && empty($student->father_name)) {
+                    $updates['father_name'] = $fatherGuardian['name'];
+                }
+                if (!empty($updates)) {
+                    $student->update($updates);
+                }
             }
         });
 
-        return redirect()->route('admin.students.index')->with('success', 'Aluno cadastrado com acesso criado.');
+        return redirect()->route('admin.students.index')->with('success', 'Aluno cadastrado com sucesso.');
     }
 
     public function edit(Student $student)

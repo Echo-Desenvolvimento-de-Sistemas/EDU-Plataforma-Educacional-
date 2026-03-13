@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -49,9 +49,13 @@ export default function Settings({ groups, classes, staff }: Props) {
     const [waStatus, setWaStatus] = useState<'open' | 'close' | 'connecting' | 'unknown'>('unknown');
     const [waQrCode, setWaQrCode] = useState<string | null>(null);
     const [waLoading, setWaLoading] = useState(false);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         checkWaStatus();
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
     }, []);
 
     const checkWaStatus = () => {
@@ -63,42 +67,54 @@ export default function Settings({ groups, classes, staff }: Props) {
             .catch(() => setWaStatus('unknown'));
     };
 
+    const pollStatus = () => {
+        if (waStatus === 'open' || !intervalRef.current) return;
+
+        axios.get('/admin/settings/whatsapp/status')
+            .then(statusRes => {
+                const state = statusRes.data?.instance?.state || statusRes.data?.state;
+                if (state === 'open') {
+                    setWaStatus('open');
+                    setWaQrCode(null);
+                    if (intervalRef.current) {
+                        clearTimeout(intervalRef.current);
+                        intervalRef.current = null;
+                    }
+                    toast.success('WhatsApp Conectado!', { id: 'wa-connection' });
+                } else if (waQrCode) {
+                    // Continue polling only if we still have a QR code and not connected
+                    intervalRef.current = setTimeout(pollStatus, 3000);
+                }
+            })
+            .catch(() => {
+                // On error, try again after a longer delay or stop
+                if (waQrCode) intervalRef.current = setTimeout(pollStatus, 5000);
+            });
+    };
+
     const handleConnectWa = () => {
+        if (waLoading || waStatus === 'open') return;
+        
         setWaLoading(true);
         axios.post('/admin/settings/whatsapp/connect')
             .then(res => {
                 if (res.data?.base64) {
                     setWaQrCode(res.data.base64);
-                    // Start polling for status
-                    const interval = setInterval(() => {
-                        axios.get('/admin/settings/whatsapp/status')
-                            .then(statusRes => {
-                                const state = statusRes.data?.instance?.state || statusRes.data?.state;
-                                if (state === 'open') {
-                                    setWaStatus('open');
-                                    setWaQrCode(null);
-                                    clearInterval(interval);
-                                    toast.success('WhatsApp Conectado!');
-                                }
-                            });
-                    }, 2000);
+                    // Start polling for status using timeout instead of interval for better control
+                    if (intervalRef.current) clearTimeout(intervalRef.current);
+                    intervalRef.current = setTimeout(pollStatus, 2000);
                 } else if (res.data?.instance?.state === 'open') {
                     setWaStatus('open');
-                    toast.success('WhatsApp já está conectado!');
+                    toast.success('WhatsApp já está conectado!', { id: 'wa-connection' });
                 } else {
-                    // Show detailed error
                     const errorMsg = res.data?.error || 'Erro desconhecido na API.';
-                    toast.error(`Não foi possível gerar o QR Code: ${errorMsg}`);
-                    console.error('Falha na conexão:', res.data);
+                    toast.error(`Não foi possível gerar o QR Code: ${errorMsg}`, { id: 'wa-error' });
                 }
             })
             .catch(err => {
                 console.error(err);
-                if (err.response?.data?.message) {
-                    toast.error(`Erro: ${err.response.data.message}`);
-                } else {
-                    toast.error('Erro ao conectar com a API.');
-                }
+                const msg = err.response?.data?.message || 'Erro ao conectar com a API.';
+                toast.error(`Erro: ${msg}`, { id: 'wa-error' });
             })
             .finally(() => setWaLoading(false));
     };
@@ -114,6 +130,15 @@ export default function Settings({ groups, classes, staff }: Props) {
         }
     };
 
+
+    const handleDisableClassChannel = (channelId: number) => {
+        if (confirm('Tem certeza que deseja desabilitar este canal? Todas as mensagens serão mantidas no banco, mas o canal não aparecerá mais na agenda.')) {
+            router.delete(`/admin/agenda/${channelId}`, {
+                preserveScroll: true,
+                onSuccess: () => toast.success('Canal desabilitado com sucesso.')
+            });
+        }
+    };
 
     const handleCreateGroup = (e: React.FormEvent) => {
         e.preventDefault();
@@ -152,9 +177,15 @@ export default function Settings({ groups, classes, staff }: Props) {
             <Head title="Configurações Agenda" />
 
             <div className="p-6 max-w-7xl mx-auto space-y-6">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Configurações da Agenda</h1>
-                    <p className="text-muted-foreground">Gerencie grupos de envio e permissões.</p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight">Configurações da Agenda</h1>
+                        <p className="text-muted-foreground">Gerencie grupos de envio e permissões.</p>
+                    </div>
+                    <Button variant="outline" onClick={() => router.get('/admin/agenda')}>
+                        <Radio className="mr-2 h-4 w-4" />
+                        Voltar para a Agenda
+                    </Button>
                 </div>
 
                 <Tabs defaultValue="connection" className="w-full">
@@ -315,10 +346,15 @@ export default function Settings({ groups, classes, staff }: Props) {
                                             </div>
                                             <div>
                                                 {cls.channel ? (
-                                                    <Button variant="outline" size="sm" className="text-green-600 border-green-200 bg-green-50 hover:bg-green-100 hover:text-green-700 cursor-default">
-                                                        <Radio className="mr-2 h-4 w-4" />
-                                                        Canal Ativo
-                                                    </Button>
+                                                    <div className="flex gap-2">
+                                                        <Button variant="outline" size="sm" className="text-green-600 border-green-200 bg-green-50 hover:bg-green-100 hover:text-green-700 cursor-default">
+                                                            <Radio className="mr-2 h-4 w-4" />
+                                                            Canal Ativo
+                                                        </Button>
+                                                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => handleDisableClassChannel(cls.channel!.id)}>
+                                                            Desabilitar
+                                                        </Button>
+                                                    </div>
                                                 ) : (
                                                     <Button variant="outline" size="sm" onClick={() => handleEnableClassChannel(cls)}>
                                                         <Radio className="mr-2 h-4 w-4 text-muted-foreground" />

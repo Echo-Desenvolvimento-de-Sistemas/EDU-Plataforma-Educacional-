@@ -75,13 +75,48 @@ class AgendaController extends Controller
                     ->orWhereIn('id', $explicitChannelIds);
             });
         }
+        $channels = $query->with('related')->get();
 
-        // Admin sees everything (no filter applied)
+        // Fetch data for ComposeModal
+        $classes = [];
+        $students = [];
 
-        $channels = $query->get();
+        if ($user->role === 'admin' || $user->role === 'secretaria') {
+            $classes = ClassRoom::with('grade')->get();
+            $students = Student::whereNotNull('user_id')->get(['id', 'name']);
+        } elseif ($user->role === 'professor') {
+            $classes = $user->allocations()->with('classRoom.grade')->get()->pluck('classRoom');
+            $classIds = $classes->pluck('id')->toArray();
+            $students = Student::whereIn('class_room_id', $classIds)->whereNotNull('user_id')->get(['id', 'name']);
+        }
+
+        $staff = User::whereIn('role', ['admin', 'secretaria', 'professor'])->get(['id', 'name', 'role']);
+
+        // Extra data for new unified page (formerly in AgendaSettingController)
+        $groups = Channel::where('type', 'BROADCAST')
+            ->whereNull('related_type')
+            ->with('speakers:id,name,role')
+            ->get();
+
+        $classRooms = ClassRoom::with(['allocations.user', 'channel.speakers', 'grade'])->get()->map(function ($cr) {
+            $gradeName = $cr->grade ? $cr->grade->name : '';
+            return [
+                'id'         => $cr->id,
+                'name'       => $cr->name,
+                'series'     => $gradeName,
+                'letter'     => ($cr->name !== $gradeName) ? $cr->name : '',
+                'channel'    => $cr->channel,
+                'professors' => $cr->allocations->map(fn($a) => $a->user)->unique('id')->values(),
+            ];
+        });
 
         return Inertia::render('Admin/Agenda/Index', [
-            'channels' => $channels,
+            'channels'   => $channels,
+            'groups'     => $groups,
+            'classes'    => $classRooms,
+            'students'   => $students,
+            'staff'      => $staff,
+            'userRole'   => $user->role,
         ]);
     }
 
@@ -89,11 +124,11 @@ class AgendaController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:BROADCAST,CLASS',
-            'icon' => 'nullable', // Can be file or string
-            // If it's a specific class channel
+            'type' => 'required|in:BROADCAST,CLASS,DIRECT',
+            'icon' => 'nullable',
             'related_type' => 'nullable|string',
             'related_id' => 'nullable|integer',
+            'can_reply' => 'nullable|boolean',
         ]);
 
         $iconPath = 'message-circle'; // Default
@@ -110,6 +145,7 @@ class AgendaController extends Controller
             'type' => $validated['type'],
             'icon' => $iconPath,
             'is_active' => true,
+            'can_reply' => $validated['can_reply'] ?? false,
             'related_type' => $validated['related_type'] ?? null,
             'related_id' => $validated['related_id'] ?? null,
         ]);
@@ -120,17 +156,84 @@ class AgendaController extends Controller
     public function sendMessage(Request $request)
     {
         $validated = $request->validate([
-            'channel_id' => 'required|exists:channels,id',
+            'channel_id' => 'nullable|exists:channels,id',
+            'class_room_id' => 'nullable|exists:class_rooms,id',
+            'student_id' => 'nullable|exists:students,id',
+            'student_ids' => 'nullable|array',
+            'student_ids.*' => 'exists:students,id',
             'title' => 'nullable|string|max:255',
             'body' => 'required|string',
-            'type' => 'required|string', // Flexible type for Rich Cards
+            'type' => 'required|string',
+            'target_audience' => 'nullable|in:student,guardian,both',
             'metadata' => 'nullable|array',
-            'banner_image' => 'nullable|image|max:2048', // 2MB
-            'attachments.*' => 'nullable|file|max:10240', // 10MB
+            'banner_image' => 'nullable|image|max:2048',
+            'attachments.*' => 'nullable|file|max:10240',
         ]);
 
-        $channel = Channel::findOrFail($validated['channel_id']);
         $sender = auth()->user();
+        $channel = null;
+
+        // 1. Resolve Channel
+        if ($validated['channel_id']) {
+            $channel = Channel::findOrFail($validated['channel_id']);
+        } elseif ($validated['class_room_id']) {
+            // Find class channel or create one
+            $channel = Channel::firstOrCreate(
+                [
+                    'related_type' => ClassRoom::class,
+                    'related_id' => $validated['class_room_id'],
+                    'type' => 'CLASS'
+                ],
+                [
+                    'name' => 'Canal: ' . ClassRoom::find($validated['class_room_id'])->name,
+                    'icon' => 'message-circle',
+                    'is_active' => true,
+                ]
+            );
+        } elseif (!empty($validated['student_ids'])) {
+            // Multi-student selection
+            $firstStudent = Student::findOrFail($validated['student_ids'][0]);
+            $channel = Channel::firstOrCreate(
+                [
+                    'type' => 'BROADCAST',
+                    'name' => 'Mensagem Direta - ' . now()->format('d/m/Y H:i'),
+                ],
+                [
+                    'icon' => 'message-circle',
+                    'is_active' => true,
+                ]
+            );
+        } elseif (!empty($validated['student_id'])) {
+            $student = Student::findOrFail($validated['student_id']);
+            $studentUser = $student->user;
+            
+            if (!$studentUser) {
+                return back()->with('error', 'Este aluno não possui um usuário cadastrado.');
+            }
+
+            $channel = Channel::firstOrCreate(
+                [
+                    'type' => 'DIRECT',
+                    'related_type' => User::class,
+                    'related_id' => $studentUser->id
+                ],
+                [
+                    'name' => 'Chat: ' . $student->name,
+                    'icon' => 'message-square',
+                    'is_active' => true,
+                    'can_reply' => true,
+                ]
+            );
+            
+            // Ensure sender is a speaker in this DM channel if not already
+            if (!$channel->speakers()->where('user_id', $sender->id)->exists()) {
+                $channel->speakers()->attach($sender->id);
+            }
+        }
+
+        if (!$channel) {
+            return back()->with('error', 'Destinatário inválido.');
+        }
 
         // Security Check for Professors
         if ($sender->role === 'professor') {
@@ -180,40 +283,58 @@ class AgendaController extends Controller
                 'metadata' => $metadata,
             ]);
 
-            // 2. Determine Recipients
-            $recipientIds = $this->resolveRecipients($channel);
-
-            // 3. Create Recipients in Bulk
-            $recipientData = collect($recipientIds)->map(function ($userId) use ($message) {
-                return [
-                    'message_id' => $message->id,
-                    'recipient_id' => $userId,
-                    'read_at' => null,
-                    'status' => 'DELIVERED',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            })->toArray();
-
-            // Insert in chunks to avoid memory issues
-            foreach (array_chunk($recipientData, 500) as $chunk) {
-                MessageRecipient::insert($chunk);
-            }
-
-            // Dispatch WhatsApp Notification Job (Async)
-            // Send to ALL recipients
-            try {
-                \App\Jobs\SendWhatsAppNotification::dispatchAfterResponse(
-                    $message->id,
-                    $recipientIds->toArray()
-                );
-            } catch (\Exception $e) {
-                // Don't block message creation if queue fails
-                \Illuminate\Support\Facades\Log::error('Failed to dispatch WhatsApp job: ' . $e->getMessage());
-            }
+            // 2. Dispatch Processing Job (Async/AfterResponse)
+            // Using dispatchAfterResponse ensures the user gets a 200 OK immediately
+            // even if the queue driver is set to 'sync' (common in dev).
+            \App\Jobs\ProcessMessageRecipientsJob::dispatchAfterResponse(
+                $message,
+                $validated['target_audience'] ?? 'both',
+                $validated['student_ids'] ?? []
+            );
         });
 
         return redirect()->back()->with('success', 'Mensagem enviada com sucesso.');
+    }
+
+    /**
+     * Start a direct message with a student
+     */
+    public function startDirectMessage(Student $student)
+    {
+        $admin = auth()->user();
+        $studentUser = $student->user;
+
+        if (!$studentUser) {
+            return back()->with('error', 'Este aluno não possui um usuário cadastrado.');
+        }
+
+        // Find or create a DIRECT channel between these two
+        // For simplicity, we name it after the student
+        $channelName = "Chat: " . $student->name;
+        
+        // Try to find existing DIRECT channel related to this student's user
+        $channel = Channel::where('type', 'DIRECT')
+            ->where('related_type', User::class)
+            ->where('related_id', $studentUser->id)
+            ->first();
+
+        if (!$channel) {
+            $channel = Channel::create([
+                'name' => $channelName,
+                'type' => 'DIRECT',
+                'icon' => 'message-square',
+                'is_active' => true,
+                'can_reply' => true, // DMs are always two way
+                'related_type' => User::class,
+                'related_id' => $studentUser->id,
+            ]);
+
+            // Add the sender as a speaker (Admin/Prof etc)
+            $channel->speakers()->attach($admin->id);
+            // In DMs, the related_id user is the other participant
+        }
+
+        return redirect()->route('admin.agenda.index')->with('select_channel', $channel->id);
     }
 
     private function formatSize($bytes)
@@ -224,41 +345,5 @@ class AgendaController extends Controller
             return number_format($bytes / 1024, 2) . ' KB';
         }
         return $bytes . ' bytes';
-    }
-
-    protected function resolveRecipients(Channel $channel)
-    {
-        // If Broadcast, sent to ALL users (or specific roles if we refine later)
-        if ($channel->type === 'BROADCAST') {
-            // Dangerous for large scale, but fine for MVP
-            // Ideally filter by active status
-            return User::where('id', '!=', auth()->id())->pluck('id');
-        }
-
-        // If Class channel, send to Students (Users) and Guardians (Users) linked to that Class
-        if ($channel->related_type === ClassRoom::class) {
-            $classRoomId = $channel->related_id;
-
-            // Get students in this class
-            $studentUserIds = Student::where('class_room_id', $classRoomId)
-                ->whereNotNull('user_id')
-                ->pluck('user_id');
-
-            // Get guardians of students in this class
-            // This is complex: Class -> Students -> Guardians -> User
-            // Assuming we want to reach Guardian Users
-            $guardianUserIds = DB::table('students')
-                ->join('guardian_student', 'students.id', '=', 'guardian_student.student_id')
-                ->join('guardians', 'guardian_student.guardian_id', '=', 'guardians.id')
-                ->where('students.class_room_id', $classRoomId)
-                ->whereNotNull('guardians.user_id')
-                ->select('guardians.user_id')
-                ->distinct()
-                ->pluck('user_id');
-
-            return $studentUserIds->merge($guardianUserIds)->unique();
-        }
-
-        return [];
     }
 }

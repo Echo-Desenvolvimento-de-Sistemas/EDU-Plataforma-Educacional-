@@ -30,6 +30,7 @@ Route::get('/magic-login/{user}', [\App\Http\Controllers\Auth\MagicLoginControll
 Route::middleware(['auth'])->prefix('agenda')->name('agenda.')->group(function () {
     Route::get('/inbox', [\App\Http\Controllers\AgendaController::class, 'index'])->name('inbox');
     Route::get('/channels/{channel}', [\App\Http\Controllers\AgendaController::class, 'show'])->name('channel');
+    Route::post('/channels/{channel}/reply', [\App\Http\Controllers\AgendaController::class, 'store'])->name('channel.reply');
     Route::get('/channels/{channel}/poll', [\App\Http\Controllers\AgendaController::class, 'poll'])->name('channel.poll');
     Route::post('/messages/{message}/read', [\App\Http\Controllers\AgendaController::class, 'markAsRead'])->name('messages.read');
 });
@@ -206,6 +207,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/settings/whatsapp/connect', [App\Http\Controllers\Admin\AgendaSettingController::class, 'connectWhatsapp'])->name('settings.whatsapp.connect');
         Route::get('/settings/whatsapp/status', [App\Http\Controllers\Admin\AgendaSettingController::class, 'checkWhatsappStatus'])->name('settings.whatsapp.status');
         Route::post('/settings/whatsapp/disconnect', [App\Http\Controllers\Admin\AgendaSettingController::class, 'disconnectWhatsapp'])->name('settings.whatsapp.disconnect');
+        Route::get('/settings/whatsapp/interval', [App\Http\Controllers\Admin\AgendaSettingController::class, 'getWhatsappInterval'])->name('settings.whatsapp.interval');
+        Route::post('/settings/whatsapp/interval', [App\Http\Controllers\Admin\AgendaSettingController::class, 'setWhatsappInterval'])->name('settings.whatsapp.interval.update');
 
         // Settings Export Data (Gamification)
         Route::get('/settings/export', [\App\Http\Controllers\Admin\SettingController::class, 'exportGamification'])->name('settings.export');
@@ -229,8 +232,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/agenda', [\App\Http\Controllers\Admin\AgendaController::class, 'store'])->name('agenda.store');
         Route::post('/agenda/message', [\App\Http\Controllers\Admin\AgendaController::class, 'sendMessage'])->name('agenda.send');
 
-        // Agenda Settings & Permissions
-        Route::get('/agenda/settings', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'index'])->name('agenda.settings');
+        // Agenda Settings & Permissions (redirect old URL for backwards compatibility)
+        Route::redirect('/agenda/settings', '/admin/agenda')->name('agenda.settings');
+        Route::get('/agenda/direct/{student}', [\App\Http\Controllers\Admin\AgendaController::class, 'startDirectMessage'])->name('agenda.direct');
         Route::put('/agenda/{channel}', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'update'])->name('agenda.update');
         Route::delete('/agenda/{channel}', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'destroy'])->name('agenda.destroy');
         Route::post('/agenda/{channel}/users', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'attachUser'])->name('agenda.users.store');
