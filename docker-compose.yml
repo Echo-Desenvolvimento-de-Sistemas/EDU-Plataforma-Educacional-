@@ -3,6 +3,8 @@ version: '3.8'
 services:
   app:
     image: edu-plataforma-educacional:latest
+    ports:
+      - "8080:80"
     env_file:
       - .env
     networks:
