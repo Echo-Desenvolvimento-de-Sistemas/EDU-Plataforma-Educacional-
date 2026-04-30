@@ -14,10 +14,6 @@ php artisan view:cache
 echo "Running migrations..."
 php artisan migrate --force
 
-# Run seeders (creates admin user and initial data)
-echo "Running seeders..."
-php artisan db:seed --force
-
 # Link storage directory
 php artisan storage:link
 
