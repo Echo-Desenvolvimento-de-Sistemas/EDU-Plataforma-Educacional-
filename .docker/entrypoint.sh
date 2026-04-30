@@ -5,7 +5,8 @@ set -e
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Run optimizations
-echo "Caching configuration..."
+echo "Cleaning and caching configuration..."
+php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

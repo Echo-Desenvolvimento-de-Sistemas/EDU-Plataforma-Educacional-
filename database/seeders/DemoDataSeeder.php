@@ -112,10 +112,23 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($subjectList as $sName => $sCode) {
-            $subjects[] = Subject::firstOrCreate(
-                ['code' => $sCode],
-                ['name' => $sName]
-            );
+            $subject = Subject::where('code', $sCode)->first();
+            
+            if (!$subject) {
+                try {
+                    $subject = Subject::create([
+                        'code' => $sCode,
+                        'name' => $sName
+                    ]);
+                } catch (\Exception $e) {
+                    // Se falhar (ex: outro container inseriu no meio tempo), tenta buscar novamente
+                    $subject = Subject::where('code', $sCode)->first();
+                }
+            }
+            
+            if ($subject) {
+                $subjects[] = $subject;
+            }
         }
 
         // 3. Classes and Students
