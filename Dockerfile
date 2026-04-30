@@ -94,14 +94,15 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Create log directories
 RUN mkdir -p /var/log/supervisor /var/log/nginx /var/log/php-fpm \
-    && chown -R www-data:www-data /var/log/supervisor /var/log/nginx /var/log/php-fpm
+    && chown -R www-data:www-data /var/log/supervisor /var/log/php-fpm \
+    && chown -R nginx:nginx /var/log/nginx
 
 # Expose port
 EXPOSE 80
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost/api/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost/up || exit 1
 
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

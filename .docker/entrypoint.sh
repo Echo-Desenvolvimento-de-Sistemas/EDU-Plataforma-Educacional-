@@ -11,6 +11,13 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Wait for database connection
+echo "Waiting for database connection..."
+until php artisan db:monitor --path=mysql > /dev/null 2>&1; do
+  echo "Database is not ready - waiting..."
+  sleep 2
+done
+
 # Run migrations (Optional: be careful in production on auto-deploy)
 echo "Running migrations..."
 php artisan migrate --force
