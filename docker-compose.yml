@@ -27,16 +27,10 @@ services:
         - "traefik.http.routers.edu_demo.rule=Host(`edu.echo.dev.br`)"
         - "traefik.http.routers.edu_demo.entrypoints=websecure"
         - "traefik.http.routers.edu_demo.tls.certresolver=myresolver"
-        # WebSocket support for Reverb
+        # WebSocket support for Reverb (routing to the same container, but separate port handled by app)
         - "traefik.http.routers.edu-ws_demo.rule=Host(`edu.echo.dev.br`) && PathPrefix(`/app`)"
         - "traefik.http.routers.edu-ws_demo.entrypoints=websecure"
         - "traefik.http.routers.edu-ws_demo.tls.certresolver=myresolver"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost/api/health" ]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-      start_period: 40s
 
   redis:
     image: redis:7-alpine

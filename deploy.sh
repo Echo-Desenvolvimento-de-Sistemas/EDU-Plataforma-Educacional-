@@ -63,7 +63,13 @@ fi
 
 # Create database if it doesn't exist
 echo -e "${YELLOW}Checking database...${NC}"
-docker exec $(docker ps -q -f name=database_mariadb) mysql -uroot -pAkio2604* -e "CREATE DATABASE IF NOT EXISTS edu_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" || true
+# We use the specific container name or filter from your VPS report
+DB_CONTAINER=$(docker ps -q -f name=database_mariadb | head -n 1)
+if [ -n "$DB_CONTAINER" ]; then
+    docker exec $DB_CONTAINER mysql -uroot -pAkio2604* -e "CREATE DATABASE IF NOT EXISTS edu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" || true
+else
+    echo -e "${RED}Warning: Could not find MariaDB container to create database.${NC}"
+fi
 
 # Deploy the stack
 echo -e "${YELLOW}Deploying stack...${NC}"
