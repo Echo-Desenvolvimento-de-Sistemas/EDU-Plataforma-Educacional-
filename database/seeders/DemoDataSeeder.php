@@ -112,7 +112,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($subjectList as $sName => $sCode) {
-            $subjects[] = Subject::updateOrCreate(
+            $subjects[] = Subject::firstOrCreate(
                 ['code' => $sCode],
                 ['name' => $sName]
             );

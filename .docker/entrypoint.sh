@@ -14,6 +14,10 @@ php artisan view:cache
 echo "Running migrations..."
 php artisan migrate --force
 
+# Run seeders
+echo "Running seeders..."
+php artisan db:seed --class=DemoDataSeeder --force
+
 # Link storage directory
 php artisan storage:link
 
