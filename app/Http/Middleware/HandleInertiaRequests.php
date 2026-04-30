@@ -74,6 +74,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'gamification' => $stats,
+                'is_demo' => session('is_demo', false),
+                'demo_persona' => session('demo_persona'),
             ],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings' => \Illuminate\Support\Facades\Cache::remember('app.settings', 3600, function () {

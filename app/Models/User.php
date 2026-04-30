@@ -7,11 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Models\Traits\HasAcademicRelations;
+use App\Models\Traits\HasCommunicationRelations;
+use App\Models\Traits\HasTeachingTools;
+use App\Models\Traits\HasProfileAttributes;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory, 
+        Notifiable, 
+        TwoFactorAuthenticatable,
+        HasAcademicRelations,
+        HasCommunicationRelations,
+        HasTeachingTools,
+        HasProfileAttributes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,57 +38,6 @@ class User extends Authenticatable
         'role',
         'phone',
     ];
-
-    public function allocations()
-    {
-        return $this->hasMany(Allocation::class);
-    }
-
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
-    public function guardian()
-    {
-        return $this->hasOne(Guardian::class);
-    }
-
-    public function speakingChannels()
-    {
-        return $this->belongsToMany(Channel::class, 'channel_user');
-    }
-
-    public function questionBanks()
-    {
-        return $this->hasMany(QuestionBank::class);
-    }
-
-    public function kanbanBoards()
-    {
-        return $this->belongsToMany(\App\Models\Kanban\KanbanBoard::class, 'kanban_board_user', 'user_id', 'board_id')
-            ->withPivot('permission')
-            ->withTimestamps();
-    }
-
-    /**
-     * Get the user's profile photo URL.
-     */
-    public function getProfilePhotoUrlAttribute(): ?string
-    {
-        // For students, use their photo_path
-        // Only access student relation if it's already loaded to avoid lazy loading violation
-        if ($this->role === 'aluno' && $this->relationLoaded('student')) {
-            $student = $this->getRelation('student');
-            if ($student && $student->photo_path) {
-                return asset('storage/' . $student->photo_path);
-            }
-        }
-
-        // For other roles, return null to use initials fallback
-        // Future enhancement: add photo_path column to users table
-        return null;
-    }
 
     /**
      * The accessors to append to the model's array form.

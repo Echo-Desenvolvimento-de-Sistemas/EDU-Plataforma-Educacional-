@@ -77,10 +77,8 @@ class LessonPlanController extends Controller
 
     public function edit(LessonPlan $plan)
     {
-        // Authorize
-        if ($plan->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('view', $plan);
+
 
         $plan->load('bnccSkills', 'feedbacks.user');
 
@@ -107,10 +105,8 @@ class LessonPlanController extends Controller
 
     public function update(Request $request, LessonPlan $plan)
     {
-        // Authorize
-        if ($plan->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('update', $plan);
+
 
         $data = $request->validate([
             'start_date' => 'required|date',
@@ -129,9 +125,8 @@ class LessonPlanController extends Controller
 
     public function submit(LessonPlan $plan)
     {
-        if ($plan->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('update', $plan);
+
 
         $this->service->submitForReview($plan);
 
@@ -140,9 +135,8 @@ class LessonPlanController extends Controller
 
     public function destroy(LessonPlan $plan)
     {
-        if ($plan->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('delete', $plan);
+
 
         $plan->delete();
 

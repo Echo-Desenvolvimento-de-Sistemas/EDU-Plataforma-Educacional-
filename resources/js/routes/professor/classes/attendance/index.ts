@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
 export const create = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
 create.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ create.url = (args: { classRoom: number | { id: number } } | [classRoom: number 
 
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
 create.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ create.get = (args: { classRoom: number | { id: number } } | [classRoom: number 
 })
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
 create.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ create.head = (args: { classRoom: number | { id: number } } | [classRoom: number
 
     /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
     const createForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ create.head = (args: { classRoom: number | { id: number } } | [classRoom: number
 
             /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
         createForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ create.head = (args: { classRoom: number | { id: number } } | [classRoom: number
         })
             /**
 * @see \App\Http\Controllers\Professor\AttendanceController::create
- * @see app/Http/Controllers/Professor/AttendanceController.php:21
+ * @see app/Http/Controllers/Professor/AttendanceController.php:29
  * @route '/professor/classes/{classRoom}/attendance/create'
  */
         createForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ create.head = (args: { classRoom: number | { id: number } } | [classRoom: number
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::store
- * @see app/Http/Controllers/Professor/AttendanceController.php:107
+ * @see app/Http/Controllers/Professor/AttendanceController.php:62
  * @route '/professor/classes/{classRoom}/attendance'
  */
 export const store = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -118,7 +118,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::store
- * @see app/Http/Controllers/Professor/AttendanceController.php:107
+ * @see app/Http/Controllers/Professor/AttendanceController.php:62
  * @route '/professor/classes/{classRoom}/attendance'
  */
 store.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ store.url = (args: { classRoom: number | { id: number } } | [classRoom: number |
 
 /**
 * @see \App\Http\Controllers\Professor\AttendanceController::store
- * @see app/Http/Controllers/Professor/AttendanceController.php:107
+ * @see app/Http/Controllers/Professor/AttendanceController.php:62
  * @route '/professor/classes/{classRoom}/attendance'
  */
 store.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -161,7 +161,7 @@ store.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
 
     /**
 * @see \App\Http\Controllers\Professor\AttendanceController::store
- * @see app/Http/Controllers/Professor/AttendanceController.php:107
+ * @see app/Http/Controllers/Professor/AttendanceController.php:62
  * @route '/professor/classes/{classRoom}/attendance'
  */
     const storeForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -171,7 +171,7 @@ store.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
 
             /**
 * @see \App\Http\Controllers\Professor\AttendanceController::store
- * @see app/Http/Controllers/Professor/AttendanceController.php:107
+ * @see app/Http/Controllers/Professor/AttendanceController.php:62
  * @route '/professor/classes/{classRoom}/attendance'
  */
         storeForm.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

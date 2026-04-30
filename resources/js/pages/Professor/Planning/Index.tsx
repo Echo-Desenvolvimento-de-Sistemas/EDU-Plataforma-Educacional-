@@ -7,9 +7,11 @@ import { Link } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { BookOpen, Calendar, Plus } from 'lucide-react';
+import { LessonPlan } from '@/types/models';
 import professor from '@/routes/professor/index';
 
-export default function Index({ plans }: { plans: any[] }) {
+export default function Index({ plans }: { plans: LessonPlan[] }) {
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'APPROVED': return 'bg-green-100 text-green-800 hover:bg-green-100';

@@ -3,17 +3,13 @@ import { Head, Link } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { User, GraduationCap } from 'lucide-react';
+import { Student } from '@/types/models';
 
-interface Student {
-    id: number;
-    name: string;
-    grade?: { name: string };
-    class_room?: { name: string };
-}
 
 interface Props {
     students: Student[];
 }
+
 
 export default function Dashboard({ students }: Props) {
     return (

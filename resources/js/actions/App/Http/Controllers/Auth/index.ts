@@ -1,6 +1,8 @@
+import DemoLoginController from './DemoLoginController'
 import MagicLoginController from './MagicLoginController'
 const Auth = {
-    MagicLoginController: Object.assign(MagicLoginController, MagicLoginController),
+    DemoLoginController: Object.assign(DemoLoginController, DemoLoginController),
+MagicLoginController: Object.assign(MagicLoginController, MagicLoginController),
 }
 
 export default Auth

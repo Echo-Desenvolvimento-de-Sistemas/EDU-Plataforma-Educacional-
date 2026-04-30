@@ -1,0 +1,115 @@
+﻿        return Inertia::render('Agenda/Inbox', [
+        return Inertia::render('Agenda/Chat', [
+        return Inertia::render('auth/FirstAccess', [
+        return Inertia::render('Kanban/Index', [
+        return Inertia::render('Kanban/Board', [
+        return Inertia::render('Manual/Index', [
+        return Inertia::render('Calendar/Index', [
+        return Inertia::render('Admin/AcademicYears/Index', [
+        return Inertia::render('Admin/AcademicYears/Create');
+        return Inertia::render('Admin/AcademicYears/Edit', [
+        return Inertia::render('Admin/Settings', [
+        return Inertia::render('Admin/Agenda/Index', [
+        return Inertia::render('Admin/Agenda/Settings', [
+        return inertia('Admin/Attendance/Index', [
+        return inertia('Admin/Attendance/Edit', [
+        return Inertia::render('Admin/ClassRooms/Index', [
+        return Inertia::render('Admin/ClassRooms/Create', [
+        return Inertia::render('Admin/ClassRooms/Edit', [
+        return Inertia::render('Admin/ClassSchedules/Index', [
+        return Inertia::render('Admin/Dashboard', [
+        return Inertia::render('Admin/Documents/Index', [
+        return Inertia::render('Admin/Documents/Create', [
+        return Inertia::render('Admin/DocumentTemplates/Index', [
+        return Inertia::render('Admin/DocumentTemplates/Edit');
+        return Inertia::render('Admin/DocumentTemplates/Edit', [
+        return Inertia::render('Admin/EducationLevels/Index', [
+        return Inertia::render('Admin/EducationLevels/Create');
+        return Inertia::render('Admin/EducationLevels/Edit', [
+        return Inertia::render('Admin/Ensalamento/Index', [
+        return Inertia::render('Admin/Grades/Index', [
+        return Inertia::render('Admin/Grades/Create', [
+        return Inertia::render('Admin/Grades/Edit', [
+        return Inertia::render('Admin/Guardians/Index', [
+        return Inertia::render('Admin/Guardians/Create', [
+        return Inertia::render('Admin/Guardians/Edit', [
+        return Inertia::render('Admin/Import/Secret');
+        return Inertia::render('Admin/Planning/Index', [
+        return Inertia::render('Admin/Planning/Show', [
+        return Inertia::render('Admin/PreRegistrations/Index', [
+        return Inertia::render('Admin/Settings/Index', [
+        return Inertia::render('Admin/Students/Index', [
+        return Inertia::render('Admin/Students/Create', [
+        return Inertia::render('Admin/Students/Edit', [
+        return Inertia::render('Admin/Students/Attendance', [
+        return Inertia::render('Admin/StudentGrades/Index', [
+        return Inertia::render('Admin/StudentGrades/Show', [
+        return Inertia::render('Admin/StudentGrades/ReportCard', [
+        return Inertia::render('Admin/Subjects/Index', [
+        return Inertia::render('Admin/Subjects/Create');
+        return Inertia::render('Admin/Subjects/Edit', [
+        return Inertia::render('Admin/SubjectPerformance/Index', [
+        return Inertia::render('Admin/SubjectPerformance/Show', [
+            return Inertia::render('Admin/Users/Overview');
+        return Inertia::render('Admin/Users/Index', [
+        return Inertia::render('Admin/Users/Create', [
+        return Inertia::render('Admin/Users/Edit', [
+        return Inertia::render('Professor/Activities/Index', [
+        return Inertia::render('Professor/Activities/Create', [
+        return Inertia::render('Professor/Activities/Show', [
+        return Inertia::render('Professor/Attendance/Create', [
+        return Inertia::render('Professor/Classes/Index', [
+        return Inertia::render('Professor/ClassRoom/Show', [
+        return Inertia::render('Professor/ClassRoom/Student', [
+        return Inertia::render('Professor/ClassSchedules/Index', [
+        return Inertia::render('Professor/Dashboard', [
+        return \Inertia\Inertia::render('Professor/Grades/Index', [
+        return Inertia::render('Professor/Planning/Index', [
+        return Inertia::render('Professor/Planning/Edit', [
+        return Inertia::render('Professor/Planning/Edit', [
+        return Inertia::render('Professor/QuestionBanks/Index', [
+        return Inertia::render('Professor/QuestionBanks/Create');
+        return Inertia::render('Professor/QuestionBanks/Show', [
+        return Inertia::render('Professor/QuestionBanks/Edit', [
+        return Inertia::render('Professor/Questions/Create', [
+        return Inertia::render('Professor/Reports', [
+            return Inertia::render('Public/Documents/DocumentValidate', [
+        return Inertia::render('Public/Documents/DocumentValidate', [
+        return Inertia::render('Public/PreRegistration/Form', [
+        return Inertia::render('Public/Users/Index', [
+        return Inertia::render('Public/Users/Edit', [
+            return Inertia::render('Responsavel/Dashboard', [
+        return Inertia::render('Responsavel/Dashboard', [
+        return Inertia::render('Secretaria/BatchEnrollment/Index', [
+        return Inertia::render('Secretaria/Dashboard', [
+        return Inertia::render('Secretaria/Grades/Index', [
+        return Inertia::render('Secretaria/Grades/Show', [
+        return Inertia::render('Secretaria/Grades/ReportCard', [
+        return Inertia::render('Secretaria/PreRegistrations/Index', [
+            return Inertia::render('Secretaria/Users/Overview');
+        return Inertia::render('Secretaria/Users/Index', [
+        return Inertia::render('Secretaria/Users/Create', [
+        return Inertia::render('Secretaria/Users/Edit', [
+        return Inertia::render('settings/password');
+        return Inertia::render('settings/profile', [
+        return Inertia::render('settings/two-factor', [
+        return Inertia::render('Aluno/Attendance/Index', [
+        return Inertia::render('Aluno/Schedule/Index', [
+            return Inertia::render('Aluno/Dashboard', [
+        return Inertia::render('Aluno/Dashboard', [
+        return Inertia::render('Aluno/Documents/Index', [
+        return Inertia::render('Aluno/Documents/Show', [
+        return Inertia::render('Aluno/Grades/Index', [
+        return Inertia::render('Student/Player/Index', [
+        Fortify::loginView(fn(Request $request) => Inertia::render('auth/login', [
+        Fortify::resetPasswordView(fn(Request $request) => Inertia::render('auth/reset-password', [
+        Fortify::requestPasswordResetLinkView(fn(Request $request) => Inertia::render('auth/forgot-password', [
+        Fortify::verifyEmailView(fn(Request $request) => Inertia::render('auth/verify-email', [
+        Fortify::registerView(fn() => Inertia::render('auth/register'));
+        Fortify::twoFactorChallengeView(fn() => Inertia::render('auth/two-factor-challenge'));
+        Fortify::confirmPasswordView(fn() => Inertia::render('auth/confirm-password'));
+        return Inertia::render('settings/appearance');
+    return Inertia::render('Public/Landing', [
+    return Inertia::render('Public/DemoAccess');
+            return Inertia::render('Professor/Manual');
+    return Inertia::render('Public/PreRegistration/Success');

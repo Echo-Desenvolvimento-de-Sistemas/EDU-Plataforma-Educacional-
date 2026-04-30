@@ -9,6 +9,8 @@ export interface Auth {
         next_level_points?: number;
         badges_count?: number;
     } | null;
+    is_demo: boolean;
+    demo_persona?: string;
 }
 
 export interface BreadcrumbItem {
@@ -38,6 +40,10 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+import { Student } from './models';
+
+export type Role = 'admin' | 'professor' | 'aluno' | 'secretaria' | 'responsavel';
+
 export interface User {
     id: number;
     name: string;
@@ -47,6 +53,13 @@ export interface User {
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
-    role: string;
-    [key: string]: unknown; // This allows for additional properties...
+    role: Role;
+    student?: Student;
+    [key: string]: unknown;
 }
+
+export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
+    auth: Auth;
+    [key: string]: unknown;
+};
+

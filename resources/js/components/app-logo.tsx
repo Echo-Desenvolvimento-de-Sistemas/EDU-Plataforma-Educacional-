@@ -7,16 +7,16 @@ export default function AppLogo({ className }: { className?: string }) {
     const logoDark = settings?.logo_dark_url || settings?.logo_url || '/images/logo-dark.png';
 
     return (
-        <div className={`relative flex items-center justify-start w-full ${className}`}>
+        <div className={`relative flex items-center justify-start ${className}`}>
             <img
                 src={logoLight}
                 alt="Logo"
-                className="dark:hidden w-full h-auto object-contain max-h-20"
+                className="dark:hidden h-full w-auto object-contain"
             />
             <img
                 src={logoDark}
                 alt="Logo"
-                className="hidden dark:block w-full h-auto object-contain max-h-20"
+                className="hidden dark:block h-full w-auto object-contain"
             />
         </div>
     );

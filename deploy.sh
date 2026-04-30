@@ -12,13 +12,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-<<<<<<< Updated upstream
 STACK_NAME="edu_demo"
-IMAGE_NAME="ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest"
-=======
-STACK_NAME="edu"
 IMAGE_NAME="edu-plataforma-educacional:latest"
->>>>>>> Stashed changes
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
 ENV_PRODUCTION_FILE=".env.production"

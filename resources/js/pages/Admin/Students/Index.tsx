@@ -1,7 +1,9 @@
 import admin from '@/routes/admin/index';
 import AppLayout from '@/layouts/app-layout';
-import { BreadcrumbItem } from '@/types';
+import { BreadcrumbItem, PageProps } from '@/types';
+import { Student, ClassRoom } from '@/types/models';
 import AppLogo from '@/components/app-logo';
+
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Edit, Trash2, Plus, Eye, Printer, Search, Filter, Power, Calendar as CalendarIcon, FileDown, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -34,20 +36,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-interface ClassRoom {
-    id: number;
-    name: string;
-}
-
-interface Student {
-    id: number;
-    name: string;
-    birth_date: string;
-    cpf: string;
-    status: string;
-    class_room: ClassRoom;
-}
-
 interface Props {
     students: {
         data: Student[];
@@ -66,6 +54,7 @@ interface Props {
         per_page?: string;
     };
 }
+
 
 export default function Index({ students, classRooms, filters }: Props) {
     const [viewingStudent, setViewingStudent] = useState<any>(null);
@@ -121,7 +110,8 @@ export default function Index({ students, classRooms, filters }: Props) {
         window.print();
     };
 
-    const { settings } = usePage().props as any;
+    const { settings } = usePage<PageProps>().props as any;
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -202,8 +192,9 @@ export default function Index({ students, classRooms, filters }: Props) {
                             </CardHeader>
                             <CardContent>
                                 <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                                    Nascimento: {new Date(student.birth_date).toLocaleDateString()}
+                                    Nascimento: {student.birth_date ? new Date(student.birth_date).toLocaleDateString() : '-'}
                                 </div>
+
                                 <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                                     CPF: {student.cpf || '-'}
                                 </div>
@@ -285,8 +276,9 @@ export default function Index({ students, classRooms, filters }: Props) {
                                             {student.class_room?.name || 'Sem Turma'}
                                         </td>
                                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                            {new Date(student.birth_date).toLocaleDateString()}
+                                            {student.birth_date ? new Date(student.birth_date).toLocaleDateString() : '-'}
                                         </td>
+
                                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                             {student.cpf || '-'}
                                         </td>

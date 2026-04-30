@@ -9,7 +9,6 @@ Route::get('/api/health', function () {
     return response()->json(['status' => 'ok'], 200);
 });
 
-
 Route::get('/', function () {
     if (auth()->check()) {
         $role = auth()->user()->role;
@@ -27,6 +26,20 @@ Route::get('/demo-access', function () {
     return Inertia::render('Public/DemoAccess');
 })->name('demo.access');
 
+Route::get('/privacy', function () {
+    return Inertia::render('Public/Privacy');
+})->name('privacy');
+
+Route::get('/terms', function () {
+    return Inertia::render('Public/Terms');
+})->name('terms');
+
+Route::post('/demo/lead', [\App\Http\Controllers\Public\LeadController::class, 'store'])->name('demo.lead.store');
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
+
+Route::match(['get', 'post'], '/demo/login/{persona}', [\App\Http\Controllers\Auth\DemoLoginController::class, 'login'])->name('demo.login');
+Route::post('/demo/logout', [\App\Http\Controllers\Auth\DemoLoginController::class, 'logout'])->name('demo.logout');
+
 Route::get('/magic-login/{user}', [\App\Http\Controllers\Auth\MagicLoginController::class, 'verify'])
     ->name('magic-login.verify')
     ->middleware('signed');
@@ -39,10 +52,6 @@ Route::middleware(['auth'])->prefix('agenda')->name('agenda.')->group(function (
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // First Access
-    Route::get('/first-access', [\App\Http\Controllers\FirstAccessController::class, 'index'])->name('first-access.index');
-    Route::post('/first-access', [\App\Http\Controllers\FirstAccessController::class, 'store'])->name('first-access.store');
-
     // Gamification SSO
     Route::get('/gamification/sso', [\App\Http\Controllers\GamificationAuthController::class, 'redirect'])->name('gamification.sso');
 

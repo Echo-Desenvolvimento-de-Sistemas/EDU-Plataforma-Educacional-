@@ -33,10 +33,11 @@ export function NavFooter({
                             >
                                 {item.external || (typeof item.href === 'string' && item.href.startsWith('http')) ? (
                                     <a
-                                        href={item.href}
+                                        href={item.href as string}
                                         target={item.external ? '_self' : '_blank'}
                                         rel={item.external ? undefined : 'noopener noreferrer'}
                                     >
+
                                         {item.icon && (
                                             <Icon
                                                 iconNode={item.icon}

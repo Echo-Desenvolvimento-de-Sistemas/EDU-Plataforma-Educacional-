@@ -7,7 +7,7 @@ use App\Models\PlanFeedback;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class LessonPlanService
+class LessonPlanService extends BaseService
 {
     /**
      * Create a new lesson plan
