@@ -42,9 +42,9 @@ if ! docker network ls | grep -q "echonet"; then
     exit 1
 fi
 
-# Build the image locally
-echo -e "${YELLOW}Building the Docker image locally (this may take a few minutes)...${NC}"
-docker build -t $IMAGE_NAME .
+# Build the image locally without cache to ensure changes are picked up
+echo -e "${YELLOW}Building the Docker image locally (no-cache)...${NC}"
+docker build --no-cache -t $IMAGE_NAME .
 
 # Create .env file if it doesn't exist
 if [ ! -f "$ENV_FILE" ]; then
