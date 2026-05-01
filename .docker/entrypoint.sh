@@ -1,51 +1,51 @@
 #!/bin/sh
-set -e
 
 echo "========================================"
 echo "EDU Platform - Container Startup"
 echo "========================================"
 
 # Ensure permissions are correct
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true
 
 # Run optimizations
-echo "[1/6] Caching configuration..."
-php artisan optimize:clear
+echo "[1/5] Caching configuration..."
+php artisan optimize:clear 2>/dev/null || true
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Wait for database using mysqladmin (reliable, no PHP dependency)
-echo "[2/6] Waiting for database connection..."
-MAX_RETRIES=30
-RETRY_COUNT=0
-until mysqladmin ping -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USERNAME" -p"$DB_PASSWORD" --silent 2>/dev/null; do
-  RETRY_COUNT=$((RETRY_COUNT + 1))
-  if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
-    echo "ERROR: Could not connect to database after $MAX_RETRIES attempts."
-    echo "DB_HOST=$DB_HOST DB_PORT=$DB_PORT DB_USERNAME=$DB_USERNAME"
-    echo "Starting supervisord WITHOUT migrations (app may have limited functionality)..."
-    exec "$@"
+# Try database connection (non-blocking - will NOT prevent startup)
+echo "[2/5] Checking database connection..."
+DB_READY=false
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+  if php artisan tinker --execute="try { DB::connection()->getPdo(); echo 'OK'; } catch(\Exception \$e) { echo 'FAIL'; exit(1); }" 2>/dev/null | grep -q "OK"; then
+    DB_READY=true
+    echo "  Database connected!"
+    break
   fi
-  echo "  Database not ready (attempt $RETRY_COUNT/$MAX_RETRIES) - retrying in 3s..."
-  sleep 3
+  echo "  Attempt $i/15 - Database not ready, retrying in 2s..."
+  sleep 2
 done
-echo "  Database connected!"
 
-# Run migrations
-echo "[3/6] Running migrations..."
-php artisan migrate --force
+if [ "$DB_READY" = true ]; then
+  # Run migrations
+  echo "[3/5] Running migrations..."
+  php artisan migrate --force || echo "  WARNING: Migration had issues, continuing..."
 
-# Run seeders (wrapped in try-catch style)
-echo "[4/6] Running seeders..."
-php artisan db:seed --class=DemoDataSeeder --force || {
-  echo "  WARNING: Seeder had errors (possibly data already exists). Continuing..."
-}
+  # Run seeders
+  echo "[4/5] Running seeders..."
+  php artisan db:seed --class=DemoDataSeeder --force 2>&1 || echo "  WARNING: Seeder had issues (data may already exist), continuing..."
+else
+  echo "  WARNING: Database not available after 15 attempts."
+  echo "  App will start without migrations. Run manually when DB is ready:"
+  echo "    docker exec \$(docker ps -q -f name=edu_demo_app) php artisan migrate --force"
+fi
 
 # Link storage directory
-echo "[5/6] Linking storage..."
+echo "[5/5] Linking storage..."
 php artisan storage:link 2>/dev/null || true
 
-echo "[6/6] Starting Supervisord..."
+echo ""
+echo "Starting Supervisord..."
 echo "========================================"
 exec "$@"
