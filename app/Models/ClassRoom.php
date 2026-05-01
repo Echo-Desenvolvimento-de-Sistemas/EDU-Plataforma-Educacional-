@@ -32,4 +32,9 @@ class ClassRoom extends Model
     {
         return $this->morphOne(Channel::class, 'related');
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(ClassSchedule::class);
+    }
 }
