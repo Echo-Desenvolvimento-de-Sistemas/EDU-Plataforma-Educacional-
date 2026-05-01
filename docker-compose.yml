@@ -26,10 +26,10 @@ services:
         order: stop-first
       labels:
         - "traefik.enable=true"
-        - "traefik.http.services.edu_demo.loadbalancer.server.port=80"
-        - "traefik.http.routers.edu_demo.rule=Host(`edu.echo.dev.br`)"
-        - "traefik.http.routers.edu_demo.entrypoints=websecure"
-        - "traefik.http.routers.edu_demo.tls.certresolver=myresolver"
+        - "traefik.http.routers.edu-app.rule=Host(`edu.echo.dev.br`)"
+        - "traefik.http.routers.edu-app.entrypoints=websecure"
+        - "traefik.http.routers.edu-app.tls.certresolver=myresolver"
+        - "traefik.http.services.edu-app.loadbalancer.server.port=80"
         # WebSocket support for Reverb
         - "traefik.http.routers.edu-ws_demo.rule=Host(`edu.echo.dev.br`) && PathPrefix(`/app`)"
         - "traefik.http.routers.edu-ws_demo.entrypoints=websecure"
