@@ -92,16 +92,17 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod +x /usr/local/bin/entrypoint.sh
 
-# Create log directories
+# Create log directories with correct ownership
 RUN mkdir -p /var/log/supervisor /var/log/nginx /var/log/php-fpm \
-    && chown -R www-data:www-data /var/log/supervisor /var/log/php-fpm \
+    && chown -R nobody:nobody /var/log/supervisor \
     && chown -R nginx:nginx /var/log/nginx
 
 # Expose port
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+# Health check - uses Laravel's built-in /up route
+# start-period=120s gives time for migrations + seeders to complete
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=5 \
     CMD curl -f http://localhost/up || exit 1
 
 # Set entrypoint
