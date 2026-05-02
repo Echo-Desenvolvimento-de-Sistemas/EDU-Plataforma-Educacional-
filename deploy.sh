@@ -14,11 +14,11 @@ git reset --hard origin/demo
 if [ ! -f .env ]; then
     echo "Creating .env from .env.production..."
     cp .env.production .env
-else
-    # Ensure DB_HOST is correct even if .env exists
-    sed -i 's/DB_HOST=.*/DB_HOST=database_mariadb/' .env
-    sed -i 's/REDIS_HOST=.*/REDIS_HOST=edu_demo_redis/' .env
 fi
+
+# Garantir que o DB_HOST use o IP estável do relatório
+sed -i 's/DB_HOST=.*/DB_HOST=10.0.1.146/' .env
+sed -i 's/REDIS_HOST=.*/REDIS_HOST=edu_demo_redis/' .env
 
 # 3. Build Image
 echo "Building Docker image..."
