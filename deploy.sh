@@ -38,12 +38,6 @@ if [ -n "$APP_CONTAINER" ]; then
     echo "Running migrations..."
     docker exec $APP_CONTAINER php artisan migrate --force
     
-    # Check if APP_KEY is empty and generate if needed
-    if docker exec $APP_CONTAINER php artisan key:generate --show | grep -q "base64"; then
-        echo "Ensuring APP_KEY is set..."
-        docker exec $APP_CONTAINER php artisan key:generate --force
-    fi
-
     echo "Caching configuration..."
     docker exec $APP_CONTAINER php artisan config:cache
     docker exec $APP_CONTAINER php artisan view:cache
