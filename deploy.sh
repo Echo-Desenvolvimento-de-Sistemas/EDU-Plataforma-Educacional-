@@ -11,13 +11,12 @@ git fetch origin demo
 git reset --hard origin/demo
 
 # 2. Prepare Environment
-if [ ! -f .env ]; then
-    echo "Creating .env from .env.production..."
-    cp .env.production .env
-fi
+# Sempre garantir que o .env seja a cópia exata do .env.production na versão demo
+echo "Copying .env.production to .env..."
+cp .env.production .env
 
-# Garantir que o DB_HOST use o nome do serviço no Swarm
-sed -i 's/DB_HOST=.*/DB_HOST=database_mariadb/' .env
+# Garantir que o DB_HOST use o IP estável do relatório
+sed -i 's/DB_HOST=.*/DB_HOST=10.0.1.146/' .env
 sed -i 's/REDIS_HOST=.*/REDIS_HOST=edu_demo_redis/' .env
 
 # 3. Build Image
