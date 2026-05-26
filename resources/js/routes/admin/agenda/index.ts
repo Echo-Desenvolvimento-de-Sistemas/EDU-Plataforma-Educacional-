@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import users from './users'
+import students from './students'
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::index
  * @see app/Http/Controllers/Admin/AgendaController.php:19
@@ -80,7 +81,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:123
+ * @see app/Http/Controllers/Admin/AgendaController.php:122
  * @route '/admin/agenda'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -95,7 +96,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:123
+ * @see app/Http/Controllers/Admin/AgendaController.php:122
  * @route '/admin/agenda'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -104,7 +105,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:123
+ * @see app/Http/Controllers/Admin/AgendaController.php:122
  * @route '/admin/agenda'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +115,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:123
+ * @see app/Http/Controllers/Admin/AgendaController.php:122
  * @route '/admin/agenda'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +125,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::store
- * @see app/Http/Controllers/Admin/AgendaController.php:123
+ * @see app/Http/Controllers/Admin/AgendaController.php:122
  * @route '/admin/agenda'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -135,7 +136,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:156
+ * @see app/Http/Controllers/Admin/AgendaController.php:171
  * @route '/admin/agenda/message'
  */
 export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -150,7 +151,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:156
+ * @see app/Http/Controllers/Admin/AgendaController.php:171
  * @route '/admin/agenda/message'
  */
 send.url = (options?: RouteQueryOptions) => {
@@ -159,7 +160,7 @@ send.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:156
+ * @see app/Http/Controllers/Admin/AgendaController.php:171
  * @route '/admin/agenda/message'
  */
 send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -169,7 +170,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:156
+ * @see app/Http/Controllers/Admin/AgendaController.php:171
  * @route '/admin/agenda/message'
  */
     const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -179,7 +180,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::send
- * @see app/Http/Controllers/Admin/AgendaController.php:156
+ * @see app/Http/Controllers/Admin/AgendaController.php:171
  * @route '/admin/agenda/message'
  */
         sendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -378,7 +379,7 @@ settings.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => 
     settings.form = settingsForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
 export const direct = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -393,7 +394,7 @@ direct.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
 direct.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -426,7 +427,7 @@ direct.url = (args: { student: number | { id: number } } | [student: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
 direct.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -435,7 +436,7 @@ direct.get = (args: { student: number | { id: number } } | [student: number | { 
 })
 /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
 direct.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -445,7 +446,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
     const directForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -455,7 +456,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
         directForm.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -464,7 +465,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
         })
             /**
 * @see \App\Http\Controllers\Admin\AgendaController::direct
- * @see app/Http/Controllers/Admin/AgendaController.php:302
+ * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
         directForm.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -480,10 +481,10 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
     direct.form = directForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-export const update = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -495,10 +496,10 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -528,20 +529,20 @@ update.url = (args: { channel: number | { id: number } } | [channel: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.put = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-    const updateForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -553,10 +554,10 @@ update.put = (args: { channel: number | { id: number } } | [channel: number | { 
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-        updateForm.put = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -569,10 +570,10 @@ update.put = (args: { channel: number | { id: number } } | [channel: number | { 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-export const destroy = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -584,10 +585,10 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -617,20 +618,20 @@ destroy.url = (args: { channel: number | { id: number } } | [channel: number | {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.delete = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-    const destroyForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -642,10 +643,10 @@ destroy.delete = (args: { channel: number | { id: number } } | [channel: number 
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-        destroyForm.delete = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -665,6 +666,7 @@ direct: Object.assign(direct, direct),
 update: Object.assign(update, update),
 destroy: Object.assign(destroy, destroy),
 users: Object.assign(users, users),
+students: Object.assign(students, students),
 }
 
 export default agenda

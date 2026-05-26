@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import interval275f94 from './interval'
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 export const connect = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -17,7 +17,7 @@ connect.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 connect.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ connect.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 connect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -36,7 +36,7 @@ connect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
     const connectForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -46,7 +46,7 @@ connect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
         connectForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ connect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     connect.form = connectForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 export const status = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -72,7 +72,7 @@ status.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 status.url = (options?: RouteQueryOptions) => {
@@ -81,7 +81,7 @@ status.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 status.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -90,7 +90,7 @@ status.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -100,7 +100,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
     const statusForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -110,7 +110,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
         statusForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -119,7 +119,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::status
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
         statusForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -135,7 +135,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     status.form = statusForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 export const disconnect = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -150,7 +150,7 @@ disconnect.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 disconnect.url = (options?: RouteQueryOptions) => {
@@ -159,7 +159,7 @@ disconnect.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 disconnect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -169,7 +169,7 @@ disconnect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
     const disconnectForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -179,7 +179,7 @@ disconnect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnect
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
         disconnectForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -190,7 +190,7 @@ disconnect.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     disconnect.form = disconnectForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 export const interval = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -205,7 +205,7 @@ interval.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 interval.url = (options?: RouteQueryOptions) => {
@@ -214,7 +214,7 @@ interval.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 interval.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -223,7 +223,7 @@ interval.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 interval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -233,7 +233,7 @@ interval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
     const intervalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -243,7 +243,7 @@ interval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
         intervalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -252,7 +252,7 @@ interval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::interval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
         intervalForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

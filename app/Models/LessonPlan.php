@@ -42,10 +42,7 @@ class LessonPlan extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function bnccSkills()
-    {
-        return $this->belongsToMany(BnccSkill::class, 'lesson_plan_skills');
-    }
+
 
     public function feedbacks()
     {

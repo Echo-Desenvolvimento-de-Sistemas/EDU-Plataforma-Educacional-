@@ -28,35 +28,22 @@ class GradeController extends Controller
         // Simple approach: All active subjects.
         $subjects = Subject::orderBy('name')->get();
 
-        // 3. Fetch Student Grades
-        // We need to aggregate scores from StudentGrade model, which links to Assessment.
+        // 3. Fetch Student Grades from PeriodResult table (optimized, no N+1)
+        $periodResults = \App\Models\PeriodResult::where('student_id', $student->id)
+            ->get()
+            ->groupBy('subject_id');
 
         $reportCard = [];
 
         foreach ($subjects as $subject) {
             $row = ['subject' => $subject->name];
+            
+            $subjectResults = $periodResults->get($subject->id, collect());
 
             foreach ($teachingPeriods as $period) {
-                // Sum scores for this student, subject, and period
-                $score = \App\Models\StudentGrade::where('student_id', $student->id)
-                    ->join('assessments', 'student_grades.assessment_id', '=', 'assessments.id')
-                    ->where('assessments.subject_id', $subject->id)
-                    ->where('assessments.grading_period_id', $period->id)
-                    ->sum('student_grades.score');
-
-                // Check if any grade exists to differentiate between 0 and "not graded" if needed.
-                // For now, if sum is 0, it might be 0 score or no grades. 
-                // A better check would be ->exists() or count(), but for display '-' is fine if 0 is rarely default.
-                // However, sum() returns 0 if no rows.
-                // Let's check count to be precise.
-
-                $hasGrades = \App\Models\StudentGrade::where('student_id', $student->id)
-                    ->join('assessments', 'student_grades.assessment_id', '=', 'assessments.id')
-                    ->where('assessments.subject_id', $subject->id)
-                    ->where('assessments.grading_period_id', $period->id)
-                    ->exists();
-
-                $row['period_' . $period->id] = $hasGrades ? (float) $score : '-';
+                $result = $subjectResults->firstWhere('grading_period_id', $period->id);
+                
+                $row['period_' . $period->id] = $result ? (float) $result->grade : '-';
             }
 
             $reportCard[] = $row;

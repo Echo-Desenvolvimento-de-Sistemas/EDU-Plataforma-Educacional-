@@ -94,13 +94,20 @@ export default function EnsalamentoIndex({
     };
 
     const handleFilterChange = (key: string, value: string) => {
+        const nextYear = key === 'academic_year_id' ? value : selectedYear;
+        const nextGrade = key === 'grade_id' ? value : selectedGrade;
+        
+        // Reset classroom filter if year or grade is changed
+        const nextClassRoom = (key === 'academic_year_id' || key === 'grade_id') 
+            ? '' 
+            : (key === 'class_room_id' ? value : (filters.class_room_id || ''));
+
         router.get(
             '/admin/ensalamento',
             {
-                academic_year_id:
-                    key === 'academic_year_id' ? value : selectedYear,
-                grade_id: key === 'grade_id' ? value : selectedGrade,
-                class_room_id: key === 'class_room_id' ? value : targetClassId,
+                academic_year_id: nextYear,
+                grade_id: nextGrade,
+                class_room_id: nextClassRoom,
                 search,
             },
             { preserveState: true },

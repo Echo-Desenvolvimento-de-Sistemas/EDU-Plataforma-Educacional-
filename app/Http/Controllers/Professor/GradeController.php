@@ -105,6 +105,8 @@ class GradeController extends Controller
         ]);
 
         DB::transaction(function () use ($validated, $classRoom, $calculationService) {
+            $studentIds = [];
+
             foreach ($validated['grades'] as $gradeData) {
                 StudentGrade::updateOrCreate(
                     [
@@ -116,10 +118,15 @@ class GradeController extends Controller
                         'submitted_at' => now(), // Or use payload date
                     ]
                 );
+                
+                $studentIds[] = $gradeData['student_id'];
+            }
 
-                // Recalculate average for this student
+            // Recalculate average ONLY ONCE per affected student
+            $uniqueStudentIds = array_unique($studentIds);
+            foreach ($uniqueStudentIds as $studentId) {
                 $calculationService->calculatePeriodAverage(
-                    $gradeData['student_id'],
+                    $studentId,
                     $classRoom->id,
                     $validated['subject_id'],
                     $validated['grading_period_id']

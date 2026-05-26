@@ -59,7 +59,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([
-            BnccSeeder::class,
             AllocationSeeder::class,
             ClassScheduleSeeder::class,
         ]);

@@ -28,6 +28,7 @@ interface Student {
 }
 
 interface Props {
+    routePrefix: string;
     classRooms: ClassRoom[];
     subjects: Subject[];
     filters?: {
@@ -45,12 +46,12 @@ interface Props {
     };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Dashboard', href: '/admin/dashboard' },
-    { title: 'Frequência', href: '/admin/attendance' },
-];
+export default function Index({ routePrefix, classRooms, subjects, filters, data }: Props) {
+    const breadcrumbs: BreadcrumbItem[] = [
+        { title: 'Dashboard', href: `/${routePrefix}/dashboard` },
+        { title: 'Frequência', href: `/${routePrefix}/attendance` },
+    ];
 
-export default function Index({ classRooms, subjects, filters, data }: Props) {
     const { data: formData, setData, get, processing, errors } = useForm({
         class_room_id: filters?.class_room_id || '',
         subject_id: filters?.subject_id || '',
@@ -61,14 +62,14 @@ export default function Index({ classRooms, subjects, filters, data }: Props) {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        get('/admin/attendance', {
+        get(`/${routePrefix}/attendance`, {
             preserveState: true,
             preserveScroll: true,
         });
     };
 
     const handleRedirectToEdit = () => {
-        router.get('/admin/attendance/edit', {
+        router.get(`/${routePrefix}/attendance/edit`, {
             class_room_id: formData.class_room_id,
             subject_id: formData.subject_id,
             date: formData.date

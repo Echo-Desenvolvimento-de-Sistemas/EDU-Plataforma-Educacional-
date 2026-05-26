@@ -88,6 +88,8 @@ export default function Index({ channels, groups, classes, students, staff }: Pr
     const [editingChannel, setEditingChannel] = useState<Channel | null>(null);
     const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
     const [newGroupName, setNewGroupName] = useState('');
+    const [selectedStudentIds, setSelectedStudentIds] = useState<number[]>([]);
+    const [groupStudentSearch, setGroupStudentSearch] = useState('');
 
     // WhatsApp state
     const [waStatus, setWaStatus] = useState<'open' | 'close' | 'connecting' | 'unknown'>('unknown');
@@ -200,8 +202,17 @@ export default function Index({ channels, groups, classes, students, staff }: Pr
     // Groups
     const handleCreateGroup = (e: React.FormEvent) => {
         e.preventDefault();
-        router.post('/admin/agenda', { name: newGroupName, type: 'BROADCAST' }, {
-            onSuccess: () => { setIsCreateGroupOpen(false); setNewGroupName(''); }
+        router.post('/admin/agenda', { 
+            name: newGroupName, 
+            type: 'BROADCAST',
+            student_ids: selectedStudentIds
+        }, {
+            onSuccess: () => { 
+                setIsCreateGroupOpen(false); 
+                setNewGroupName(''); 
+                setSelectedStudentIds([]);
+                setGroupStudentSearch('');
+            }
         });
     };
 
@@ -498,14 +509,21 @@ export default function Index({ channels, groups, classes, students, staff }: Pr
                     {/* ── Tab: Grupos de Envio ── */}
                     <TabsContent value="groups" className="space-y-4">
                         <div className="flex justify-end">
-                            <Dialog open={isCreateGroupOpen} onOpenChange={setIsCreateGroupOpen}>
+                            <Dialog open={isCreateGroupOpen} onOpenChange={(open) => {
+                                setIsCreateGroupOpen(open);
+                                if (!open) {
+                                    setNewGroupName('');
+                                    setSelectedStudentIds([]);
+                                    setGroupStudentSearch('');
+                                }
+                            }}>
                                 <DialogTrigger asChild>
                                     <Button>
                                         <Plus className="mr-2 h-4 w-4" />
                                         Novo Grupo
                                     </Button>
                                 </DialogTrigger>
-                                <DialogContent>
+                                <DialogContent className="sm:max-w-[425px]">
                                     <DialogHeader>
                                         <DialogTitle>Criar Novo Grupo de Envio</DialogTitle>
                                         <DialogDescription>Crie um grupo para disparos em massa (ex: Avisos Gerais).</DialogDescription>
@@ -515,6 +533,49 @@ export default function Index({ channels, groups, classes, students, staff }: Pr
                                             <div className="space-y-2">
                                                 <Label htmlFor="group-name">Nome do Grupo</Label>
                                                 <Input id="group-name" value={newGroupName} onChange={e => setNewGroupName(e.target.value)} placeholder="Ex: Avisos Importantes" required />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label>Limitar Destinatários (Opcional)</Label>
+                                                <p className="text-xs text-muted-foreground">Selecione alunos específicos para este grupo. Deixe vazio para enviar para toda a escola.</p>
+                                                <div className="relative mt-1">
+                                                    <Input 
+                                                        placeholder="Buscar aluno por nome..." 
+                                                        value={groupStudentSearch}
+                                                        onChange={e => setGroupStudentSearch(e.target.value)}
+                                                        className="text-xs"
+                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-1.5 mt-2 max-h-40 overflow-y-auto p-2 border rounded-md">
+                                                    {students
+                                                        .filter(s => s.name.toLowerCase().includes(groupStudentSearch.toLowerCase()))
+                                                        .map(student => {
+                                                            const isChecked = selectedStudentIds.includes(student.id);
+                                                            const classRoom = classes.find(c => c.id === student.class_room_id);
+                                                            const className = classRoom 
+                                                                ? `${classRoom.series} ${classRoom.letter}`.trim() || classRoom.name
+                                                                : 'Sem turma';
+                                                            return (
+                                                                <div key={student.id} className="flex items-center space-x-2 p-1 hover:bg-secondary rounded transition-colors">
+                                                                    <Checkbox
+                                                                        id={`group-student-${student.id}`}
+                                                                        checked={isChecked}
+                                                                        onCheckedChange={checked => {
+                                                                            setSelectedStudentIds(prev => 
+                                                                                checked ? [...prev, student.id] : prev.filter(id => id !== student.id)
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                    <Label htmlFor={`group-student-${student.id}`} className="text-xs flex justify-between w-full cursor-pointer pr-2">
+                                                                        <span>{student.name}</span>
+                                                                        <span className="text-[10px] text-muted-foreground">{className}</span>
+                                                                    </Label>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    {students.filter(s => s.name.toLowerCase().includes(groupStudentSearch.toLowerCase())).length === 0 && (
+                                                        <p className="text-center py-4 text-xs text-muted-foreground">Nenhum aluno encontrado.</p>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                         <DialogFooter>
@@ -534,7 +595,13 @@ export default function Index({ channels, groups, classes, students, staff }: Pr
                         ) : (
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                 {groups.map(group => (
-                                    <GroupManager key={group.id} group={group} staff={staff} />
+                                    <GroupManager 
+                                        key={group.id} 
+                                        group={group} 
+                                        staff={staff} 
+                                        students={students} 
+                                        classes={classes} 
+                                    />
                                 ))}
                             </div>
                         )}

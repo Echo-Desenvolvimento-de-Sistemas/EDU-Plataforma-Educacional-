@@ -19,7 +19,7 @@ interface Question {
     subject?: string;
     topic?: string;
     grade_level?: string;
-    bncc_code?: string;
+
     options: Option[];
 }
 
@@ -69,8 +69,7 @@ export default function Show({ bank, questions }: Props) {
             const matchesSearch = filters.search === '' ||
                 q.statement.toLowerCase().includes(filters.search.toLowerCase()) ||
                 q.subject?.toLowerCase().includes(filters.search.toLowerCase()) ||
-                q.topic?.toLowerCase().includes(filters.search.toLowerCase()) ||
-                q.bncc_code?.toLowerCase().includes(filters.search.toLowerCase());
+                q.topic?.toLowerCase().includes(filters.search.toLowerCase());
 
             const matchesDifficulty = filters.difficulty === '' || q.difficulty.toString() === filters.difficulty;
             const matchesType = filters.type === '' || q.type === filters.type;
@@ -202,11 +201,7 @@ export default function Show({ bank, questions }: Props) {
                                                                 {question.grade_level}
                                                             </span>
                                                         )}
-                                                        {question.bncc_code && (
-                                                            <span className="text-xs text-teal-600 bg-teal-50 px-2 py-0.5 rounded border border-teal-100 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800" title="BNCC">
-                                                                {question.bncc_code}
-                                                            </span>
-                                                        )}
+
                                                     </div>
                                                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button

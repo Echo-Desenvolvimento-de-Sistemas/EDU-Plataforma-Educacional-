@@ -28,10 +28,6 @@ class LessonPlanService
                 'status' => 'DRAFT',
             ]);
 
-            if (!empty($data['bncc_skills'])) {
-                $plan->bnccSkills()->sync($data['bncc_skills']);
-            }
-
             return $plan;
         });
     }
@@ -51,10 +47,6 @@ class LessonPlanService
                 'evaluation' => $data['evaluation'] ?? null,
                 // Do not update status directly here, use transitions
             ]);
-
-            if (isset($data['bncc_skills'])) {
-                $plan->bnccSkills()->sync($data['bncc_skills']);
-            }
 
             // If it was REQUEST_CHANGES, maybe reset to DRAFT or keep as is? 
             // Usually if teacher edits, it goes back to DRAFT or stays until submit.
@@ -121,10 +113,6 @@ class LessonPlanService
             $newPlan->end_date = $newEndDate;
             $newPlan->status = 'DRAFT';
             $newPlan->save();
-
-            // Clone skills pivot
-            $skillIds = $originalPlan->bnccSkills()->pluck('bncc_skills.id');
-            $newPlan->bnccSkills()->sync($skillIds);
 
             return $newPlan;
         });

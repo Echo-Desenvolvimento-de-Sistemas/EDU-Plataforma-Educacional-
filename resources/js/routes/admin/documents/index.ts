@@ -157,7 +157,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Admin\DocumentController::store
- * @see app/Http/Controllers/Admin/DocumentController.php:66
+ * @see app/Http/Controllers/Admin/DocumentController.php:67
  * @route '/admin/documents'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\DocumentController::store
- * @see app/Http/Controllers/Admin/DocumentController.php:66
+ * @see app/Http/Controllers/Admin/DocumentController.php:67
  * @route '/admin/documents'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\DocumentController::store
- * @see app/Http/Controllers/Admin/DocumentController.php:66
+ * @see app/Http/Controllers/Admin/DocumentController.php:67
  * @route '/admin/documents'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\DocumentController::store
- * @see app/Http/Controllers/Admin/DocumentController.php:66
+ * @see app/Http/Controllers/Admin/DocumentController.php:67
  * @route '/admin/documents'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\DocumentController::store
- * @see app/Http/Controllers/Admin/DocumentController.php:66
+ * @see app/Http/Controllers/Admin/DocumentController.php:67
  * @route '/admin/documents'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

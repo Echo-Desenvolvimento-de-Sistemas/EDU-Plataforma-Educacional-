@@ -163,7 +163,7 @@ export const index = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
 const edit89163c7a23dd2ccbcb939a73e42bb3ca = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +178,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
 edit89163c7a23dd2ccbcb939a73e42bb3ca.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
 edit89163c7a23dd2ccbcb939a73e42bb3ca.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -196,7 +196,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.get = (options?: RouteQueryOptions): RouteD
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
 edit89163c7a23dd2ccbcb939a73e42bb3ca.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -206,7 +206,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.head = (options?: RouteQueryOptions): Route
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
     const edit89163c7a23dd2ccbcb939a73e42bb3caForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,7 +216,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.head = (options?: RouteQueryOptions): Route
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
         edit89163c7a23dd2ccbcb939a73e42bb3caForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -225,7 +225,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.head = (options?: RouteQueryOptions): Route
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/secretaria/attendance/edit'
  */
         edit89163c7a23dd2ccbcb939a73e42bb3caForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -241,7 +241,7 @@ edit89163c7a23dd2ccbcb939a73e42bb3ca.head = (options?: RouteQueryOptions): Route
     edit89163c7a23dd2ccbcb939a73e42bb3ca.form = edit89163c7a23dd2ccbcb939a73e42bb3caForm
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 const edit42f3f2fe40f86043c8f08e476f5847fa = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -256,7 +256,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit42f3f2fe40f86043c8f08e476f5847fa.url = (options?: RouteQueryOptions) => {
@@ -265,7 +265,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit42f3f2fe40f86043c8f08e476f5847fa.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -274,7 +274,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.get = (options?: RouteQueryOptions): RouteD
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit42f3f2fe40f86043c8f08e476f5847fa.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -284,7 +284,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.head = (options?: RouteQueryOptions): Route
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
     const edit42f3f2fe40f86043c8f08e476f5847faForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -294,7 +294,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.head = (options?: RouteQueryOptions): Route
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
         edit42f3f2fe40f86043c8f08e476f5847faForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -303,7 +303,7 @@ edit42f3f2fe40f86043c8f08e476f5847fa.head = (options?: RouteQueryOptions): Route
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
         edit42f3f2fe40f86043c8f08e476f5847faForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -325,7 +325,7 @@ export const edit = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/secretaria/attendance/batch'
  */
 const batchStore31740d3ae193ac503fc411aae4051fdf = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -340,7 +340,7 @@ batchStore31740d3ae193ac503fc411aae4051fdf.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/secretaria/attendance/batch'
  */
 batchStore31740d3ae193ac503fc411aae4051fdf.url = (options?: RouteQueryOptions) => {
@@ -349,7 +349,7 @@ batchStore31740d3ae193ac503fc411aae4051fdf.url = (options?: RouteQueryOptions) =
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/secretaria/attendance/batch'
  */
 batchStore31740d3ae193ac503fc411aae4051fdf.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -359,7 +359,7 @@ batchStore31740d3ae193ac503fc411aae4051fdf.post = (options?: RouteQueryOptions):
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/secretaria/attendance/batch'
  */
     const batchStore31740d3ae193ac503fc411aae4051fdfForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -369,7 +369,7 @@ batchStore31740d3ae193ac503fc411aae4051fdf.post = (options?: RouteQueryOptions):
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/secretaria/attendance/batch'
  */
         batchStore31740d3ae193ac503fc411aae4051fdfForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -380,7 +380,7 @@ batchStore31740d3ae193ac503fc411aae4051fdf.post = (options?: RouteQueryOptions):
     batchStore31740d3ae193ac503fc411aae4051fdf.form = batchStore31740d3ae193ac503fc411aae4051fdfForm
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 const batchStored6db330718025d47b294ded090aa1a01 = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -395,7 +395,7 @@ batchStored6db330718025d47b294ded090aa1a01.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 batchStored6db330718025d47b294ded090aa1a01.url = (options?: RouteQueryOptions) => {
@@ -404,7 +404,7 @@ batchStored6db330718025d47b294ded090aa1a01.url = (options?: RouteQueryOptions) =
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 batchStored6db330718025d47b294ded090aa1a01.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -414,7 +414,7 @@ batchStored6db330718025d47b294ded090aa1a01.post = (options?: RouteQueryOptions):
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
     const batchStored6db330718025d47b294ded090aa1a01Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -424,7 +424,7 @@ batchStored6db330718025d47b294ded090aa1a01.post = (options?: RouteQueryOptions):
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batchStore
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
         batchStored6db330718025d47b294ded090aa1a01Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -441,7 +441,7 @@ export const batchStore = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
 const frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -456,7 +456,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
 frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.url = (options?: RouteQueryOptions) => {
@@ -465,7 +465,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.url = (options?: RouteQueryOptio
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
 frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -474,7 +474,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.get = (options?: RouteQueryOptio
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
 frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -484,7 +484,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.head = (options?: RouteQueryOpti
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
     const frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -494,7 +494,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.head = (options?: RouteQueryOpti
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
         frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -503,7 +503,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.head = (options?: RouteQueryOpti
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/secretaria/attendance/report'
  */
         frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -519,7 +519,7 @@ frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.head = (options?: RouteQueryOpti
     frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0.form = frequencyReportefbc85a2ae0755d618cadc1d9ce4e7a0Form
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 const frequencyReport8208f32867b13b718a0b479ae598596a = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -534,7 +534,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 frequencyReport8208f32867b13b718a0b479ae598596a.url = (options?: RouteQueryOptions) => {
@@ -543,7 +543,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.url = (options?: RouteQueryOptio
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 frequencyReport8208f32867b13b718a0b479ae598596a.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -552,7 +552,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.get = (options?: RouteQueryOptio
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 frequencyReport8208f32867b13b718a0b479ae598596a.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -562,7 +562,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.head = (options?: RouteQueryOpti
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
     const frequencyReport8208f32867b13b718a0b479ae598596aForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -572,7 +572,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.head = (options?: RouteQueryOpti
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
         frequencyReport8208f32867b13b718a0b479ae598596aForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -581,7 +581,7 @@ frequencyReport8208f32867b13b718a0b479ae598596a.head = (options?: RouteQueryOpti
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::frequencyReport
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
         frequencyReport8208f32867b13b718a0b479ae598596aForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

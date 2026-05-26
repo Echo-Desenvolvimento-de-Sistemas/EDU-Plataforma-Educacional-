@@ -19,7 +19,7 @@ class LessonPlanController extends Controller
 
     public function index()
     {
-        $plans = LessonPlan::with(['classRoom', 'subject', 'bnccSkills'])
+        $plans = LessonPlan::with(['classRoom', 'subject'])
             ->where('user_id', auth()->id())
             ->orderBy('start_date', 'desc')
             ->get();
@@ -65,7 +65,6 @@ class LessonPlanController extends Controller
             'methodology' => 'nullable|string',
             'resources' => 'nullable|string',
             'evaluation' => 'nullable|string',
-            'bncc_skills' => 'array'
         ]);
 
         $data['user_id'] = auth()->id();
@@ -82,7 +81,7 @@ class LessonPlanController extends Controller
             abort(403);
         }
 
-        $plan->load('bnccSkills', 'feedbacks.user');
+        $plan->load('feedbacks.user');
 
         $user = auth()->user();
 
@@ -119,7 +118,6 @@ class LessonPlanController extends Controller
             'methodology' => 'nullable|string',
             'resources' => 'nullable|string',
             'evaluation' => 'nullable|string',
-            'bncc_skills' => 'array'
         ]);
 
         $this->service->update($plan, $data);

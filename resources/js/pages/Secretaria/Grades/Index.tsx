@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Users, Calendar, ArrowRight } from 'lucide-react';
+import { Search, Users, Calendar, ArrowRight, Plus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 
@@ -66,12 +66,20 @@ export default function Index({ classRooms, academicYears, filters }: Props) {
                         <h1 className="text-2xl font-bold tracking-tight">Notas e Boletins</h1>
                         <p className="text-muted-foreground">Selecione uma turma para visualizar as notas e gerar boletins.</p>
                     </div>
-                    <Button asChild variant="outline">
-                        <Link href="/secretaria/subject-performance">
-                            <ArrowRight className="mr-2 h-4 w-4" />
-                            Métricas por Disciplina
-                        </Link>
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button asChild variant="default" className="bg-blue-600 hover:bg-blue-700 text-white">
+                            <Link href="/secretaria/grades/entry">
+                                <Plus className="mr-2 h-4 w-4" />
+                                Lançar/Editar Notas
+                            </Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/secretaria/subject-performance">
+                                <ArrowRight className="mr-2 h-4 w-4" />
+                                Métricas por Disciplina
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">

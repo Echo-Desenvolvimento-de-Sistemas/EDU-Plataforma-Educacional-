@@ -3,7 +3,7 @@ import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileText, ArrowLeft, User } from 'lucide-react';
+import { FileText, ArrowLeft, User, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -49,18 +49,26 @@ export default function Show({ classRoom, students }: Props) {
             <Head title={`Turma ${classRoom.name} - Boletins`} />
 
             <div className="flex flex-col gap-6 p-4">
-                <div className="flex items-center gap-4">
-                    <Button variant="ghost" size="icon" asChild>
-                        <Link href="/secretaria/grades">
-                            <ArrowLeft className="h-4 w-4" />
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <Button variant="ghost" size="icon" asChild>
+                            <Link href="/secretaria/grades">
+                                <ArrowLeft className="h-4 w-4" />
+                            </Link>
+                        </Button>
+                        <div>
+                            <h1 className="text-2xl font-bold tracking-tight">{classRoom.name}</h1>
+                            <p className="text-muted-foreground">
+                                {classRoom.grade.name} • {classRoom.academic_year.year}
+                            </p>
+                        </div>
+                    </div>
+                    <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
+                        <Link href={`/secretaria/grades/entry?class_room_id=${classRoom.id}`}>
+                            <Plus className="mr-2 h-4 w-4" />
+                            Lançar Notas da Turma
                         </Link>
                     </Button>
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight">{classRoom.name}</h1>
-                        <p className="text-muted-foreground">
-                            {classRoom.grade.name} • {classRoom.academic_year.year}
-                        </p>
-                    </div>
                 </div>
 
                 <div className="rounded-md border bg-card">

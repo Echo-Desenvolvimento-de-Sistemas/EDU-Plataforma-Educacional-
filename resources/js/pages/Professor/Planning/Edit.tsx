@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { BnccSelector } from '@/components/Pedagogical/BnccSelector';
+
 import { useForm, usePage } from '@inertiajs/react';
 import { AlertCircle, Save, Send } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -30,7 +30,6 @@ export default function Edit({ plan, classes, subjects }: any) {
         methodology: plan?.methodology || '',
         resources: plan?.resources || '',
         evaluation: plan?.evaluation || '',
-        bncc_skills: plan?.bncc_skills?.map((s: any) => s.id) || [],
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -144,15 +143,6 @@ export default function Edit({ plan, classes, subjects }: any) {
                                 <Label>Tema da Aula / Unidade Temática</Label>
                                 <Input value={data.topic} onChange={e => setData('topic', e.target.value)} placeholder="Ex: Operações Básicas com Naturais" />
                                 {errors.topic && <span className="text-red-500 text-xs">{errors.topic}</span>}
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label>Habilidades BNCC</Label>
-                                <BnccSelector
-                                    selectedIds={data.bncc_skills}
-                                    onChange={ids => setData('bncc_skills', ids)}
-                                    component={subjects.find((s: any) => s.id.toString() === data.subject_id?.toString())?.name}
-                                />
                             </div>
 
                             <div className="space-y-2">

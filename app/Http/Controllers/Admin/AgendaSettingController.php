@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Channel;
 use App\Models\ClassRoom;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,13 +17,13 @@ class AgendaSettingController extends Controller
         // 1. Fetch Broadcast Groups (manually created channels)
         // Groups that are NOT linked to a ClassRoom (or other auto-types later)
         $groups = Channel::where('type', 'BROADCAST')
-            ->whereNull('related_type')
+            ->whereNull('context_type')
             ->with('speakers:id,name,role') // Get users who can speak in this channel
             ->get();
 
         // 2. Fetch Automatically Managed Classes
         // These are channels linked to ClassRooms
-        $classes = Channel::where('related_type', ClassRoom::class)
+        $classes = Channel::where('context_type', ClassRoom::class)
             ->with(['related', 'speakers'])
             ->get();
 
@@ -58,12 +59,12 @@ class AgendaSettingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
         Channel::create([
-            'name' => $validated['name'],
+            'title' => $validated['title'],
             'type' => 'BROADCAST',
             'icon' => 'users',
             'is_active' => true,
@@ -79,11 +80,11 @@ class AgendaSettingController extends Controller
             'icon' => 'nullable', // Can be file
         ]);
 
-        $data = ['name' => $validated['name']];
+        $data = ['title' => $validated['name']];
 
         if ($request->hasFile('icon')) {
             $path = $request->file('icon')->store('channels', 'public');
-            $data['icon'] = asset('storage/' . $path);
+            $data['icon_path'] = asset('storage/' . $path);
         }
 
         $channel->update($data);
@@ -114,6 +115,34 @@ class AgendaSettingController extends Controller
     {
         $channel->speakers()->detach($user->id);
         return back()->with('success', 'Usuário removido do grupo.');
+    }
+
+    // Attach a student to a channel
+    public function attachStudent(Request $request, Channel $channel)
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+        ]);
+
+        $channel->students()->syncWithoutDetaching([$validated['student_id']]);
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Aluno adicionado ao grupo.']);
+        }
+
+        return back()->with('success', 'Aluno adicionado ao grupo.');
+    }
+
+    // Detach a student
+    public function detachStudent(Request $request, Channel $channel, Student $student)
+    {
+        $channel->students()->detach($student->id);
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Aluno removido do grupo.']);
+        }
+
+        return back()->with('success', 'Aluno removido do grupo.');
     }
 
     /**

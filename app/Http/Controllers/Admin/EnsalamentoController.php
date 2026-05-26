@@ -30,12 +30,26 @@ class EnsalamentoController extends Controller
 
         $studentsQuery = Student::query()
             ->with('classRoom')
+            ->when($request->class_room_id, function ($query, $classRoomId) {
+                $query->where('class_room_id', $classRoomId);
+            })
+            ->when(!$request->class_room_id && $request->grade_id, function ($query, $gradeId) {
+                $query->where(function ($q) use ($gradeId) {
+                    $q->whereHas('classRoom', function ($sq) use ($gradeId) {
+                        $sq->where('grade_id', $gradeId);
+                    })->orWhereNull('class_room_id');
+                });
+            })
+            ->when(!$request->class_room_id && $request->academic_year_id, function ($query, $yearId) {
+                $query->where(function ($q) use ($yearId) {
+                    $q->whereHas('classRoom', function ($sq) use ($yearId) {
+                        $sq->where('academic_year_id', $yearId);
+                    })->orWhereNull('class_room_id');
+                });
+            })
             ->when($request->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
-            // If we have a grade filter, we might want to filter students by age or previous grade? 
-            // Often "Ensalamento" is just taking students and putting them in a class.
-            // Let's filter by unassigned if no class is selected, or just all students matching search.
             ->orderBy('name');
 
         // Logic: specific requirements might vary. 

@@ -14,6 +14,9 @@ class PreRegistration extends Model
         'target_class_id',
         'student_id',
         'type',
+        'lgpd_accepted_at',
+        'lgpd_accepted_ip',
+        'lgpd_accepted_user_agent',
     ];
 
     public function creator()

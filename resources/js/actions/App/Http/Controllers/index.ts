@@ -4,7 +4,6 @@ import FirstAccessController from './FirstAccessController'
 import GamificationAuthController from './GamificationAuthController'
 import SchoolEventController from './SchoolEventController'
 import ManualController from './ManualController'
-import Api from './Api'
 import KanbanController from './KanbanController'
 import Secretaria from './Secretaria'
 import Admin from './Admin'
@@ -20,7 +19,6 @@ FirstAccessController: Object.assign(FirstAccessController, FirstAccessControlle
 GamificationAuthController: Object.assign(GamificationAuthController, GamificationAuthController),
 SchoolEventController: Object.assign(SchoolEventController, SchoolEventController),
 ManualController: Object.assign(ManualController, ManualController),
-Api: Object.assign(Api, Api),
 KanbanController: Object.assign(KanbanController, KanbanController),
 Secretaria: Object.assign(Secretaria, Secretaria),
 Admin: Object.assign(Admin, Admin),

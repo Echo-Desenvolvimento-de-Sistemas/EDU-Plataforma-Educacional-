@@ -2,6 +2,7 @@ import StudentRegistrationCard from '@/components/student-registration-card';
 import AppLogo from '@/components/app-logo';
 import AppLayout from '@/layouts/app-layout';
 import admin from '@/routes/admin/index';
+import { cn } from '@/lib/utils';
 import { Head, useForm, router, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -90,6 +91,7 @@ interface Student {
     address?: Address;
     health?: Health;
     guardians?: Guardian[];
+    class_room_id?: number | null;
 }
 
 interface PreRegistration {
@@ -101,6 +103,7 @@ interface PreRegistration {
     creator: { name: string };
     type: 'new' | 'renewal';
     target_class?: { name: string };
+    target_class_id?: number | null;
     student?: Student;
 }
 
@@ -141,10 +144,23 @@ export default function Index({ preRegistrations, classRooms, students, academic
     const [deletingItem, setDeletingItem] = useState<PreRegistration | null>(null);
     const [showBatchMigrateModal, setShowBatchMigrateModal] = useState(false);
     const [selectedYear, setSelectedYear] = useState<string>('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [typeFilter, setTypeFilter] = useState('all');
 
     const filteredClasses = selectedYear
         ? classRooms.filter(c => c.academic_year_id.toString() === selectedYear)
         : classRooms;
+
+    const filteredPreRegistrations = preRegistrations.filter(item => {
+        const name = item.type === 'renewal' && item.student
+            ? item.student.name
+            : item.student_name || 'Sem referência';
+        const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
+        const matchesType = typeFilter === 'all' || item.type === typeFilter;
+        return matchesSearch && matchesStatus && matchesType;
+    });
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -361,6 +377,47 @@ export default function Index({ preRegistrations, classRooms, students, academic
                             <CardTitle>Links Gerados</CardTitle>
                         </CardHeader>
                         <CardContent>
+                            {/* Search and Filters */}
+                            <div className="flex flex-col md:flex-row gap-3 mb-6 items-end justify-between border-b pb-4 border-slate-100 dark:border-slate-800">
+                                <div className="w-full md:w-1/3 space-y-1">
+                                    <Label className="text-[10px] font-extrabold uppercase text-slate-450 tracking-wider">Buscar por Aluno/Referência</Label>
+                                    <Input
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        placeholder="Digite o nome para buscar..."
+                                        className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus-visible:ring-emerald-500"
+                                    />
+                                </div>
+                                <div className="flex gap-3 w-full md:w-auto">
+                                    <div className="w-1/2 md:w-[160px] space-y-1">
+                                        <Label className="text-[10px] font-extrabold uppercase text-slate-450 tracking-wider">Status</Label>
+                                        <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                            <SelectTrigger className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus:ring-emerald-500">
+                                                <SelectValue placeholder="Todos" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">Todos</SelectItem>
+                                                <SelectItem value="pending">Pendente</SelectItem>
+                                                <SelectItem value="completed">Concluído</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="w-1/2 md:w-[160px] space-y-1">
+                                        <Label className="text-[10px] font-extrabold uppercase text-slate-450 tracking-wider">Tipo</Label>
+                                        <Select value={typeFilter} onValueChange={setTypeFilter}>
+                                            <SelectTrigger className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus:ring-emerald-500">
+                                                <SelectValue placeholder="Todos" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">Todos</SelectItem>
+                                                <SelectItem value="new">Novo Aluno</SelectItem>
+                                                <SelectItem value="renewal">Rematrícula</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -374,13 +431,20 @@ export default function Index({ preRegistrations, classRooms, students, academic
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {preRegistrations.map((item) => (
+                                    {filteredPreRegistrations.map((item) => (
                                         <TableRow key={item.id}>
-                                            <TableCell className="font-medium">
-                                                {item.type === 'renewal' && item.student
-                                                    ? item.student.name
-                                                    : item.student_name || 'Sem referência'}
-                                            </TableCell>
+                                             <TableCell className="font-medium">
+                                                 {item.student ? (
+                                                     <div className="flex flex-col">
+                                                         <span className="font-bold text-slate-800 dark:text-slate-100">{item.student.name}</span>
+                                                         {item.student_name && item.student_name !== item.student.name && (
+                                                             <span className="text-[10px] text-slate-400">Ref: {item.student_name}</span>
+                                                         )}
+                                                     </div>
+                                                 ) : (
+                                                     item.student_name || 'Sem referência'
+                                                 )}
+                                             </TableCell>
                                             <TableCell>
                                                 <Badge variant={item.type === 'new' ? 'default' : 'secondary'}>
                                                     {item.type === 'new' ? 'Novo' : 'Rematrícula'}
@@ -421,19 +485,25 @@ export default function Index({ preRegistrations, classRooms, students, academic
                                                     </Button>
 
                                                     {item.status === 'completed' && item.target_class && (
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                                            title="Migrar aluno para esta turma"
-                                                            onClick={() => {
-                                                                if (confirm(`Deseja mover o aluno para a turma ${item.target_class?.name}?`)) {
-                                                                    router.post(admin.preRegistrations.index.url() + `/${item.id}/migrate`);
-                                                                }
-                                                            }}
-                                                        >
-                                                            <ArrowRightCircle className="h-4 w-4" />
-                                                        </Button>
+                                                        item.student && item.student.class_room_id === item.target_class_id ? (
+                                                            <Badge variant="outline" className="text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-800 flex items-center gap-1">
+                                                                <Check className="h-3 w-3" /> Migrado
+                                                            </Badge>
+                                                        ) : (
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                className="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                                                title="Migrar aluno para esta turma"
+                                                                onClick={() => {
+                                                                    if (confirm(`Deseja mover o aluno para a turma ${item.target_class?.name}?`)) {
+                                                                        router.post(admin.preRegistrations.index.url() + `/${item.id}/migrate`);
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <ArrowRightCircle className="h-4 w-4" />
+                                                            </Button>
+                                                        )
                                                     )}
 
                                                     <Button
@@ -470,23 +540,39 @@ export default function Index({ preRegistrations, classRooms, students, academic
                         {viewingItem && (
                             <div className="space-y-6 print:hidden">
                                 {/* Header Info - Display Only */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border dark:border-gray-700">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-emerald-50/20 dark:bg-emerald-950/10 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30">
                                     <div>
-                                        <Label className="text-xs text-gray-500 uppercase">Tipo</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.type === 'new' ? 'Novo Aluno' : 'Rematrícula'}</div>
+                                        <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Tipo</Label>
+                                        <div className="mt-1">
+                                            <Badge variant={viewingItem.type === 'new' ? 'default' : 'secondary'} className="text-[10px] py-0.5 px-2.5 font-bold">
+                                                {viewingItem.type === 'new' ? 'Novo Aluno' : 'Rematrícula'}
+                                            </Badge>
+                                        </div>
                                     </div>
                                     <div>
-                                        <Label className="text-xs text-gray-500 uppercase">Status</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.status === 'completed' ? 'Concluído' : 'Pendente'}</div>
+                                        <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Status</Label>
+                                        <div className="mt-1">
+                                            <Badge 
+                                                variant={viewingItem.status === 'completed' ? 'outline' : 'destructive'} 
+                                                className={cn(
+                                                    "text-[10px] py-0.5 px-2.5 font-bold",
+                                                    viewingItem.status === 'completed' && "text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-800"
+                                                )}
+                                            >
+                                                {viewingItem.status === 'completed' ? 'Concluído' : 'Pendente'}
+                                            </Badge>
+                                        </div>
                                     </div>
                                     <div>
-                                        <Label className="text-xs text-gray-500 uppercase">Turma Destino</Label>
-                                        <div className="font-medium text-gray-900 dark:text-gray-100">{viewingItem.target_class ? viewingItem.target_class.name : 'Não definida'}</div>
+                                        <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Turma Destino</Label>
+                                        <div className="mt-1 font-bold text-sm text-slate-700 dark:text-slate-200">
+                                            {viewingItem.target_class ? viewingItem.target_class.name : 'Não definida'}
+                                        </div>
                                     </div>
                                     <div>
-                                        <Label className="text-xs text-gray-500 uppercase">Criado Por</Label>
-                                        <div className="border-t border-black pt-2">
-                                            <p className="font-bold text-sm">Secretaria / Coordenação</p>
+                                        <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Criado Por</Label>
+                                        <div className="mt-1 font-bold text-sm text-slate-700 dark:text-slate-200">
+                                            {viewingItem.creator?.name || 'Secretaria'}
                                         </div>
                                     </div>
                                 </div>

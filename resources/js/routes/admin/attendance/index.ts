@@ -79,7 +79,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ edit.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
     const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
         editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::edit
- * @see app/Http/Controllers/Admin/AttendanceController.php:159
+ * @see app/Http/Controllers/Admin/AttendanceController.php:160
  * @route '/admin/attendance/edit'
  */
         editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batch
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 export const batch = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ batch.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batch
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 batch.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ batch.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batch
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
 batch.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ batch.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batch
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
     const batchForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ batch.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::batch
- * @see app/Http/Controllers/Admin/AttendanceController.php:235
+ * @see app/Http/Controllers/Admin/AttendanceController.php:237
  * @route '/admin/attendance/batch'
  */
         batchForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -212,7 +212,7 @@ batch.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     batch.form = batchForm
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 export const report = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ report.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 report.url = (options?: RouteQueryOptions) => {
@@ -236,7 +236,7 @@ report.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 report.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -245,7 +245,7 @@ report.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
 report.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -255,7 +255,7 @@ report.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
     const reportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -265,7 +265,7 @@ report.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
         reportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -274,7 +274,7 @@ report.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Admin\AttendanceController::report
- * @see app/Http/Controllers/Admin/AttendanceController.php:292
+ * @see app/Http/Controllers/Admin/AttendanceController.php:294
  * @route '/admin/attendance/report'
  */
         reportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

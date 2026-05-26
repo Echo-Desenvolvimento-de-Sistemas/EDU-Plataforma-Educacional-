@@ -30,9 +30,10 @@ export default defineConfig({
         jsx: 'automatic',
     },
     server: {
-        host: '127.0.0.1',
+        host: '0.0.0.0',
+        cors: true,
         hmr: {
-            host: 'localhost',
+            host: '192.168.1.13',
         },
     },
 });

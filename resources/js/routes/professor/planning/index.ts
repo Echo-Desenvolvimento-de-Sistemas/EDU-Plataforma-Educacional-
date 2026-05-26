@@ -309,7 +309,7 @@ show.head = (args: { planning: string | number } | [planning: string | number ] 
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
 export const edit = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -324,7 +324,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
 edit.url = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -352,7 +352,7 @@ edit.url = (args: { planning: string | number } | [planning: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
 edit.get = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -361,7 +361,7 @@ edit.get = (args: { planning: string | number } | [planning: string | number ] |
 })
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
 edit.head = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -371,7 +371,7 @@ edit.head = (args: { planning: string | number } | [planning: string | number ] 
 
     /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
     const editForm = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -381,7 +381,7 @@ edit.head = (args: { planning: string | number } | [planning: string | number ] 
 
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
         editForm.get = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -390,7 +390,7 @@ edit.head = (args: { planning: string | number } | [planning: string | number ] 
         })
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::edit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:78
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:77
  * @route '/professor/planning/{planning}/edit'
  */
         editForm.head = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -406,7 +406,7 @@ edit.head = (args: { planning: string | number } | [planning: string | number ] 
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
 export const update = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -421,7 +421,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
 update.url = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -449,7 +449,7 @@ update.url = (args: { planning: string | number } | [planning: string | number ]
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
 update.put = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -458,7 +458,7 @@ update.put = (args: { planning: string | number } | [planning: string | number ]
 })
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
 update.patch = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -468,7 +468,7 @@ update.patch = (args: { planning: string | number } | [planning: string | number
 
     /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
     const updateForm = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -483,7 +483,7 @@ update.patch = (args: { planning: string | number } | [planning: string | number
 
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
         updateForm.put = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -497,7 +497,7 @@ update.patch = (args: { planning: string | number } | [planning: string | number
         })
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::update
- * @see app/Http/Controllers/Professor/LessonPlanController.php:108
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:107
  * @route '/professor/planning/{planning}'
  */
         updateForm.patch = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -513,7 +513,7 @@ update.patch = (args: { planning: string | number } | [planning: string | number
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::destroy
- * @see app/Http/Controllers/Professor/LessonPlanController.php:141
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:139
  * @route '/professor/planning/{planning}'
  */
 export const destroy = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -528,7 +528,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::destroy
- * @see app/Http/Controllers/Professor/LessonPlanController.php:141
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:139
  * @route '/professor/planning/{planning}'
  */
 destroy.url = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -556,7 +556,7 @@ destroy.url = (args: { planning: string | number } | [planning: string | number 
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::destroy
- * @see app/Http/Controllers/Professor/LessonPlanController.php:141
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:139
  * @route '/professor/planning/{planning}'
  */
 destroy.delete = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -566,7 +566,7 @@ destroy.delete = (args: { planning: string | number } | [planning: string | numb
 
     /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::destroy
- * @see app/Http/Controllers/Professor/LessonPlanController.php:141
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:139
  * @route '/professor/planning/{planning}'
  */
     const destroyForm = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -581,7 +581,7 @@ destroy.delete = (args: { planning: string | number } | [planning: string | numb
 
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::destroy
- * @see app/Http/Controllers/Professor/LessonPlanController.php:141
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:139
  * @route '/professor/planning/{planning}'
  */
         destroyForm.delete = (args: { planning: string | number } | [planning: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -597,7 +597,7 @@ destroy.delete = (args: { planning: string | number } | [planning: string | numb
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::submit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:130
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
 export const submit = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -612,7 +612,7 @@ submit.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::submit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:130
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
 submit.url = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -645,7 +645,7 @@ submit.url = (args: { plan: number | { id: number } } | [plan: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::submit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:130
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
 submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -655,7 +655,7 @@ submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: n
 
     /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::submit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:130
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
     const submitForm = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -665,7 +665,7 @@ submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: n
 
             /**
 * @see \App\Http\Controllers\Professor\LessonPlanController::submit
- * @see app/Http/Controllers/Professor/LessonPlanController.php:130
+ * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
         submitForm.post = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

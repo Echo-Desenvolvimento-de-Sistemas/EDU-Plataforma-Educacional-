@@ -32,7 +32,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
         subject: string;
         topic: string;
         grade_level: string;
-        bncc_code: string;
+
         options: Option[];
     }
 
@@ -47,7 +47,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
         subject: '',
         topic: '',
         grade_level: '',
-        bncc_code: '',
+
         options: [
             { label: '', is_correct: false },
             { label: '', is_correct: false }
@@ -202,7 +202,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                     </div>
 
                     <div className="border rounded-md p-3 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                        <details className="group" open={!!(data.subject || data.topic || data.grade_level || data.bncc_code)}>
+                        <details className="group" open={!!(data.subject || data.topic || data.grade_level)}>
                             <summary className="flex justify-between items-center font-medium cursor-pointer list-none text-sm text-gray-700 dark:text-gray-300">
                                 <span>Mais Detalhes (Opcional)</span>
                                 <span className="transition group-open:rotate-180">
@@ -240,16 +240,7 @@ export default function QuickQuestionModal({ bankId, isOpen, onClose, onQuestion
                                         placeholder="Ex: 8º Ano"
                                     />
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-500 mb-1 dark:text-gray-400">Código BNCC</label>
-                                    <input
-                                        type="text"
-                                        value={data.bncc_code || ''}
-                                        onChange={e => updateData('bncc_code', e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                                        placeholder="Ex: EF08MA01"
-                                    />
-                                </div>
+
                             </div>
                         </details>
                     </div>

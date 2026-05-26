@@ -81,10 +81,10 @@ export function AppSidebar() {
 
                 {user.role === 'secretaria' && (
                     <>
-                        <Collapsible asChild defaultOpen={true} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={true} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Administrativo
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -120,10 +120,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Acadêmico
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -179,10 +179,10 @@ export function AppSidebar() {
 
                 {user.role === 'professor' && (
                     <>
-                        <Collapsible asChild defaultOpen={true} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={true} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Minhas Aulas
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -226,10 +226,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Avaliações & Notas
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -277,10 +277,10 @@ export function AppSidebar() {
 
                 {user.role === 'aluno' && (
                     <>
-                        <Collapsible asChild defaultOpen={true} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={true} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Acadêmico
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -324,10 +324,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Meus Dados
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -353,10 +353,10 @@ export function AppSidebar() {
 
                 {user.role === 'admin' && (
                     <>
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Secretaria
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -408,10 +408,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={true} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={true} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Acadêmico & Pedagógico
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -479,10 +479,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Estrutura Curricular
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>
@@ -526,10 +526,10 @@ export function AppSidebar() {
                             </SidebarGroup>
                         </Collapsible>
 
-                        <Collapsible asChild defaultOpen={false} className="group/collapsible">
+                        <Collapsible asChild defaultOpen={false} className="group/collapsible mb-2">
                             <SidebarGroup>
                                 <SidebarGroupLabel asChild>
-                                    <CollapsibleTrigger>
+                                    <CollapsibleTrigger className="flex w-full items-center cursor-pointer rounded-md px-3 py-2 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                                         Sistema
                                         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                                     </CollapsibleTrigger>

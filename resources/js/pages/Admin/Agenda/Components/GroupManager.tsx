@@ -3,14 +3,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Users, Trash2, UserPlus, X, Settings } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { router, useForm } from '@inertiajs/react'; // Added useForm
-import { cn } from "@/lib/utils";
+import { router, useForm } from '@inertiajs/react';
 import { Check } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"; // Added Dialog
-import { Input } from "@/components/ui/input"; // Added Input
-import { Label } from "@/components/ui/label"; // Added Label
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from 'sonner';
 
 interface User {
@@ -19,22 +16,44 @@ interface User {
     role: string;
 }
 
+interface Student {
+    id: number;
+    name: string;
+    class_room_id?: number;
+}
+
+interface ClassRoom {
+    id: number;
+    name: string;
+    series: string;
+    letter: string;
+    professors: User[];
+    channel?: { id: number; name: string; speakers: User[] };
+}
+
 interface Channel {
     id: number;
     name: string;
-    icon?: string; // Added icon
+    icon?: string;
     speakers: User[];
+    students?: Student[];
 }
 
 interface Props {
     group: Channel;
     staff: User[];
+    students: Student[];
+    classes: ClassRoom[];
 }
 
-export function GroupManager({ group, staff }: Props) {
+export function GroupManager({ group, staff, students, classes }: Props) {
     const [open, setOpen] = useState(false);
-    const [isEditOpen, setIsEditOpen] = useState(false); // Edit Modal State
-    const [searchQuery, setSearchQuery] = useState(''); // Search State
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Students modal state
+    const [studentModalOpen, setStudentModalOpen] = useState(false);
+    const [studentSearchQuery, setStudentSearchQuery] = useState('');
 
     // Edit Form
     const editForm = useForm({
@@ -88,11 +107,42 @@ export function GroupManager({ group, staff }: Props) {
         });
     };
 
+    const handleAddStudent = (studentId: number) => {
+        toast.promise(
+            new Promise((resolve, reject) => {
+                router.post(`/admin/agenda/${group.id}/students`, {
+                    student_id: studentId,
+                }, {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        setStudentModalOpen(false);
+                        resolve(true);
+                    },
+                    onError: () => reject(false),
+                });
+            }),
+            {
+                loading: 'Vinculando aluno...',
+                success: 'Aluno adicionado ao grupo!',
+                error: 'Erro ao adicionar aluno.',
+            }
+        );
+    };
+
+    const handleRemoveStudent = (studentId: number) => {
+        router.delete(`/admin/agenda/${group.id}/students/${studentId}`, {
+            preserveScroll: true,
+        });
+    };
+
     // Filter out users already in the group
     const availableStaff = staff.filter(s => !group.speakers.find(sp => sp.id === s.id));
 
+    // Filter out students already in the group
+    const availableStudents = students.filter(s => !(group.students || []).find(st => st.id === s.id));
+
     return (
-        <Card className="relative group/card">
+        <Card className="relative group/card flex flex-col justify-between">
             {/* Edit Modal */}
             <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
                 <DialogContent>
@@ -131,101 +181,206 @@ export function GroupManager({ group, staff }: Props) {
                 </DialogContent>
             </Dialog>
 
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    {group.icon && group.icon.startsWith('http') ? (
-                        <img src={group.icon} alt={group.name} className="w-6 h-6 rounded-full object-cover" />
-                    ) : (
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                    )}
-                    {group.name}
-                </CardTitle>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 opacity-0 group-hover/card:opacity-100 transition-opacity"
-                    onClick={() => setIsEditOpen(true)}
-                >
-                    <Settings className="h-4 w-4" />
-                </Button>
-            </CardHeader>
-            <CardContent>
-                <div className="mt-4">
-                    <p className="text-xs font-medium text-muted-foreground mb-2">Quem pode enviar:</p>
-                    <div className="flex flex-wrap gap-2">
-                        {group.speakers.map((speaker) => (
-                            <Badge 
-                                key={speaker.id} 
-                                variant="secondary" 
-                                className="pr-1 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50 border-none px-3"
-                            >
-                                {speaker.name}
-                                <button
-                                    onClick={() => handleRemoveUser(speaker.id)}
-                                    className="ml-2 rounded-full hover:bg-destructive hover:text-white p-0.5 transition-colors"
+            <div>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-base font-semibold flex items-center gap-2">
+                        {group.icon && group.icon.startsWith('http') ? (
+                            <img src={group.icon} alt={group.name} className="w-6 h-6 rounded-full object-cover" />
+                        ) : (
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                        )}
+                        {group.name}
+                    </CardTitle>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 opacity-0 group-hover/card:opacity-100 transition-opacity"
+                        onClick={() => setIsEditOpen(true)}
+                    >
+                        <Settings className="h-4 w-4" />
+                    </Button>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {/* Speakers Section */}
+                    <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Quem envia:</p>
+                        <div className="flex flex-wrap gap-2">
+                            {group.speakers.map((speaker) => (
+                                <Badge 
+                                    key={speaker.id} 
+                                    variant="secondary" 
+                                    className="pr-1 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50 border-none px-3 py-1"
                                 >
-                                    <X className="h-3 w-3" />
-                                </button>
-                            </Badge>
-                        ))}
-                        <Dialog open={open} onOpenChange={setOpen}>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
-                                className="h-7 rounded-full border-dashed bg-transparent hover:bg-secondary dark:hover:bg-gray-800 text-xs font-normal"
-                                onClick={() => setOpen(true)}
-                            >
-                                <UserPlus className="mr-1 h-3.5 w-3.5" />
-                                Adicionar
-                            </Button>
-                            <DialogContent className="max-w-md">
-                                <DialogHeader>
-                                    <DialogTitle>Adicionar pessoa autorizada</DialogTitle>
-                                    <DialogDescription>Selecione um funcionário ou professor para enviar mensagens em {group.name}.</DialogDescription>
-                                </DialogHeader>
-                                <div className="space-y-4 py-4">
-                                    <div className="relative">
-                                        <Users className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                                        <Input 
-                                            placeholder="Buscar por nome..." 
-                                            className="pl-9"
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                        />
+                                    {speaker.name}
+                                    <button
+                                        onClick={() => handleRemoveUser(speaker.id)}
+                                        className="ml-2 rounded-full hover:bg-destructive hover:text-white p-0.5 transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </Badge>
+                            ))}
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="h-7 rounded-full border-dashed bg-transparent hover:bg-secondary dark:hover:bg-gray-800 text-xs font-normal"
+                                    onClick={() => setOpen(true)}
+                                >
+                                    <UserPlus className="mr-1 h-3.5 w-3.5" />
+                                    Adicionar
+                                </Button>
+                                <DialogContent className="max-w-md">
+                                    <DialogHeader>
+                                        <DialogTitle>Adicionar pessoa autorizada</DialogTitle>
+                                        <DialogDescription>Selecione um funcionário ou professor para enviar mensagens em {group.name}.</DialogDescription>
+                                    </DialogHeader>
+                                    <div className="space-y-4 py-4">
+                                        <div className="relative">
+                                            <Users className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                            <Input 
+                                                placeholder="Buscar por nome..." 
+                                                className="pl-9"
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="max-h-[300px] overflow-y-auto space-y-1 pr-2">
+                                            {availableStaff
+                                                .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                .length === 0 ? (
+                                                    <p className="text-center py-8 text-sm text-muted-foreground">Nenhum resultado encontrado.</p>
+                                                ) : (
+                                                    availableStaff
+                                                        .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                        .map((user) => (
+                                                            <button
+                                                                key={user.id}
+                                                                onClick={() => handleAddUser(user.id)}
+                                                                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-secondary transition-colors text-left border border-transparent hover:border-border group"
+                                                            >
+                                                                <div className="flex flex-col">
+                                                                    <span className="font-medium text-sm">{user.name}</span>
+                                                                    <span className="text-xs text-muted-foreground capitalize">{user.role}</span>
+                                                                </div>
+                                                                <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                    <Check className="h-4 w-4" />
+                                                                </div>
+                                                            </button>
+                                                        ))
+                                                )}
+                                        </div>
                                     </div>
-                                    <div className="max-h-[300px] overflow-y-auto space-y-1 pr-2">
-                                        {availableStaff
-                                            .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                            .length === 0 ? (
-                                                <p className="text-center py-8 text-sm text-muted-foreground">Nenhum resultado encontrado.</p>
-                                            ) : (
-                                                availableStaff
-                                                    .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                                    .map((user) => (
-                                                        <button
-                                                            key={user.id}
-                                                            onClick={() => handleAddUser(user.id)}
-                                                            className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-secondary transition-colors text-left border border-transparent hover:border-border group"
-                                                        >
-                                                            <div className="flex flex-col">
-                                                                <span className="font-medium text-sm">{user.name}</span>
-                                                                <span className="text-xs text-muted-foreground capitalize">{user.role}</span>
-                                                            </div>
-                                                            <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                                                <Check className="h-4 w-4" />
-                                                            </div>
-                                                        </button>
-                                                    ))
-                                            )}
-                                    </div>
-                                </div>
-                                <DialogFooter>
-                                    <Button variant="ghost" onClick={() => setOpen(false)}>Fechar</Button>
-                                </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
+                                    <DialogFooter>
+                                        <Button variant="ghost" onClick={() => setOpen(false)}>Fechar</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+                        </div>
                     </div>
-                </div>
-            </CardContent>
+
+                    {/* Recipients Section */}
+                    <div className="border-t pt-4">
+                        <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Quem recebe:</p>
+                            {(!group.students || group.students.length === 0) && (
+                                <Badge variant="outline" className="text-[10px] text-muted-foreground border-dashed bg-transparent">
+                                    Toda a Escola (Padrão)
+                                </Badge>
+                            )}
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {group.students?.map((student) => {
+                                const classRoom = classes.find(c => c.id === student.class_room_id);
+                                const className = classRoom 
+                                    ? `${classRoom.series} ${classRoom.letter}`.trim() || classRoom.name
+                                    : null;
+                                return (
+                                    <Badge 
+                                        key={student.id} 
+                                        variant="secondary" 
+                                        className="pr-1 bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-300 dark:hover:bg-amber-900/50 border-none px-3 py-1"
+                                    >
+                                        <span className="flex flex-col text-left">
+                                            <span className="font-semibold text-xs leading-tight">{student.name}</span>
+                                            {className && <span className="text-[9px] text-amber-600/80 dark:text-amber-400/80 leading-none mt-0.5">{className}</span>}
+                                        </span>
+                                        <button
+                                            onClick={() => handleRemoveStudent(student.id)}
+                                            className="ml-2 rounded-full hover:bg-destructive hover:text-white p-0.5 transition-colors self-center"
+                                        >
+                                            <X className="h-3 w-3" />
+                                        </button>
+                                    </Badge>
+                                );
+                            })}
+                            <Dialog open={studentModalOpen} onOpenChange={setStudentModalOpen}>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="h-7 rounded-full border-dashed bg-transparent hover:bg-secondary dark:hover:bg-gray-800 text-xs font-normal"
+                                    onClick={() => setStudentModalOpen(true)}
+                                >
+                                    <UserPlus className="mr-1 h-3.5 w-3.5" />
+                                    Vincular Aluno
+                                </Button>
+                                <DialogContent className="max-w-md">
+                                    <DialogHeader>
+                                        <DialogTitle>Limitar Destinatários do Grupo</DialogTitle>
+                                        <DialogDescription>
+                                            Adicione alunos a este grupo. Se nenhum aluno estiver vinculado, a transmissão continuará enviando a toda a escola.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="space-y-4 py-4">
+                                        <div className="relative">
+                                            <Users className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                            <Input 
+                                                placeholder="Buscar aluno por nome..." 
+                                                className="pl-9"
+                                                value={studentSearchQuery}
+                                                onChange={(e) => setStudentSearchQuery(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="max-h-[300px] overflow-y-auto space-y-1 pr-2">
+                                            {availableStudents
+                                                .filter(student => student.name.toLowerCase().includes(studentSearchQuery.toLowerCase()))
+                                                .length === 0 ? (
+                                                    <p className="text-center py-8 text-sm text-muted-foreground">Nenhum aluno encontrado.</p>
+                                                ) : (
+                                                    availableStudents
+                                                        .filter(student => student.name.toLowerCase().includes(studentSearchQuery.toLowerCase()))
+                                                        .map((student) => {
+                                                            const classRoom = classes.find(c => c.id === student.class_room_id);
+                                                            const className = classRoom 
+                                                                ? `${classRoom.series} ${classRoom.letter}`.trim() || classRoom.name
+                                                                : 'Sem turma';
+                                                            return (
+                                                                <button
+                                                                    key={student.id}
+                                                                    onClick={() => handleAddStudent(student.id)}
+                                                                    className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-secondary transition-colors text-left border border-transparent hover:border-border group"
+                                                                >
+                                                                    <div className="flex flex-col">
+                                                                        <span className="font-medium text-sm">{student.name}</span>
+                                                                        <span className="text-xs text-muted-foreground">{className}</span>
+                                                                    </div>
+                                                                    <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                        <Check className="h-4 w-4" />
+                                                                    </div>
+                                                                </button>
+                                                            );
+                                                        })
+                                                )}
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <Button variant="ghost" onClick={() => setStudentModalOpen(false)}>Fechar</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+                        </div>
+                    </div>
+                </CardContent>
+            </div>
             <CardFooter className="justify-end border-t p-2">
                 <Button
                     variant="ghost"

@@ -131,24 +131,6 @@ export default function Show({ plan }: { plan: any }) {
                             </CardContent>
                         </Card>
 
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Habilidades BNCC</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-2">
-                                    {plan.bncc_skills.map((skill: any) => (
-                                        <div key={skill.id} className="flex gap-3 p-3 bg-muted/50 rounded border">
-                                            <Badge variant="outline" className="h-fit font-mono">{skill.code}</Badge>
-                                            <div>
-                                                <p className="text-sm">{skill.description}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    {plan.bncc_skills.length === 0 && <p className="text-muted-foreground text-sm">Nenhuma habilidade vinculada.</p>}
-                                </div>
-                            </CardContent>
-                        </Card>
                     </div>
 
                     <div className="space-y-6">

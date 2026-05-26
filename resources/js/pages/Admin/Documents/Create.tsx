@@ -1,17 +1,23 @@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react'; // Import useForm
-import { Button } from '@/components/ui/button'; // Import Button
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'; // Import Card components
-import { Label } from '@/components/ui/label'; // Import Label
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Import Select components
-import admin from '@/routes/admin/index'; // Import admin routes
-import { ArrowLeft, CheckCircle, Printer } from 'lucide-react'; // Import icons
+import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import admin from '@/routes/admin/index';
+import { ArrowLeft, Printer } from 'lucide-react';
+import { useState, useMemo } from 'react';
 
 interface Student {
     id: number;
     name: string;
     cpf: string;
+    class_room?: {
+        id: number;
+        name: string;
+    } | null;
 }
 
 interface DocumentTemplate {
@@ -26,8 +32,11 @@ interface Props {
 }
 
 export default function Create({ students, templates }: Props) {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [classFilter, setClassFilter] = useState('all');
+
     const { data, setData, post, processing, errors } = useForm({
-        student_id: '',
+        student_ids: [] as number[],
         template_id: '',
     });
 
@@ -45,6 +54,58 @@ export default function Create({ students, templates }: Props) {
             href: '#',
         },
     ];
+
+    const uniqueClasses = useMemo(() => {
+        const classes = new Set<string>();
+        students.forEach((student) => {
+            const classObj = student.class_room || (student as any).classRoom;
+            if (classObj?.name) {
+                classes.add(classObj.name);
+            }
+        });
+        return Array.from(classes).sort();
+    }, [students]);
+
+    const filteredStudents = useMemo(() => {
+        return students.filter((student) => {
+            const matchesSearch = 
+                student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (student.cpf && student.cpf.includes(searchTerm));
+
+            const classObj = student.class_room || (student as any).classRoom;
+            const matchesClass = classFilter === 'all' || classObj?.name === classFilter;
+
+            return matchesSearch && matchesClass;
+        });
+    }, [students, searchTerm, classFilter]);
+
+    const handleToggleStudent = (studentId: number) => {
+        const currentIds = [...data.student_ids];
+        const index = currentIds.indexOf(studentId);
+        if (index > -1) {
+            currentIds.splice(index, 1);
+        } else {
+            currentIds.push(studentId);
+        }
+        setData('student_ids', currentIds);
+    };
+
+    const handleToggleSelectAllVisible = () => {
+        const visibleIds = filteredStudents.map((s) => s.id);
+        const allVisibleSelected = visibleIds.every((id) => data.student_ids.includes(id));
+
+        if (allVisibleSelected) {
+            setData('student_ids', data.student_ids.filter((id) => !visibleIds.includes(id)));
+        } else {
+            const newIds = Array.from(new Set([...data.student_ids, ...visibleIds]));
+            setData('student_ids', newIds);
+        }
+    };
+
+    const isAllVisibleSelected = useMemo(() => {
+        if (filteredStudents.length === 0) return false;
+        return filteredStudents.every((s) => data.student_ids.includes(s.id));
+    }, [filteredStudents, data.student_ids]);
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,7 +126,7 @@ export default function Create({ students, templates }: Props) {
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight">Emitir Novo Documento</h1>
                         <p className="text-muted-foreground">
-                            Selecione o aluno e o modelo para gerar o documento.
+                            Selecione os alunos e o modelo para gerar os documentos.
                         </p>
                     </div>
                 </div>
@@ -77,36 +138,14 @@ export default function Create({ students, templates }: Props) {
                     <CardContent>
                         <form onSubmit={submit} className="space-y-6">
 
+                            {/* Template Selection */}
                             <div className="space-y-2">
-                                <Label htmlFor="student_id">Aluno</Label>
-                                <Select
-                                    value={data.student_id}
-                                    onValueChange={(val) => setData('student_id', val)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Selecione o aluno..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="max-h-[300px]">
-                                        {students.map((student) => (
-                                            <SelectItem key={student.id} value={student.id.toString()}>
-                                                {student.name} ({student.cpf || 'Sem CPF'})
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.student_id && <span className="text-sm text-red-500">{errors.student_id}</span>}
-                                <p className="text-xs text-muted-foreground">
-                                    Selecione o aluno para quem o documento será emitido.
-                                </p>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="template_id">Modelo de Documento</Label>
+                                <Label htmlFor="template_id" className="text-sm font-bold text-slate-800 dark:text-slate-200">Modelo de Documento</Label>
                                 <Select
                                     value={data.template_id}
                                     onValueChange={(val) => setData('template_id', val)}
                                 >
-                                    <SelectTrigger>
+                                    <SelectTrigger className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus:ring-emerald-500">
                                         <SelectValue placeholder="Selecione o modelo..." />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -117,13 +156,112 @@ export default function Create({ students, templates }: Props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.template_id && <span className="text-sm text-red-500">{errors.template_id}</span>}
+                                {errors.template_id && <span className="text-sm text-red-500 block">{errors.template_id}</span>}
+                            </div>
+
+                            {/* Students Selection List with Filters */}
+                            <div className="space-y-3 pt-2">
+                                <Label className="text-sm font-bold text-slate-800 dark:text-slate-200">Selecionar Alunos</Label>
+                                
+                                {/* Search and Filter Controls */}
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <div className="flex-1">
+                                        <Input
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            placeholder="Buscar aluno por nome ou CPF..."
+                                            className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus-visible:ring-emerald-500"
+                                        />
+                                    </div>
+                                    <div className="w-full sm:w-[200px]">
+                                        <Select value={classFilter} onValueChange={setClassFilter}>
+                                            <SelectTrigger className="h-10 rounded-2xl bg-background border-slate-200 dark:border-slate-800 focus:ring-emerald-500">
+                                                <SelectValue placeholder="Filtrar por Turma" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">Todas as Turmas</SelectItem>
+                                                {uniqueClasses.map((className) => (
+                                                    <SelectItem key={className} value={className}>
+                                                        {className}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+
+                                {/* Table checklist */}
+                                <div className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-background">
+                                    {/* Table Header */}
+                                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-50/50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800">
+                                        <input 
+                                            type="checkbox"
+                                            checked={isAllVisibleSelected} 
+                                            onChange={handleToggleSelectAllVisible}
+                                            id="select-all-visible"
+                                            className="rounded border-slate-300 dark:border-slate-700 text-emerald-600 focus:ring-emerald-500 h-4 w-4 accent-emerald-600 dark:accent-emerald-400 cursor-pointer"
+                                        />
+                                        <label htmlFor="select-all-visible" className="text-xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider flex-1 cursor-pointer select-none">
+                                            Nome do Aluno
+                                        </label>
+                                        <span className="text-xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider w-[120px] text-right">
+                                            Turma
+                                        </span>
+                                    </div>
+
+                                    {/* Table Body scroll area */}
+                                    <div className="max-h-[300px] overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800/80">
+                                        {filteredStudents.length > 0 ? (
+                                            filteredStudents.map((student) => {
+                                                const classObj = student.class_room || (student as any).classRoom;
+                                                const isSelected = data.student_ids.includes(student.id);
+                                                return (
+                                                    <div 
+                                                        key={student.id} 
+                                                        className={`flex items-center gap-3 px-4 py-3 hover:bg-slate-50/30 dark:hover:bg-slate-900/20 transition-all cursor-pointer ${
+                                                            isSelected ? 'bg-emerald-50/10 dark:bg-emerald-950/5' : ''
+                                                        }`}
+                                                        onClick={() => handleToggleStudent(student.id)}
+                                                    >
+                                                        <input 
+                                                            type="checkbox"
+                                                            checked={isSelected}
+                                                            onChange={() => handleToggleStudent(student.id)}
+                                                            onClick={(e) => e.stopPropagation()}
+                                                            className="rounded border-slate-300 dark:border-slate-700 text-emerald-600 focus:ring-emerald-500 h-4 w-4 accent-emerald-600 dark:accent-emerald-400 cursor-pointer"
+                                                        />
+                                                        <div className="flex-1 min-w-0 select-none">
+                                                            <p className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">{student.name}</p>
+                                                            <p className="text-xs text-slate-400 dark:text-slate-500 font-mono">{student.cpf || 'Sem CPF'}</p>
+                                                        </div>
+                                                        <span className="text-xs font-semibold text-slate-600 dark:text-slate-350 bg-slate-100 dark:bg-slate-800/80 py-1 px-2.5 rounded-full shrink-0">
+                                                            {classObj?.name || 'Sem turma'}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <div className="text-center py-8 text-sm text-slate-400 dark:text-slate-500 font-medium">
+                                                Nenhum aluno encontrado para os filtros selecionados.
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {errors.student_ids && <span className="text-sm text-red-500 block">{errors.student_ids}</span>}
+
+                                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1 pt-1">
+                                    <span>Mostrando {filteredStudents.length} de {students.length} alunos</span>
+                                    <span className="font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/5 px-2.5 py-0.5 rounded-full">
+                                        {data.student_ids.length} selecionado(s)
+                                    </span>
+                                </div>
                             </div>
 
                             <div className="pt-4 flex justify-end">
-                                <Button type="submit" disabled={processing} className="w-full sm:w-auto">
+                                <Button type="submit" disabled={processing || data.student_ids.length === 0 || !data.template_id} className="w-full sm:w-auto">
                                     <Printer className="h-4 w-4 mr-2" />
-                                    Gerar e Emitir
+                                    Gerar e Emitir ({data.student_ids.length})
                                 </Button>
                             </div>
 

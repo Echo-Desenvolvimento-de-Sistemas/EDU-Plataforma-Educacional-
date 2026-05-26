@@ -37,7 +37,7 @@ class DocumentGeneratorService
         // Fetch Class Info
         $gradeDescription = 'não enturmado';
         if ($student->classRoom) {
-            $student->load('classRoom.grade.educationLevel');
+            $student->load(['classRoom.grade.educationLevel', 'classRoom.academicYear']);
             $grade = $student->classRoom->grade;
             if ($grade) {
                 $levelName = $grade->educationLevel ? $grade->educationLevel->name : '';
@@ -47,7 +47,9 @@ class DocumentGeneratorService
 
         // Prepare Placeholders
         $placeholders = [
+            '{{student_name}}' => $student->name,
             '{{name}}' => $student->name,
+            '{{student.name}}' => $student->name,
             '{{cpf}}' => $student->cpf ?? 'N/A',
             '{{registration_number}}' => $student->registration_number ?? 'N/A',
             '{{date}}' => now()->format('d/m/Y'),
@@ -55,6 +57,10 @@ class DocumentGeneratorService
             '{{school_name}}' => $schoolName,
             '{{logo_img}}' => $logoHtml,
             '{{grade_description}}' => $gradeDescription,
+            '{{grade_name}}' => $student->classRoom && $student->classRoom->grade ? $student->classRoom->grade->name : ($student->classRoom ? $student->classRoom->name : 'Sem Turma'),
+            '{{class_name}}' => $student->classRoom ? $student->classRoom->name : 'Sem Turma',
+            '{{classroom_name}}' => $student->classRoom ? $student->classRoom->name : 'Sem Turma',
+            '{{year}}' => $student->classRoom && $student->classRoom->academicYear ? $student->classRoom->academicYear->year : now()->format('Y'),
             '{{city}}' => Setting::where('key', 'school_city')->value('value') ?? 'Cidade',
         ];
 

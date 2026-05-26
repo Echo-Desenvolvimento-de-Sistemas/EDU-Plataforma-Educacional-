@@ -135,6 +135,7 @@ class AttendanceController extends Controller
         }
 
         return inertia('Admin/Attendance/Index', [
+            'routePrefix' => request()->is('secretaria*') ? 'secretaria' : 'admin',
             'classRooms' => $classRooms,
             'subjects' => $subjects,
             'filters' => [
@@ -217,6 +218,7 @@ class AttendanceController extends Controller
         $subject = \App\Models\Subject::find($subjectId);
 
         return inertia('Admin/Attendance/Edit', [
+            'routePrefix' => request()->is('secretaria*') ? 'secretaria' : 'admin',
             'classRoom' => $classRoom,
             'subject' => $subject,
             'date' => $date,

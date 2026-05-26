@@ -30,6 +30,6 @@ class ClassRoom extends Model
 
     public function channel()
     {
-        return $this->morphOne(Channel::class, 'related');
+        return $this->morphOne(Channel::class, 'context');
     }
 }

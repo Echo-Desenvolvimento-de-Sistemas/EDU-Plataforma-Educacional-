@@ -231,7 +231,7 @@ edit.head = (args: { question: string | number } | [question: string | number ] 
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
 export const update = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -246,7 +246,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
 update.url = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -279,7 +279,7 @@ update.url = (args: { question: number | { id: number } } | [question: number | 
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
 update.put = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -288,7 +288,7 @@ update.put = (args: { question: number | { id: number } } | [question: number | 
 })
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
 update.patch = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -298,7 +298,7 @@ update.patch = (args: { question: number | { id: number } } | [question: number 
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
     const updateForm = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -313,7 +313,7 @@ update.patch = (args: { question: number | { id: number } } | [question: number 
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
         updateForm.put = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -327,7 +327,7 @@ update.patch = (args: { question: number | { id: number } } | [question: number 
         })
             /**
 * @see \App\Http\Controllers\Professor\QuestionController::update
- * @see app/Http/Controllers/Professor/QuestionController.php:84
+ * @see app/Http/Controllers/Professor/QuestionController.php:82
  * @route '/professor/questions/{question}'
  */
         updateForm.patch = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -343,7 +343,7 @@ update.patch = (args: { question: number | { id: number } } | [question: number 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::destroy
- * @see app/Http/Controllers/Professor/QuestionController.php:161
+ * @see app/Http/Controllers/Professor/QuestionController.php:157
  * @route '/professor/questions/{question}'
  */
 export const destroy = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -358,7 +358,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::destroy
- * @see app/Http/Controllers/Professor/QuestionController.php:161
+ * @see app/Http/Controllers/Professor/QuestionController.php:157
  * @route '/professor/questions/{question}'
  */
 destroy.url = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -391,7 +391,7 @@ destroy.url = (args: { question: number | { id: number } } | [question: number |
 
 /**
 * @see \App\Http\Controllers\Professor\QuestionController::destroy
- * @see app/Http/Controllers/Professor/QuestionController.php:161
+ * @see app/Http/Controllers/Professor/QuestionController.php:157
  * @route '/professor/questions/{question}'
  */
 destroy.delete = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -401,7 +401,7 @@ destroy.delete = (args: { question: number | { id: number } } | [question: numbe
 
     /**
 * @see \App\Http\Controllers\Professor\QuestionController::destroy
- * @see app/Http/Controllers/Professor/QuestionController.php:161
+ * @see app/Http/Controllers/Professor/QuestionController.php:157
  * @route '/professor/questions/{question}'
  */
     const destroyForm = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -416,7 +416,7 @@ destroy.delete = (args: { question: number | { id: number } } | [question: numbe
 
             /**
 * @see \App\Http\Controllers\Professor\QuestionController::destroy
- * @see app/Http/Controllers/Professor/QuestionController.php:161
+ * @see app/Http/Controllers/Professor/QuestionController.php:157
  * @route '/professor/questions/{question}'
  */
         destroyForm.delete = (args: { question: number | { id: number } } | [question: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

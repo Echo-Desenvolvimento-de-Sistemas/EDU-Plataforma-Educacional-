@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['question_bank_id', 'statement', 'type', 'difficulty', 'explanation', 'subject', 'topic', 'grade_level', 'bncc_code', 'tags'];
+    protected $fillable = ['question_bank_id', 'statement', 'type', 'difficulty', 'explanation', 'subject', 'topic', 'grade_level', 'tags'];
 
     protected $casts = [
         'difficulty' => 'integer',

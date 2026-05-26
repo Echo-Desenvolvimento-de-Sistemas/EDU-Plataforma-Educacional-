@@ -21,7 +21,6 @@ export default function Create({ bank }: Props) {
         subject: '',
         topic: '',
         grade_level: '',
-        bncc_code: '',
         options: [
             { label: '', is_correct: false },
             { label: '', is_correct: false }
@@ -151,16 +150,7 @@ export default function Create({ bank }: Props) {
                                             placeholder="Ex: 6º Ano"
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-gray-500 mb-1 dark:text-gray-400">BNCC</label>
-                                        <input
-                                            type="text"
-                                            value={data.bncc_code}
-                                            onChange={e => setData('bncc_code', e.target.value)}
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2 text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                                            placeholder="Ex: EF06MA01"
-                                        />
-                                    </div>
+
                                 </div>
                             </div>
 

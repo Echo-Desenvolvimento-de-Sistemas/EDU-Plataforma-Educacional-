@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Printer } from 'lucide-react';
 import documents from '@/routes/aluno/documents/index';
+import DOMPurify from 'dompurify';
 
 interface IssuedDocument {
     id: number;
@@ -67,7 +68,7 @@ export default function Show({ document }: Props) {
                 {/* Print Container */}
                 <div className="bg-white text-black p-8 rounded-xl border shadow-sm print:shadow-none print:border-none print:fixed print:top-0 print:left-0 print:w-full print:h-full print:z-[9999] print:bg-white print:m-0 print:rounded-none overflow-visible">
                     <div
-                        dangerouslySetInnerHTML={{ __html: document.content_snapshot }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(document.content_snapshot) }}
                         className="document-content print-content"
                     />
                 </div>

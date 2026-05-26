@@ -54,8 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/manual', [\App\Http\Controllers\ManualController::class, 'index'])->name('manual');
 
-    // BNCC Search
-    Route::get('/bncc/search', [\App\Http\Controllers\Api\BnccController::class, 'search'])->name('bncc.search');
+
 
     // User Kanban
     Route::get('/kanban', [\App\Http\Controllers\KanbanController::class, 'index'])->name('kanban.index');
@@ -80,6 +79,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('pre-registrations', \App\Http\Controllers\Secretaria\PreRegistrationController::class)->only(['index', 'store', 'show', 'destroy']);
 
         Route::get('/grades', [\App\Http\Controllers\Secretaria\GradeController::class, 'index'])->name('grades.index');
+        Route::get('/grades/entry', [\App\Http\Controllers\Secretaria\GradeController::class, 'entry'])->name('grades.entry');
+        Route::get('/grades/{classRoom}/grades-api', [\App\Http\Controllers\Secretaria\GradeController::class, 'getGradesApi'])->name('grades.grades-api');
+        Route::post('/grades/{classRoom}/grades-batch', [\App\Http\Controllers\Secretaria\GradeController::class, 'storeBatch'])->name('grades.batch');
+        Route::post('/grades/{classRoom}/assessments', [\App\Http\Controllers\Secretaria\GradeController::class, 'storeAssessment'])->name('grades.assessments.store');
+        Route::delete('/grades/{classRoom}/assessments/{assessment}', [\App\Http\Controllers\Secretaria\GradeController::class, 'destroyAssessment'])->name('grades.assessments.destroy');
         Route::get('/grades/{classRoom}', [\App\Http\Controllers\Secretaria\GradeController::class, 'show'])->name('grades.show');
         Route::get('/grades/student/{student}', [\App\Http\Controllers\Secretaria\GradeController::class, 'reportCard'])->name('grades.report-card');
 
@@ -239,6 +243,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/agenda/{channel}', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'destroy'])->name('agenda.destroy');
         Route::post('/agenda/{channel}/users', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'attachUser'])->name('agenda.users.store');
         Route::delete('/agenda/{channel}/users/{user}', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'detachUser'])->name('agenda.users.destroy');
+        Route::post('/agenda/{channel}/students', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'attachStudent'])->name('agenda.students.store');
+        Route::delete('/agenda/{channel}/students/{student}', [\App\Http\Controllers\Admin\AgendaSettingController::class, 'detachStudent'])->name('agenda.students.destroy');
 
         // Ensalamento
         Route::get('/ensalamento', [\App\Http\Controllers\Admin\EnsalamentoController::class, 'index'])->name('ensalamento.index');
@@ -247,6 +253,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Student Grades (Notas)
         Route::get('/student-grades', [\App\Http\Controllers\Admin\StudentGradeController::class, 'index'])->name('student-grades.index');
+        Route::get('/student-grades/entry', [\App\Http\Controllers\Admin\StudentGradeController::class, 'entry'])->name('student-grades.entry');
+        Route::get('/student-grades/{classRoom}/grades-api', [\App\Http\Controllers\Admin\StudentGradeController::class, 'getGradesApi'])->name('student-grades.grades-api');
+        Route::post('/student-grades/{classRoom}/grades-batch', [\App\Http\Controllers\Admin\StudentGradeController::class, 'storeBatch'])->name('student-grades.batch');
+        Route::post('/student-grades/{classRoom}/assessments', [\App\Http\Controllers\Admin\StudentGradeController::class, 'storeAssessment'])->name('student-grades.assessments.store');
+        Route::delete('/student-grades/{classRoom}/assessments/{assessment}', [\App\Http\Controllers\Admin\StudentGradeController::class, 'destroyAssessment'])->name('student-grades.assessments.destroy');
         Route::get('/student-grades/{classRoom}', [\App\Http\Controllers\Admin\StudentGradeController::class, 'show'])->name('student-grades.show');
         Route::get('/student-grades/student/{student}', [\App\Http\Controllers\Admin\StudentGradeController::class, 'reportCard'])->name('student-grades.report-card');
 
@@ -274,6 +285,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
+Route::get('/termos-e-privacidade', [\App\Http\Controllers\Public\PrivacyTermsController::class, 'index'])->name('privacy-terms.index');
+
 Route::get('/pre-matricula/sucesso', function () {
     return Inertia::render('Public/PreRegistration/Success');
 })->name('pre-registration.success');
@@ -283,8 +296,6 @@ Route::post('/pre-matricula/{token}', [\App\Http\Controllers\Public\PreRegistrat
 
 Route::get('/validate-document/{uuid}', [\App\Http\Controllers\Public\DocumentValidationController::class, 'validateDocument'])->name('documents.validate');
 
-Route::prefix('public')->name('public.')->group(function () {
-    Route::resource('users', \App\Http\Controllers\Public\UserController::class)->only(['index', 'edit', 'update']);
-});
+
 
 require __DIR__ . '/settings.php';

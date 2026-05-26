@@ -48,10 +48,11 @@ class DocumentController extends Controller
     public function create()
     {
         // For the select inputs
-        // Optimized: only select necessary fields.
-        // In a real app with thousands of students, this should be an async search. 
-        // For now, loading all is acceptable as per previous context (small scaler).
-        $students = Student::select('id', 'name', 'cpf')->orderBy('name')->get();
+        // Optimized: only select necessary fields and load classRoom.
+        $students = Student::with('classRoom:id,name')
+            ->select('id', 'name', 'cpf', 'class_room_id')
+            ->orderBy('name')
+            ->get();
         $templates = DocumentTemplate::where('is_active', true)->select('id', 'title', 'type')->get();
 
         return Inertia::render('Admin/Documents/Create', [
@@ -65,16 +66,24 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        // Support backward compatibility if single student_id is sent
+        if ($request->has('student_id') && !$request->has('student_ids')) {
+            $request->merge(['student_ids' => [$request->student_id]]);
+        }
+
         $request->validate([
-            'student_id' => 'required|exists:students,id',
+            'student_ids' => 'required|array',
+            'student_ids.*' => 'exists:students,id',
             'template_id' => 'required|exists:document_templates,id',
         ]);
 
-        $student = Student::findOrFail($request->student_id);
         $template = DocumentTemplate::findOrFail($request->template_id);
 
-        $this->documentGenerator->generate($template, $student);
+        foreach ($request->student_ids as $studentId) {
+            $student = Student::findOrFail($studentId);
+            $this->documentGenerator->generate($template, $student);
+        }
 
-        return redirect()->route('admin.documents.index')->with('success', 'Documento emitido com sucesso!');
+        return redirect()->route('admin.documents.index')->with('success', 'Documentos emitidos com sucesso!');
     }
 }

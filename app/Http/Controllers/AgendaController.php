@@ -25,14 +25,22 @@ class AgendaController extends Controller
             if ($student && $student->class_room_id) {
                 $query->where(function ($q) use ($student) {
                     $q->where(function ($q2) use ($student) {
-                        $q2->where('related_type', ClassRoom::class)
-                            ->where('related_id', $student->class_room_id);
-                    })->orWhereNull('related_type'); // Global/Broadcast channels
+                        $q2->where('context_type', ClassRoom::class)
+                            ->where('context_id', $student->class_room_id);
+                    })->orWhere(function ($q2) use ($student) {
+                        $q2->whereNull('context_type')
+                            ->where(function ($q3) use ($student) {
+                                $q3->whereDoesntHave('students')
+                                    ->orWhereHas('students', function ($q4) use ($student) {
+                                        $q4->where('students.id', $student->id);
+                                    });
+                            });
+                    });
                 });
             } else {
-                // Student has no class, maybe show nothing or just global?
-                // Let's safe fallback to just global/broadcast to avoid leaking other classes
-                $query->whereNull('related_type');
+                // Student has no class, show only global channels that don't have custom students
+                $query->whereNull('context_type')
+                    ->whereDoesntHave('students');
             }
         }
 
@@ -44,15 +52,25 @@ class AgendaController extends Controller
                     ->whereNotNull('class_room_id')
                     ->pluck('class_room_id')
                     ->unique();
+                $guardianStudentIds = $guardian->students()->pluck('students.id')->toArray();
 
-                $query->where(function ($q) use ($studentClassIds) {
+                $query->where(function ($q) use ($studentClassIds, $guardianStudentIds) {
                     $q->where(function ($q2) use ($studentClassIds) {
-                        $q2->where('related_type', ClassRoom::class)
-                            ->whereIn('related_id', $studentClassIds);
-                    })->orWhereNull('related_type');
+                        $q2->where('context_type', ClassRoom::class)
+                            ->whereIn('context_id', $studentClassIds);
+                    })->orWhere(function ($q2) use ($guardianStudentIds) {
+                        $q2->whereNull('context_type')
+                            ->where(function ($q3) use ($guardianStudentIds) {
+                                $q3->whereDoesntHave('students')
+                                    ->orWhereHas('students', function ($q4) use ($guardianStudentIds) {
+                                        $q4->whereIn('students.id', $guardianStudentIds);
+                                    });
+                            });
+                    });
                 });
             } else {
-                $query->whereNull('related_type');
+                $query->whereNull('context_type')
+                    ->whereDoesntHave('students');
             }
         }
 
@@ -62,7 +80,7 @@ class AgendaController extends Controller
             }
         ])
             ->withCount(['recipients as unread_count' => function ($q) use ($user) {
-                $q->where('recipient_id', $user->id)
+                $q->where('user_id', $user->id)
                     ->whereNull('read_at');
             }])
             ->get()
@@ -76,7 +94,7 @@ class AgendaController extends Controller
 
                 return [
                     'id' => $channel->id,
-                    'name' => $channel->name,
+                    'name' => $channel->title,
                     'icon' => $channel->icon,
                     'last_message' => $lastMessage ? $lastMessage->body : null,
                     'last_message_at' => $lastMessage ? $lastMessage->created_at->diffForHumans() : null,
@@ -92,17 +110,17 @@ class AgendaController extends Controller
             $classIds = $user->allocations()->pluck('class_room_id')->unique();
 
             // Find Channels linked to these classes
-            $classChannels = Channel::where('related_type', ClassRoom::class)
-                ->whereIn('related_id', $classIds)
+            $classChannels = Channel::where('context_type', ClassRoom::class)
+                ->whereIn('context_id', $classIds)
                 ->get()
                 ->map(function ($c) {
-                    return ['id' => $c->id, 'name' => $c->name];
+                    return ['id' => $c->id, 'name' => $c->title];
                 });
 
             $allowedChannels = $allowedChannels->merge($classChannels);
         } elseif ($user->role === 'admin') {
             $broadcasts = Channel::where('type', 'BROADCAST')->get()->map(function ($c) {
-                return ['id' => $c->id, 'name' => $c->name];
+                return ['id' => $c->id, 'name' => $c->title];
             });
             $allowedChannels = $allowedChannels->merge($broadcasts);
         } elseif ($user->role === 'aluno') {
@@ -110,11 +128,11 @@ class AgendaController extends Controller
             // of their own class
             $student = $user->student;
             if ($student && $student->class_room_id) {
-                $classChannels = Channel::where('related_type', ClassRoom::class)
-                    ->where('related_id', $student->class_room_id)
+                $classChannels = Channel::where('context_type', ClassRoom::class)
+                    ->where('context_id', $student->class_room_id)
                     ->where('can_reply', true)
                     ->get()
-                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->name]);
+                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->title]);
                 $allowedChannels = $allowedChannels->merge($classChannels);
             }
         } elseif ($user->role === 'responsavel') {
@@ -126,11 +144,11 @@ class AgendaController extends Controller
                     ->pluck('class_room_id')
                     ->unique();
 
-                $classChannels = Channel::where('related_type', ClassRoom::class)
-                    ->whereIn('related_id', $studentClassIds)
+                $classChannels = Channel::where('context_type', ClassRoom::class)
+                    ->whereIn('context_id', $studentClassIds)
                     ->where('can_reply', true)
                     ->get()
-                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->name]);
+                    ->map(fn($c) => ['id' => $c->id, 'name' => $c->title]);
                 $allowedChannels = $allowedChannels->merge($classChannels);
             }
         }
@@ -138,7 +156,7 @@ class AgendaController extends Controller
         // 3. Add explicit speaking channels (from settings)
         // This allows Secretaria or specific Professors to speak in Broadcast groups
         $explicitChannels = $user->speakingChannels->map(function ($c) {
-            return ['id' => $c->id, 'name' => $c->name];
+            return ['id' => $c->id, 'name' => $c->title];
         });
 
         $allowedChannels = $allowedChannels->merge($explicitChannels)->unique('id');
@@ -195,7 +213,7 @@ class AgendaController extends Controller
         return Inertia::render('Agenda/Chat', [
             'channel' => [
                 'id' => $channel->id,
-                'name' => $channel->name,
+                'name' => $channel->title,
                 'icon' => $channel->icon,
                 'can_reply' => $channel->can_reply,
             ],
@@ -215,7 +233,7 @@ class AgendaController extends Controller
             ->with([
                 'sender',
                 'recipients' => function ($query) use ($user) {
-                    $query->where('recipient_id', $user->id);
+                    $query->where('user_id', $user->id);
                 }
             ])
             ->latest()
@@ -278,7 +296,7 @@ class AgendaController extends Controller
         $user = auth()->user();
 
         $recipient = MessageRecipient::where('message_id', $message->id)
-            ->where('recipient_id', $user->id)
+            ->where('user_id', $user->id)
             ->first();
 
         if ($recipient && is_null($recipient->read_at)) {
@@ -320,7 +338,7 @@ class AgendaController extends Controller
         $recipientData = $speakers->map(function ($userId) use ($message) {
             return [
                 'message_id' => $message->id,
-                'recipient_id' => $userId,
+                'user_id' => $userId,
                 'status' => 'DELIVERED',
                 'created_at' => now(),
                 'updated_at' => now(),

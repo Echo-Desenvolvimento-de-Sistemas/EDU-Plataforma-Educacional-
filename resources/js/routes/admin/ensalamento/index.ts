@@ -79,7 +79,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::store
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:55
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:69
  * @route '/admin/ensalamento'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -94,7 +94,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::store
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:55
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:69
  * @route '/admin/ensalamento'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::store
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:55
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:69
  * @route '/admin/ensalamento'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -113,7 +113,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::store
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:55
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:69
  * @route '/admin/ensalamento'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -123,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::store
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:55
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:69
  * @route '/admin/ensalamento'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -134,7 +134,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::destroy
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:70
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:84
  * @route '/admin/ensalamento'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -149,7 +149,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::destroy
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:70
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:84
  * @route '/admin/ensalamento'
  */
 destroy.url = (options?: RouteQueryOptions) => {
@@ -158,7 +158,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::destroy
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:70
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:84
  * @route '/admin/ensalamento'
  */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -168,7 +168,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
     /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::destroy
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:70
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:84
  * @route '/admin/ensalamento'
  */
     const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -183,7 +183,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
             /**
 * @see \App\Http\Controllers\Admin\EnsalamentoController::destroy
- * @see app/Http/Controllers/Admin/EnsalamentoController.php:70
+ * @see app/Http/Controllers/Admin/EnsalamentoController.php:84
  * @route '/admin/ensalamento'
  */
         destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

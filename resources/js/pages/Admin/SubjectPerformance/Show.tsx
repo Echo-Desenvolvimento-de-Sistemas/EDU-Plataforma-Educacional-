@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
-import { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { BreadcrumbItem, SharedData } from '@/types';
+import { Head, usePage } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 interface ClassPerformance {
@@ -19,14 +19,18 @@ interface Props {
 }
 
 export default function Show({ subject, classPerformance }: Props) {
+    const { auth } = usePage<SharedData>().props;
+    const isSecretaria = auth.user.role === 'secretaria';
+    const basePath = isSecretaria ? '/secretaria' : '/admin';
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Desempenho por Disciplina',
-            href: '/admin/subject-performance',
+            href: `${basePath}/subject-performance`,
         },
         {
             title: subject.name,
-            href: `/admin/subject-performance/${subject.id}`,
+            href: `${basePath}/subject-performance/${subject.id}`,
         },
     ];
 

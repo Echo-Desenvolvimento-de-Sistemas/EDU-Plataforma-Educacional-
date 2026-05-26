@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, XCircle } from 'lucide-react';
+import DOMPurify from 'dompurify';
 
 interface Props {
     isValid: boolean;
@@ -110,7 +111,7 @@ export default function Validate({ isValid, message, document }: Props) {
                                     </div>
                                     <div
                                         className="document-preview border p-8 bg-white text-black shadow-sm print:shadow-none print:border-0"
-                                        dangerouslySetInnerHTML={{ __html: document.content_snapshot }}
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(document.content_snapshot) }}
                                     />
                                 </div>
                             )}

@@ -23,6 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             \App\Http\Middleware\EnsureFirstAccessCompleted::class,
+            'throttle:global',
+            \App\Http\Middleware\SanitizeInput::class,
         ]);
 
         $middleware->alias([

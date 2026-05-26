@@ -1,10 +1,10 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AgendaController::reply
- * @see app/Http/Controllers/AgendaController.php:291
+ * @see app/Http/Controllers/AgendaController.php:309
  * @route '/agenda/channels/{channel}/reply'
  */
-export const reply = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const reply = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reply.url(args, options),
     method: 'post',
 })
@@ -16,10 +16,10 @@ reply.definition = {
 
 /**
 * @see \App\Http\Controllers\AgendaController::reply
- * @see app/Http/Controllers/AgendaController.php:291
+ * @see app/Http/Controllers/AgendaController.php:309
  * @route '/agenda/channels/{channel}/reply'
  */
-reply.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+reply.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -49,30 +49,30 @@ reply.url = (args: { channel: number | { id: number } } | [channel: number | { i
 
 /**
 * @see \App\Http\Controllers\AgendaController::reply
- * @see app/Http/Controllers/AgendaController.php:291
+ * @see app/Http/Controllers/AgendaController.php:309
  * @route '/agenda/channels/{channel}/reply'
  */
-reply.post = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+reply.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reply.url(args, options),
     method: 'post',
 })
 
     /**
 * @see \App\Http\Controllers\AgendaController::reply
- * @see app/Http/Controllers/AgendaController.php:291
+ * @see app/Http/Controllers/AgendaController.php:309
  * @route '/agenda/channels/{channel}/reply'
  */
-    const replyForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const replyForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: reply.url(args, options),
         method: 'post',
     })
 
             /**
 * @see \App\Http\Controllers\AgendaController::reply
- * @see app/Http/Controllers/AgendaController.php:291
+ * @see app/Http/Controllers/AgendaController.php:309
  * @route '/agenda/channels/{channel}/reply'
  */
-        replyForm.post = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        replyForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: reply.url(args, options),
             method: 'post',
         })
@@ -80,10 +80,10 @@ reply.post = (args: { channel: number | { id: number } } | [channel: number | { 
     reply.form = replyForm
 /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-export const poll = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const poll = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: poll.url(args, options),
     method: 'get',
 })
@@ -95,10 +95,10 @@ poll.definition = {
 
 /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-poll.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+poll.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -128,48 +128,48 @@ poll.url = (args: { channel: number | { id: number } } | [channel: number | { id
 
 /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-poll.get = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+poll.get = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: poll.url(args, options),
     method: 'get',
 })
 /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-poll.head = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+poll.head = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: poll.url(args, options),
     method: 'head',
 })
 
     /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-    const pollForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const pollForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: poll.url(args, options),
         method: 'get',
     })
 
             /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-        pollForm.get = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        pollForm.get = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: poll.url(args, options),
             method: 'get',
         })
             /**
 * @see \App\Http\Controllers\AgendaController::poll
- * @see app/Http/Controllers/AgendaController.php:206
+ * @see app/Http/Controllers/AgendaController.php:224
  * @route '/agenda/channels/{channel}/poll'
  */
-        pollForm.head = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        pollForm.head = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: poll.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

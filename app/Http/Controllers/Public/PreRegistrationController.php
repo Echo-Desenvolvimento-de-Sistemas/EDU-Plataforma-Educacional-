@@ -122,6 +122,9 @@ class PreRegistrationController extends Controller
             'guardian.cpf' => 'required|string|max:14',
             'guardian.phone' => 'required|string',
             'guardian.kinship' => 'required|string',
+
+            // LGPD Consent Validation
+            'accepted_lgpd' => 'accepted',
         ];
 
         // If renewal, we might need to exclude current student from unique check explicitly if needed, 
@@ -218,7 +221,10 @@ class PreRegistrationController extends Controller
             // Complete Pre-Registration
             $preRegistration->update([
                 'status' => 'completed',
-                'student_id' => $student->id
+                'student_id' => $student->id,
+                'lgpd_accepted_at' => now(),
+                'lgpd_accepted_ip' => $request->ip(),
+                'lgpd_accepted_user_agent' => $request->userAgent(),
             ]);
 
             // Create Access for Student and Guardian

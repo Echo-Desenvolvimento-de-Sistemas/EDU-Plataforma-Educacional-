@@ -11,7 +11,7 @@ class MessageRecipient extends Model
 
     protected $fillable = [
         'message_id',
-        'recipient_id',
+        'user_id',
         'read_at',
         'status',
     ];
@@ -27,6 +27,6 @@ class MessageRecipient extends Model
 
     public function recipient()
     {
-        return $this->belongsTo(User::class, 'recipient_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

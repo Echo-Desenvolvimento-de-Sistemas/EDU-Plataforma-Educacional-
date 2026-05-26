@@ -383,7 +383,7 @@ class StudentController extends Controller
             if ($student->user) {
                 $user = $student->user; // Assign to $user for consistency with the provided snippet
                 // Agenda Message Relations
-                \Illuminate\Support\Facades\DB::table('message_recipients')->where('recipient_id', $user->id)->delete();
+                \Illuminate\Support\Facades\DB::table('message_recipients')->where('user_id', $user->id)->delete();
                 // Check if message_reads table exists or just safe delete
                 try {
                     // Assuming message_reads might use user_id or recipient_id. If not sure, skip or check schema.

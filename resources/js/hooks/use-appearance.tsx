@@ -20,6 +20,12 @@ const setCookie = (name: string, value: string, days = 365) => {
 };
 
 const applyTheme = (appearance: Appearance) => {
+    if (typeof window !== 'undefined' && window.location.pathname.includes('/pre-matricula')) {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+        return;
+    }
+
     const isDark =
         appearance === 'dark' || (appearance === 'system' && prefersDark());
 

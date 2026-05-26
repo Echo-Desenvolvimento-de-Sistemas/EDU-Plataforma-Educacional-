@@ -39,7 +39,6 @@ class QuestionController extends Controller
             'subject' => 'nullable|string|max:255',
             'topic' => 'nullable|string|max:255',
             'grade_level' => 'nullable|string|max:255',
-            'bncc_code' => 'nullable|string|max:255',
             'tags' => 'nullable|array',
         ]);
 
@@ -58,7 +57,6 @@ class QuestionController extends Controller
                 'subject' => $validated['subject'] ?? null,
                 'topic' => $validated['topic'] ?? null,
                 'grade_level' => $validated['grade_level'] ?? null,
-                'bncc_code' => $validated['bncc_code'] ?? null,
                 'tags' => $validated['tags'] ?? null,
             ]);
 
@@ -100,7 +98,6 @@ class QuestionController extends Controller
             'subject' => 'nullable|string|max:255',
             'topic' => 'nullable|string|max:255',
             'grade_level' => 'nullable|string|max:255',
-            'bncc_code' => 'nullable|string|max:255',
             'tags' => 'nullable|array',
         ]);
 
@@ -113,7 +110,6 @@ class QuestionController extends Controller
                 'subject' => $validated['subject'] ?? null,
                 'topic' => $validated['topic'] ?? null,
                 'grade_level' => $validated['grade_level'] ?? null,
-                'bncc_code' => $validated['bncc_code'] ?? null,
                 'tags' => $validated['tags'] ?? null,
             ]);
 

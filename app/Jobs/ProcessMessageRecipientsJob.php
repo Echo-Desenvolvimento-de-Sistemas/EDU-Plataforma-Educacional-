@@ -52,7 +52,7 @@ class ProcessMessageRecipientsJob implements ShouldQueue
         $recipientData = $recipientIds->map(function ($userId) {
             return [
                 'message_id' => $this->message->id,
-                'recipient_id' => $userId,
+                'user_id' => $userId,
                 'read_at' => null,
                 'status' => 'DELIVERED',
                 'created_at' => now(),
@@ -84,23 +84,27 @@ class ProcessMessageRecipientsJob implements ShouldQueue
             return $this->resolveByTarget($selectedStudents, $targetAudience);
         }
 
-        // If Broadcast, sent to ALL active users
+        // If Broadcast, sent to ALL active users unless restricted to custom students
         if ($channel->type === 'BROADCAST') {
+            if ($channel->students()->exists()) {
+                $groupStudents = $channel->students()->get();
+                return $this->resolveByTarget($groupStudents, $targetAudience);
+            }
             return User::where('id', '!=', $this->message->sender_id)
                 ->where('active', true)
                 ->pluck('id');
         }
 
         // If Class channel, resolve by target audience
-        if ($channel->related_type === ClassRoom::class) {
-            $classRoomId = $channel->related_id;
+        if ($channel->context_type === ClassRoom::class) {
+            $classRoomId = $channel->context_id;
             $classStudents = Student::where('class_room_id', $classRoomId)->get();
             return $this->resolveByTarget($classStudents, $targetAudience);
         }
 
         // If Direct message, send to the related user
-        if ($channel->type === 'DIRECT' && $channel->related_type === User::class) {
-            return collect([$channel->related_id]);
+        if ($channel->type === 'DIRECT' && $channel->context_type === User::class) {
+            return collect([$channel->context_id]);
         }
 
         return collect([]);

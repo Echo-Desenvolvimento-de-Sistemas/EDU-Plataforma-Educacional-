@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local')) {
             \Illuminate\Database\Eloquent\Model::preventLazyLoading();
         }
+
+        RateLimiter::for('global', function (Request $request) {
+            return Limit::perMinute(100)->by($request->user()?->id ?: $request->ip());
+        });
 
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\ClassRoom::observe(\App\Observers\ClassRoomObserver::class);

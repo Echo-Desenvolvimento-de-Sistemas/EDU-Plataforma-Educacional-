@@ -51,7 +51,7 @@ class SendCommunicationJob implements ShouldQueue
             // Create tracking record if not exists
             MessageRecipient::firstOrCreate([
                 'message_id' => $this->message->id,
-                'recipient_id' => $recipient->id,
+                'user_id' => $recipient->id,
             ]);
 
             // Generate Magic Link

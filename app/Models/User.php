@@ -46,7 +46,10 @@ class User extends Authenticatable
 
     public function speakingChannels()
     {
-        return $this->belongsToMany(Channel::class, 'channel_user');
+        return $this->belongsToMany(Channel::class, 'channel_users')
+            ->wherePivot('is_speaker', true)
+            ->withPivot('is_speaker', 'last_read_at')
+            ->withTimestamps();
     }
 
     public function questionBanks()

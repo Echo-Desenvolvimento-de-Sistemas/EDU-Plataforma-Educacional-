@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 
 interface Props {
+    routePrefix: string;
     classRoom: {
         id: number;
         name: string;
@@ -29,10 +30,10 @@ interface Props {
     } | null;
 }
 
-export default function Edit({ classRoom, subject, date, students, diary }: Props) {
+export default function Edit({ routePrefix, classRoom, subject, date, students, diary }: Props) {
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Dashboard', href: '/admin/dashboard' },
-        { title: 'Frequência', href: '/admin/attendance' },
+        { title: 'Dashboard', href: `/${routePrefix}/dashboard` },
+        { title: 'Frequência', href: `/${routePrefix}/attendance` },
         { title: 'Editar', href: '' },
     ];
 
@@ -72,7 +73,7 @@ export default function Edit({ classRoom, subject, date, students, diary }: Prop
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/admin/attendance/batch', {
+        post(`/${routePrefix}/attendance/batch`, {
             onSuccess: () => toast.success('Frequência salva com sucesso!'),
             onError: () => toast.error('Erro ao salvar frequência. Verifique os dados.')
         });
@@ -85,7 +86,7 @@ export default function Edit({ classRoom, subject, date, students, diary }: Prop
             <form onSubmit={submit} className="flex flex-col gap-6 p-4 max-w-5xl mx-auto w-full">
                 <div className="flex items-center gap-4">
                     <Button variant="ghost" size="icon" asChild>
-                        <Link href="/admin/attendance">
+                        <Link href={`/${routePrefix}/attendance`}>
                             <ArrowLeft className="h-4 w-4" />
                         </Link>
                     </Button>
@@ -143,7 +144,7 @@ export default function Edit({ classRoom, subject, date, students, diary }: Prop
 
                 <div className="flex justify-end gap-4 pb-8">
                     <Button variant="outline" asChild>
-                        <Link href="/admin/attendance">Cancelar</Link>
+                        <Link href={`/${routePrefix}/attendance`}>Cancelar</Link>
                     </Button>
                     <Button type="submit" disabled={processing} className="min-w-[150px]">
                         {processing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}

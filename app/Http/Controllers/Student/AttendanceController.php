@@ -23,51 +23,50 @@ class AttendanceController extends Controller
         $subjects = Subject::orderBy('name')->get();
         $attendanceStats = [];
 
-        // Overall Stats
+        // 1. Pre-fetch all class diaries for this class
+        $classDiaries = ClassDiary::where('class_room_id', $student->class_room_id)->get();
+        
+        // Group classes count by subject
+        $classesPerSubject = $classDiaries->groupBy('subject_id')->map(function ($diaries) {
+            return $diaries->sum('classes_count');
+        });
+
+        // 2. Pre-fetch all absences for this student with related class diary
+        $absences = Attendance::with('classDiary')
+            ->where('student_id', $student->id)
+            ->where('status', 'absent')
+            ->get();
+            
+        // Group absences by subject
+        $absencesPerSubject = $absences->groupBy(function ($att) {
+            return $att->classDiary->subject_id ?? null;
+        })->map(function ($atts) {
+            return $atts->sum(function ($att) {
+                return $att->classDiary->classes_count ?? 0;
+            });
+        });
+
         $totalClassesOverall = 0;
         $totalAbsencesOverall = 0;
 
         foreach ($subjects as $subject) {
-            // 1. Total Classes for this Subject in this Class
-            $totalClasses = ClassDiary::where('class_room_id', $student->class_room_id)
-                ->where('subject_id', $subject->id)
-                ->sum('classes_count');
-
-            // 2. Total Absences
-            $absences = Attendance::where('student_id', $student->id)
-                ->where('status', 'absent')
-                ->whereHas('classDiary', function ($q) use ($subject) {
-                    $q->where('subject_id', $subject->id);
-                })
-                ->get()
-                ->sum(function ($att) {
-                    return $att->classDiary->classes_count;
-                });
-
-            // 3. Justified
-            $justified = Attendance::where('student_id', $student->id)
-                // Assuming we might mark 'justified' directly in status or via separate logic
-                // For now, let's treat status 'justified' if it exists, or rely on AbsenceJustification model
-                // For simplicity in this view, let's assume raw count from Attendance table if we used status='justified' or 'absent'
-                // But wait, the previous controller used 'absent' + Justification Model.
-                // Let's stick to simplest display: Total Absences vs Total Classes.
-                ->where('status', 'justified') // If we updated status
-                ->count();
+            $totalClasses = $classesPerSubject->get($subject->id, 0);
+            $absencesCount = $absencesPerSubject->get($subject->id, 0);
 
             // Percentage
             $percentage = $totalClasses > 0
-                ? round((($totalClasses - $absences) / $totalClasses) * 100, 1)
+                ? round((($totalClasses - $absencesCount) / $totalClasses) * 100, 1)
                 : 100;
 
             $attendanceStats[] = [
                 'subject' => $subject->name,
                 'total_classes' => $totalClasses,
-                'total_absences' => $absences,
+                'total_absences' => $absencesCount,
                 'percentage' => $percentage
             ];
 
             $totalClassesOverall += $totalClasses;
-            $totalAbsencesOverall += $absences;
+            $totalAbsencesOverall += $absencesCount;
         }
 
         $overallPercentage = $totalClassesOverall > 0

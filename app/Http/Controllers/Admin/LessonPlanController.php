@@ -48,7 +48,7 @@ class LessonPlanController extends Controller
 
     public function show(LessonPlan $lessonPlan)
     {
-        $lessonPlan->load(['user', 'classRoom', 'subject', 'bnccSkills', 'feedbacks.user']);
+        $lessonPlan->load(['user', 'classRoom', 'subject', 'feedbacks.user']);
 
         return Inertia::render('Admin/Planning/Show', [
             'plan' => $lessonPlan

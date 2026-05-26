@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import assessments from './assessments'
 /**
 * @see \App\Http\Controllers\Admin\StudentGradeController::index
  * @see app/Http/Controllers/Admin/StudentGradeController.php:16
@@ -77,6 +78,265 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     index.form = indexForm
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+export const entry = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: entry.url(options),
+    method: 'get',
+})
+
+entry.definition = {
+    methods: ["get","head"],
+    url: '/admin/student-grades/entry',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+entry.url = (options?: RouteQueryOptions) => {
+    return entry.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+entry.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: entry.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+entry.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: entry.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+    const entryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: entry.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+        entryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: entry.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::entry
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:84
+ * @route '/admin/student-grades/entry'
+ */
+        entryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: entry.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    entry.form = entryForm
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+export const gradesApi = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: gradesApi.url(args, options),
+    method: 'get',
+})
+
+gradesApi.definition = {
+    methods: ["get","head"],
+    url: '/admin/student-grades/{classRoom}/grades-api',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+gradesApi.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { classRoom: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { classRoom: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    classRoom: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        classRoom: typeof args.classRoom === 'object'
+                ? args.classRoom.id
+                : args.classRoom,
+                }
+
+    return gradesApi.definition.url
+            .replace('{classRoom}', parsedArgs.classRoom.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+gradesApi.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: gradesApi.url(args, options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: gradesApi.url(args, options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+    const gradesApiForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: gradesApi.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+        gradesApiForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: gradesApi.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::gradesApi
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:109
+ * @route '/admin/student-grades/{classRoom}/grades-api'
+ */
+        gradesApiForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: gradesApi.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    gradesApi.form = gradesApiForm
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::batch
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:143
+ * @route '/admin/student-grades/{classRoom}/grades-batch'
+ */
+export const batch = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: batch.url(args, options),
+    method: 'post',
+})
+
+batch.definition = {
+    methods: ["post"],
+    url: '/admin/student-grades/{classRoom}/grades-batch',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::batch
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:143
+ * @route '/admin/student-grades/{classRoom}/grades-batch'
+ */
+batch.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { classRoom: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { classRoom: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    classRoom: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        classRoom: typeof args.classRoom === 'object'
+                ? args.classRoom.id
+                : args.classRoom,
+                }
+
+    return batch.definition.url
+            .replace('{classRoom}', parsedArgs.classRoom.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\StudentGradeController::batch
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:143
+ * @route '/admin/student-grades/{classRoom}/grades-batch'
+ */
+batch.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: batch.url(args, options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::batch
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:143
+ * @route '/admin/student-grades/{classRoom}/grades-batch'
+ */
+    const batchForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: batch.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\StudentGradeController::batch
+ * @see app/Http/Controllers/Admin/StudentGradeController.php:143
+ * @route '/admin/student-grades/{classRoom}/grades-batch'
+ */
+        batchForm.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: batch.url(args, options),
+            method: 'post',
+        })
+    
+    batch.form = batchForm
 /**
 * @see \App\Http\Controllers\Admin\StudentGradeController::show
  * @see app/Http/Controllers/Admin/StudentGradeController.php:39
@@ -283,6 +543,10 @@ reportCard.head = (args: { student: number | { id: number } } | [student: number
     reportCard.form = reportCardForm
 const studentGrades = {
     index: Object.assign(index, index),
+entry: Object.assign(entry, entry),
+gradesApi: Object.assign(gradesApi, gradesApi),
+batch: Object.assign(batch, batch),
+assessments: Object.assign(assessments, assessments),
 show: Object.assign(show, show),
 reportCard: Object.assign(reportCard, reportCard),
 }

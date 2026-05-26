@@ -1,21 +1,10 @@
 import AppLayout from '@/layouts/app-layout';
-import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { BreadcrumbItem, SharedData } from '@/types';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, TrendingUp, TrendingDown, BookOpen } from 'lucide-react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard Admin',
-        href: '/admin/dashboard',
-    },
-    {
-        title: 'Desempenho por Disciplina',
-        href: '/admin/subject-performance',
-    },
-];
 
 interface SubjectStats {
     id: number;
@@ -31,6 +20,22 @@ interface Props {
 }
 
 export default function Index({ subjects }: Props) {
+    const { auth } = usePage<SharedData>().props;
+    const isSecretaria = auth.user.role === 'secretaria';
+    const basePath = isSecretaria ? '/secretaria' : '/admin';
+    const dashboardName = isSecretaria ? 'Dashboard Secretaria' : 'Dashboard Admin';
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: dashboardName,
+            href: `${basePath}/dashboard`,
+        },
+        {
+            title: 'Desempenho por Disciplina',
+            href: `${basePath}/subject-performance`,
+        },
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Desempenho por Disciplina" />
@@ -90,7 +95,7 @@ export default function Index({ subjects }: Props) {
                                                 </TableCell>
                                                 <TableCell className="text-right">
                                                     <Link
-                                                        href={`/admin/subject-performance/${subject.id}`}
+                                                        href={`${basePath}/subject-performance/${subject.id}`}
                                                         className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
                                                     >
                                                         Detalhes <ExternalLink className="ml-1 h-3 w-3" />

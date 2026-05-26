@@ -38,8 +38,8 @@ class AgendaController extends Controller
                     $q->where('type', 'BROADCAST')
                         // And Class-specific channels for their students
                         ->orWhere(function ($q2) use ($classIds) {
-                            $q2->where('related_type', ClassRoom::class)
-                                ->whereIn('related_id', $classIds);
+                            $q2->where('context_type', ClassRoom::class)
+                                ->whereIn('context_id', $classIds);
                         });
                 });
             } else {
@@ -54,8 +54,8 @@ class AgendaController extends Controller
                 $query->where(function ($q) use ($classId) {
                     $q->where('type', 'BROADCAST')
                         ->orWhere(function ($q2) use ($classId) {
-                            $q2->where('related_type', ClassRoom::class)
-                                ->where('related_id', $classId);
+                            $q2->where('context_type', ClassRoom::class)
+                                ->where('context_id', $classId);
                         });
                 });
             } else {
@@ -69,8 +69,8 @@ class AgendaController extends Controller
             $query->where(function ($q) use ($allowedClassIds, $explicitChannelIds) {
                 $q->where('type', 'BROADCAST')
                     ->orWhere(function ($q2) use ($allowedClassIds) {
-                        $q2->where('related_type', ClassRoom::class)
-                            ->whereIn('related_id', $allowedClassIds);
+                        $q2->where('context_type', ClassRoom::class)
+                            ->whereIn('context_id', $allowedClassIds);
                     })
                     ->orWhereIn('id', $explicitChannelIds);
             });
@@ -83,19 +83,19 @@ class AgendaController extends Controller
 
         if ($user->role === 'admin' || $user->role === 'secretaria') {
             $classes = ClassRoom::with('grade')->get();
-            $students = Student::whereNotNull('user_id')->get(['id', 'name']);
+            $students = Student::get(['id', 'name', 'class_room_id']);
         } elseif ($user->role === 'professor') {
             $classes = $user->allocations()->with('classRoom.grade')->get()->pluck('classRoom');
             $classIds = $classes->pluck('id')->toArray();
-            $students = Student::whereIn('class_room_id', $classIds)->whereNotNull('user_id')->get(['id', 'name']);
+            $students = Student::whereIn('class_room_id', $classIds)->get(['id', 'name', 'class_room_id']);
         }
 
         $staff = User::whereIn('role', ['admin', 'secretaria', 'professor'])->get(['id', 'name', 'role']);
 
         // Extra data for new unified page (formerly in AgendaSettingController)
         $groups = Channel::where('type', 'BROADCAST')
-            ->whereNull('related_type')
-            ->with('speakers:id,name,role')
+            ->whereNull('context_type')
+            ->with(['speakers:id,name,role', 'students:id,name,class_room_id'])
             ->get();
 
         $classRooms = ClassRoom::with(['allocations.user', 'channel.speakers', 'grade'])->get()->map(function ($cr) {
@@ -119,16 +119,24 @@ class AgendaController extends Controller
             'userRole'   => $user->role,
         ]);
     }
-
     public function store(Request $request)
     {
+        if ($request->has('name') && !$request->has('title')) {
+            $request->merge(['title' => $request->input('name')]);
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:BROADCAST,CLASS,DIRECT',
+            'title' => 'nullable|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'type' => 'required|string',
             'icon' => 'nullable',
+            'context_type' => 'nullable|string',
+            'context_id' => 'nullable|integer',
             'related_type' => 'nullable|string',
             'related_id' => 'nullable|integer',
             'can_reply' => 'nullable|boolean',
+            'student_ids' => 'nullable|array',
+            'student_ids.*' => 'exists:students,id',
         ]);
 
         $iconPath = 'message-circle'; // Default
@@ -140,15 +148,22 @@ class AgendaController extends Controller
             $iconPath = $validated['icon'];
         }
 
+        $type = strtoupper($validated['type']);
+        if ($type === 'CLASS') $type = 'COMMUNICATION';
+
         $channel = Channel::create([
-            'name' => $validated['name'],
-            'type' => $validated['type'],
+            'title' => $validated['title'] ?? $validated['name'],
+            'type' => $type,
             'icon' => $iconPath,
             'is_active' => true,
             'can_reply' => $validated['can_reply'] ?? false,
-            'related_type' => $validated['related_type'] ?? null,
-            'related_id' => $validated['related_id'] ?? null,
+            'context_type' => $validated['context_type'] ?? $validated['related_type'] ?? null,
+            'context_id' => $validated['context_id'] ?? $validated['related_id'] ?? null,
         ]);
+
+        if ($channel->type === 'BROADCAST' && !empty($validated['student_ids'])) {
+            $channel->students()->sync($validated['student_ids']);
+        }
 
         return redirect()->back()->with('success', 'Canal criado com sucesso.');
     }
@@ -180,12 +195,12 @@ class AgendaController extends Controller
             // Find class channel or create one
             $channel = Channel::firstOrCreate(
                 [
-                    'related_type' => ClassRoom::class,
-                    'related_id' => $validated['class_room_id'],
-                    'type' => 'CLASS'
+                    'context_type' => ClassRoom::class,
+                    'context_id' => $validated['class_room_id'],
+                    'type' => 'COMMUNICATION'
                 ],
                 [
-                    'name' => 'Canal: ' . ClassRoom::find($validated['class_room_id'])->name,
+                    'title' => 'Canal: ' . ClassRoom::find($validated['class_room_id'])->name,
                     'icon' => 'message-circle',
                     'is_active' => true,
                 ]
@@ -196,7 +211,7 @@ class AgendaController extends Controller
             $channel = Channel::firstOrCreate(
                 [
                     'type' => 'BROADCAST',
-                    'name' => 'Mensagem Direta - ' . now()->format('d/m/Y H:i'),
+                    'title' => 'Mensagem Direta - ' . now()->format('d/m/Y H:i'),
                 ],
                 [
                     'icon' => 'message-circle',
@@ -214,11 +229,11 @@ class AgendaController extends Controller
             $channel = Channel::firstOrCreate(
                 [
                     'type' => 'DIRECT',
-                    'related_type' => User::class,
-                    'related_id' => $studentUser->id
+                    'context_type' => User::class,
+                    'context_id' => $studentUser->id
                 ],
                 [
-                    'name' => 'Chat: ' . $student->name,
+                    'title' => 'Chat: ' . $student->name,
                     'icon' => 'message-square',
                     'is_active' => true,
                     'can_reply' => true,
@@ -242,7 +257,7 @@ class AgendaController extends Controller
 
             // Check if channel is bound to a class AND that class is in allocations
             // OR check if channel is explicitly allowed (speakingChannels)
-            $isClassChannel = $channel->related_type === ClassRoom::class && in_array($channel->related_id, $allowedClassIds);
+            $isClassChannel = $channel->context_type === ClassRoom::class && in_array($channel->context_id, $allowedClassIds);
             $isExplicitChannel = $sender->speakingChannels->contains($channel->id);
 
             if (!$isClassChannel && !$isExplicitChannel) {
@@ -314,19 +329,19 @@ class AgendaController extends Controller
         
         // Try to find existing DIRECT channel related to this student's user
         $channel = Channel::where('type', 'DIRECT')
-            ->where('related_type', User::class)
-            ->where('related_id', $studentUser->id)
+            ->where('context_type', User::class)
+            ->where('context_id', $studentUser->id)
             ->first();
 
         if (!$channel) {
             $channel = Channel::create([
-                'name' => $channelName,
+                'title' => $channelName,
                 'type' => 'DIRECT',
                 'icon' => 'message-square',
                 'is_active' => true,
                 'can_reply' => true, // DMs are always two way
-                'related_type' => User::class,
-                'related_id' => $studentUser->id,
+                'context_type' => User::class,
+                'context_id' => $studentUser->id,
             ]);
 
             // Add the sender as a speaker (Admin/Prof etc)

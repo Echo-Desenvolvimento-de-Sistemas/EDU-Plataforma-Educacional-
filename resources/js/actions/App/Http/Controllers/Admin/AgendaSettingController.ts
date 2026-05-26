@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 export const connectWhatsapp = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ connectWhatsapp.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 connectWhatsapp.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ connectWhatsapp.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
 connectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ connectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
     const connectWhatsappForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ connectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::connectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:149
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:178
  * @route '/admin/settings/whatsapp/connect'
  */
         connectWhatsappForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ connectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
     connectWhatsapp.form = connectWhatsappForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 export const checkWhatsappStatus = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -71,7 +71,7 @@ checkWhatsappStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 checkWhatsappStatus.url = (options?: RouteQueryOptions) => {
@@ -80,7 +80,7 @@ checkWhatsappStatus.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 checkWhatsappStatus.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -89,7 +89,7 @@ checkWhatsappStatus.get = (options?: RouteQueryOptions): RouteDefinition<'get'> 
 })
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
 checkWhatsappStatus.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -99,7 +99,7 @@ checkWhatsappStatus.head = (options?: RouteQueryOptions): RouteDefinition<'head'
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
     const checkWhatsappStatusForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -109,7 +109,7 @@ checkWhatsappStatus.head = (options?: RouteQueryOptions): RouteDefinition<'head'
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
         checkWhatsappStatusForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -118,7 +118,7 @@ checkWhatsappStatus.head = (options?: RouteQueryOptions): RouteDefinition<'head'
         })
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::checkWhatsappStatus
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:163
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:192
  * @route '/admin/settings/whatsapp/status'
  */
         checkWhatsappStatusForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -134,7 +134,7 @@ checkWhatsappStatus.head = (options?: RouteQueryOptions): RouteDefinition<'head'
     checkWhatsappStatus.form = checkWhatsappStatusForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 export const disconnectWhatsapp = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -149,7 +149,7 @@ disconnectWhatsapp.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 disconnectWhatsapp.url = (options?: RouteQueryOptions) => {
@@ -158,7 +158,7 @@ disconnectWhatsapp.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
 disconnectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -168,7 +168,7 @@ disconnectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
     const disconnectWhatsappForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -178,7 +178,7 @@ disconnectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::disconnectWhatsapp
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:175
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:204
  * @route '/admin/settings/whatsapp/disconnect'
  */
         disconnectWhatsappForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -189,7 +189,7 @@ disconnectWhatsapp.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
     disconnectWhatsapp.form = disconnectWhatsappForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 export const getWhatsappInterval = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -204,7 +204,7 @@ getWhatsappInterval.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 getWhatsappInterval.url = (options?: RouteQueryOptions) => {
@@ -213,7 +213,7 @@ getWhatsappInterval.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 getWhatsappInterval.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -222,7 +222,7 @@ getWhatsappInterval.get = (options?: RouteQueryOptions): RouteDefinition<'get'> 
 })
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
 getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -232,7 +232,7 @@ getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
     const getWhatsappIntervalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -242,7 +242,7 @@ getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
         getWhatsappIntervalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -251,7 +251,7 @@ getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'
         })
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::getWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:185
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:214
  * @route '/admin/settings/whatsapp/interval'
  */
         getWhatsappIntervalForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -267,7 +267,7 @@ getWhatsappInterval.head = (options?: RouteQueryOptions): RouteDefinition<'head'
     getWhatsappInterval.form = getWhatsappIntervalForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:223
  * @route '/admin/settings/whatsapp/interval'
  */
 export const setWhatsappInterval = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -282,7 +282,7 @@ setWhatsappInterval.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:223
  * @route '/admin/settings/whatsapp/interval'
  */
 setWhatsappInterval.url = (options?: RouteQueryOptions) => {
@@ -291,7 +291,7 @@ setWhatsappInterval.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:223
  * @route '/admin/settings/whatsapp/interval'
  */
 setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -301,7 +301,7 @@ setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:223
  * @route '/admin/settings/whatsapp/interval'
  */
     const setWhatsappIntervalForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -311,7 +311,7 @@ setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::setWhatsappInterval
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:194
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:223
  * @route '/admin/settings/whatsapp/interval'
  */
         setWhatsappIntervalForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -322,10 +322,10 @@ setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'
     setWhatsappInterval.form = setWhatsappIntervalForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-export const update = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -337,10 +337,10 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -370,20 +370,20 @@ update.url = (args: { channel: number | { id: number } } | [channel: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.put = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-    const updateForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -395,10 +395,10 @@ update.put = (args: { channel: number | { id: number } } | [channel: number | { 
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::update
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:75
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-        updateForm.put = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -411,10 +411,10 @@ update.put = (args: { channel: number | { id: number } } | [channel: number | { 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-export const destroy = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -426,10 +426,10 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -459,20 +459,20 @@ destroy.url = (args: { channel: number | { id: number } } | [channel: number | {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.delete = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-    const destroyForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -484,10 +484,10 @@ destroy.delete = (args: { channel: number | { id: number } } | [channel: number 
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::destroy
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:94
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-        destroyForm.delete = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -500,10 +500,10 @@ destroy.delete = (args: { channel: number | { id: number } } | [channel: number 
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::attachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:101
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-export const attachUser = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const attachUser = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachUser.url(args, options),
     method: 'post',
 })
@@ -515,10 +515,10 @@ attachUser.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::attachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:101
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-attachUser.url = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+attachUser.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -548,30 +548,30 @@ attachUser.url = (args: { channel: number | { id: number } } | [channel: number 
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::attachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:101
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-attachUser.post = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+attachUser.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachUser.url(args, options),
     method: 'post',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::attachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:101
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-    const attachUserForm = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const attachUserForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: attachUser.url(args, options),
         method: 'post',
     })
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::attachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:101
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-        attachUserForm.post = (args: { channel: number | { id: number } } | [channel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        attachUserForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: attachUser.url(args, options),
             method: 'post',
         })
@@ -579,10 +579,10 @@ attachUser.post = (args: { channel: number | { id: number } } | [channel: number
     attachUser.form = attachUserForm
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::detachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:113
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-export const detachUser = (args: { channel: number | { id: number }, user: number | { id: number } } | [channel: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const detachUser = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachUser.url(args, options),
     method: 'delete',
 })
@@ -594,10 +594,10 @@ detachUser.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::detachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:113
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-detachUser.url = (args: { channel: number | { id: number }, user: number | { id: number } } | [channel: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions) => {
+detachUser.url = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     channel: args[0],
@@ -624,20 +624,20 @@ detachUser.url = (args: { channel: number | { id: number }, user: number | { id:
 
 /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::detachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:113
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-detachUser.delete = (args: { channel: number | { id: number }, user: number | { id: number } } | [channel: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+detachUser.delete = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachUser.url(args, options),
     method: 'delete',
 })
 
     /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::detachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:113
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-    const detachUserForm = (args: { channel: number | { id: number }, user: number | { id: number } } | [channel: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const detachUserForm = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: detachUser.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -649,10 +649,10 @@ detachUser.delete = (args: { channel: number | { id: number }, user: number | { 
 
             /**
 * @see \App\Http\Controllers\Admin\AgendaSettingController::detachUser
- * @see app/Http/Controllers/Admin/AgendaSettingController.php:113
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-        detachUserForm.delete = (args: { channel: number | { id: number }, user: number | { id: number } } | [channel: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        detachUserForm.delete = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: detachUser.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -663,6 +663,171 @@ detachUser.delete = (args: { channel: number | { id: number }, user: number | { 
         })
     
     detachUser.form = detachUserForm
-const AgendaSettingController = { connectWhatsapp, checkWhatsappStatus, disconnectWhatsapp, getWhatsappInterval, setWhatsappInterval, update, destroy, attachUser, detachUser }
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::attachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
+ * @route '/admin/agenda/{channel}/students'
+ */
+export const attachStudent = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: attachStudent.url(args, options),
+    method: 'post',
+})
+
+attachStudent.definition = {
+    methods: ["post"],
+    url: '/admin/agenda/{channel}/students',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::attachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
+ * @route '/admin/agenda/{channel}/students'
+ */
+attachStudent.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { channel: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { channel: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    channel: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        channel: typeof args.channel === 'object'
+                ? args.channel.id
+                : args.channel,
+                }
+
+    return attachStudent.definition.url
+            .replace('{channel}', parsedArgs.channel.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::attachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
+ * @route '/admin/agenda/{channel}/students'
+ */
+attachStudent.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: attachStudent.url(args, options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::attachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
+ * @route '/admin/agenda/{channel}/students'
+ */
+    const attachStudentForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: attachStudent.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::attachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
+ * @route '/admin/agenda/{channel}/students'
+ */
+        attachStudentForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: attachStudent.url(args, options),
+            method: 'post',
+        })
+    
+    attachStudent.form = attachStudentForm
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::detachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
+ * @route '/admin/agenda/{channel}/students/{student}'
+ */
+export const detachStudent = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: detachStudent.url(args, options),
+    method: 'delete',
+})
+
+detachStudent.definition = {
+    methods: ["delete"],
+    url: '/admin/agenda/{channel}/students/{student}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::detachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
+ * @route '/admin/agenda/{channel}/students/{student}'
+ */
+detachStudent.url = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+                    channel: args[0],
+                    student: args[1],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        channel: typeof args.channel === 'object'
+                ? args.channel.id
+                : args.channel,
+                                student: typeof args.student === 'object'
+                ? args.student.id
+                : args.student,
+                }
+
+    return detachStudent.definition.url
+            .replace('{channel}', parsedArgs.channel.toString())
+            .replace('{student}', parsedArgs.student.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::detachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
+ * @route '/admin/agenda/{channel}/students/{student}'
+ */
+detachStudent.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: detachStudent.url(args, options),
+    method: 'delete',
+})
+
+    /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::detachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
+ * @route '/admin/agenda/{channel}/students/{student}'
+ */
+    const detachStudentForm = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: detachStudent.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'DELETE',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Admin\AgendaSettingController::detachStudent
+ * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
+ * @route '/admin/agenda/{channel}/students/{student}'
+ */
+        detachStudentForm.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: detachStudent.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'DELETE',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    detachStudent.form = detachStudentForm
+const AgendaSettingController = { connectWhatsapp, checkWhatsappStatus, disconnectWhatsapp, getWhatsappInterval, setWhatsappInterval, update, destroy, attachUser, detachUser, attachStudent, detachStudent }
 
 export default AgendaSettingController
