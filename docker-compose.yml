@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: edu-local:v1
+    image: ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest
     env_file:
       - .env
     networks:
