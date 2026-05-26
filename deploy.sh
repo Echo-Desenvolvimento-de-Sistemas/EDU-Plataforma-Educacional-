@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 STACK_NAME="edu"
-IMAGE_NAME="ghcr.io/echo-desenvolvimento-de-sistemas/edu-plataforma-educacional:latest"
+IMAGE_NAME="edu-local:v1"
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
 ENV_PRODUCTION_FILE=".env.production"
@@ -42,9 +42,9 @@ if ! docker network ls | grep -q "echonet"; then
     exit 1
 fi
 
-# Pull the remote image
-echo -e "${YELLOW}Pulling Docker image ($IMAGE_NAME)...${NC}"
-docker pull $IMAGE_NAME
+# Build the local image
+echo -e "${YELLOW}Building Docker image ($IMAGE_NAME)...${NC}"
+docker build -t $IMAGE_NAME .
 
 # Create .env file if it doesn't exist
 if [ ! -f "$ENV_FILE" ]; then
