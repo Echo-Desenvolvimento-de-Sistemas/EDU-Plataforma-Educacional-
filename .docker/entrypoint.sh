@@ -10,9 +10,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Run migrations (Optional: be careful in production on auto-deploy)
+# Run migrations (continue even if they fail to prevent container crash loops)
 echo "Running migrations..."
-php artisan migrate --force
+php artisan migrate --force || echo "WARNING: Some migrations failed. Check logs."
 
 # Run seeders (creates admin user and initial data)
 echo "Running seeders..."
