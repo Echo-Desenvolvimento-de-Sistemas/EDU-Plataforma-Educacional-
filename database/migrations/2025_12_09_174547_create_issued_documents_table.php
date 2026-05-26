@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('issued_documents', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->index();
+            $table->char('uuid', 36)->unique()->index();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('document_template_id')->constrained()->cascadeOnDelete();
             $table->string('verification_hash')->nullable(); // For future blockchain/integrity hash
