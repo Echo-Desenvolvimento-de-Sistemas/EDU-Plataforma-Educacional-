@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 STACK_NAME="edu"
-IMAGE_NAME="edu-local:v1"
+IMAGE_NAME="edu-local:v2"
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
 ENV_PRODUCTION_FILE=".env.production"

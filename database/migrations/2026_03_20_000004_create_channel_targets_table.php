@@ -11,8 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('channel_targets', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('channel_id')->constrained('channels')->onDelete('cascade');
+            $table->char('id', 36)->primary();
+            $table->char('channel_id', 36);
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->string('target_type'); // e.g. App\Models\ClassRoom, App\Models\Student, etc.
             $table->string('target_id'); // Using string for flexibility with UUIDs or IDs
             $table->boolean('is_active')->default(true);

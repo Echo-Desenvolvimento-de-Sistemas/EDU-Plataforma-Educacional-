@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: edu-local:v1
+    image: edu-local:v2
     env_file:
       - .env
     networks:

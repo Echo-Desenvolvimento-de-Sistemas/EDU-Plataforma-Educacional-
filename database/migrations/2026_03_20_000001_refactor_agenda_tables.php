@@ -17,7 +17,7 @@ return new class extends Migration {
         Schema::dropIfExists('channels');
 
         Schema::create('channels', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->char('id', 36)->primary();
             $table->string('title');
             $table->enum('type', ['broadcast', 'communication', 'direct']);
             $table->boolean('can_reply')->default(false);
