@@ -19,7 +19,7 @@ return new class extends Migration {
         Schema::create('channels', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->enum('type', ['broadcast', 'communication', 'direct', 'BROADCAST', 'COMMUNICATION', 'DIRECT']);
+            $table->enum('type', ['broadcast', 'communication', 'direct']);
             $table->boolean('can_reply')->default(false);
             $table->nullableUuidMorphs('context');
             $table->boolean('is_active')->default(true);
@@ -43,8 +43,7 @@ return new class extends Migration {
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->json('content'); // Supports rich cards, text, stickers, etc.
             $table->enum('type', [
-                'text', 'image', 'file', 'system', 'notice', 'event', 'financial', 'urgent', 'homework', 'comunicado',
-                'TEXT', 'IMAGE', 'FILE', 'SYSTEM', 'NOTICE', 'EVENT', 'FINANCIAL', 'URGENT', 'HOMEWORK', 'COMUNICADO'
+                'text', 'image', 'file', 'system', 'notice', 'event', 'financial', 'urgent', 'homework', 'comunicado'
             ]);
             $table->timestamps();
         });
