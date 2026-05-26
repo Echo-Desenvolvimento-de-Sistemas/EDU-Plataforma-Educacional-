@@ -21,7 +21,9 @@ return new class extends Migration {
             $table->string('title');
             $table->enum('type', ['broadcast', 'communication', 'direct']);
             $table->boolean('can_reply')->default(false);
-            $table->nullableUuidMorphs('context');
+            $table->string('context_type')->nullable();
+            $table->char('context_id', 36)->nullable();
+            $table->index(['context_type', 'context_id']);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -29,7 +31,8 @@ return new class extends Migration {
         Schema::create('channel_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('channel_id')->constrained('channels')->onDelete('cascade');
+            $table->char('channel_id', 36);
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->boolean('is_speaker')->default(false);
             $table->timestamp('last_read_at')->nullable();
             $table->timestamps();
@@ -39,7 +42,8 @@ return new class extends Migration {
 
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('channel_id')->constrained('channels')->onDelete('cascade');
+            $table->char('channel_id', 36);
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->json('content'); // Supports rich cards, text, stickers, etc.
             $table->enum('type', [
