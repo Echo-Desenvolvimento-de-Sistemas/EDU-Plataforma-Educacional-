@@ -83,7 +83,7 @@ store.post = (args: { guardian: number | { id: number } } | [guardian: number | 
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-export const destroy = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -98,7 +98,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-destroy.url = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     guardian: args[0],
@@ -128,7 +128,7 @@ destroy.url = (args: { guardian: number | { id: number }, student: number | { id
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-destroy.delete = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -138,7 +138,7 @@ destroy.delete = (args: { guardian: number | { id: number }, student: number | {
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-    const destroyForm = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -153,7 +153,7 @@ destroy.delete = (args: { guardian: number | { id: number }, student: number | {
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-        destroyForm.delete = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

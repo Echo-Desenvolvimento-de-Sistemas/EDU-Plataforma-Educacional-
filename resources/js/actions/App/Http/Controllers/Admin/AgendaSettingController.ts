@@ -325,7 +325,7 @@ setWhatsappInterval.post = (options?: RouteQueryOptions): RouteDefinition<'post'
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-export const update = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -340,7 +340,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+update.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -373,7 +373,7 @@ update.url = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -383,7 +383,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-    const updateForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -398,7 +398,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-        updateForm.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -414,7 +414,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-export const destroy = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -429,7 +429,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+destroy.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -462,7 +462,7 @@ destroy.url = (args: { channel: string | { id: string } } | [channel: string | {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -472,7 +472,7 @@ destroy.delete = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-    const destroyForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -487,7 +487,7 @@ destroy.delete = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-        destroyForm.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -503,7 +503,7 @@ destroy.delete = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-export const attachUser = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const attachUser = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachUser.url(args, options),
     method: 'post',
 })
@@ -518,7 +518,7 @@ attachUser.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-attachUser.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+attachUser.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -551,7 +551,7 @@ attachUser.url = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-attachUser.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+attachUser.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachUser.url(args, options),
     method: 'post',
 })
@@ -561,7 +561,7 @@ attachUser.post = (args: { channel: string | { id: string } } | [channel: string
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-    const attachUserForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const attachUserForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: attachUser.url(args, options),
         method: 'post',
     })
@@ -571,7 +571,7 @@ attachUser.post = (args: { channel: string | { id: string } } | [channel: string
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:102
  * @route '/admin/agenda/{channel}/users'
  */
-        attachUserForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        attachUserForm.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: attachUser.url(args, options),
             method: 'post',
         })
@@ -582,7 +582,7 @@ attachUser.post = (args: { channel: string | { id: string } } | [channel: string
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-export const detachUser = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const detachUser = (args: { channel: string | number | { id: string | number }, user: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachUser.url(args, options),
     method: 'delete',
 })
@@ -597,7 +597,7 @@ detachUser.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-detachUser.url = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions) => {
+detachUser.url = (args: { channel: string | number | { id: string | number }, user: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     channel: args[0],
@@ -627,7 +627,7 @@ detachUser.url = (args: { channel: string | { id: string }, user: number | { id:
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-detachUser.delete = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+detachUser.delete = (args: { channel: string | number | { id: string | number }, user: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachUser.url(args, options),
     method: 'delete',
 })
@@ -637,7 +637,7 @@ detachUser.delete = (args: { channel: string | { id: string }, user: number | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-    const detachUserForm = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const detachUserForm = (args: { channel: string | number | { id: string | number }, user: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: detachUser.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -652,7 +652,7 @@ detachUser.delete = (args: { channel: string | { id: string }, user: number | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:114
  * @route '/admin/agenda/{channel}/users/{user}'
  */
-        detachUserForm.delete = (args: { channel: string | { id: string }, user: number | { id: number } } | [channel: string | { id: string }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        detachUserForm.delete = (args: { channel: string | number | { id: string | number }, user: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: detachUser.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -668,7 +668,7 @@ detachUser.delete = (args: { channel: string | { id: string }, user: number | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-export const attachStudent = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const attachStudent = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachStudent.url(args, options),
     method: 'post',
 })
@@ -683,7 +683,7 @@ attachStudent.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-attachStudent.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+attachStudent.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -716,7 +716,7 @@ attachStudent.url = (args: { channel: string | { id: string } } | [channel: stri
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-attachStudent.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+attachStudent.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: attachStudent.url(args, options),
     method: 'post',
 })
@@ -726,7 +726,7 @@ attachStudent.post = (args: { channel: string | { id: string } } | [channel: str
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-    const attachStudentForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const attachStudentForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: attachStudent.url(args, options),
         method: 'post',
     })
@@ -736,7 +736,7 @@ attachStudent.post = (args: { channel: string | { id: string } } | [channel: str
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-        attachStudentForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        attachStudentForm.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: attachStudent.url(args, options),
             method: 'post',
         })
@@ -747,7 +747,7 @@ attachStudent.post = (args: { channel: string | { id: string } } | [channel: str
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-export const detachStudent = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const detachStudent = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachStudent.url(args, options),
     method: 'delete',
 })
@@ -762,7 +762,7 @@ detachStudent.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-detachStudent.url = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions) => {
+detachStudent.url = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     channel: args[0],
@@ -792,7 +792,7 @@ detachStudent.url = (args: { channel: string | { id: string }, student: number |
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-detachStudent.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+detachStudent.delete = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachStudent.url(args, options),
     method: 'delete',
 })
@@ -802,7 +802,7 @@ detachStudent.delete = (args: { channel: string | { id: string }, student: numbe
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-    const detachStudentForm = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const detachStudentForm = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: detachStudent.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -817,7 +817,7 @@ detachStudent.delete = (args: { channel: string | { id: string }, student: numbe
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-        detachStudentForm.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        detachStudentForm.delete = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: detachStudent.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

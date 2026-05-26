@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/Professor/AssessmentController.php:13
  * @route '/professor/classes/{classRoom}/assessments'
  */
-export const store = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/Professor/AssessmentController.php:13
  * @route '/professor/classes/{classRoom}/assessments'
  */
-store.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+store.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Professor/AssessmentController.php:13
  * @route '/professor/classes/{classRoom}/assessments'
  */
-store.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ store.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/AssessmentController.php:13
  * @route '/professor/classes/{classRoom}/assessments'
  */
-    const storeForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ store.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/AssessmentController.php:13
  * @route '/professor/classes/{classRoom}/assessments'
  */
-        storeForm.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -83,7 +83,7 @@ store.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/AssessmentController.php:52
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-export const update = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -98,7 +98,7 @@ update.definition = {
  * @see app/Http/Controllers/Professor/AssessmentController.php:52
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-update.url = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions) => {
+update.url = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     classRoom: args[0],
@@ -128,7 +128,7 @@ update.url = (args: { classRoom: number | { id: number }, assessment: number | {
  * @see app/Http/Controllers/Professor/AssessmentController.php:52
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-update.put = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -138,7 +138,7 @@ update.put = (args: { classRoom: number | { id: number }, assessment: number | {
  * @see app/Http/Controllers/Professor/AssessmentController.php:52
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-    const updateForm = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -153,7 +153,7 @@ update.put = (args: { classRoom: number | { id: number }, assessment: number | {
  * @see app/Http/Controllers/Professor/AssessmentController.php:52
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-        updateForm.put = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -169,7 +169,7 @@ update.put = (args: { classRoom: number | { id: number }, assessment: number | {
  * @see app/Http/Controllers/Professor/AssessmentController.php:73
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-export const destroy = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -184,7 +184,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Professor/AssessmentController.php:73
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-destroy.url = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     classRoom: args[0],
@@ -214,7 +214,7 @@ destroy.url = (args: { classRoom: number | { id: number }, assessment: number | 
  * @see app/Http/Controllers/Professor/AssessmentController.php:73
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-destroy.delete = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -224,7 +224,7 @@ destroy.delete = (args: { classRoom: number | { id: number }, assessment: number
  * @see app/Http/Controllers/Professor/AssessmentController.php:73
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-    const destroyForm = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -239,7 +239,7 @@ destroy.delete = (args: { classRoom: number | { id: number }, assessment: number
  * @see app/Http/Controllers/Professor/AssessmentController.php:73
  * @route '/professor/classes/{classRoom}/assessments/{assessment}'
  */
-        destroyForm.delete = (args: { classRoom: number | { id: number }, assessment: number | { id: number } } | [classRoom: number | { id: number }, assessment: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number }, assessment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

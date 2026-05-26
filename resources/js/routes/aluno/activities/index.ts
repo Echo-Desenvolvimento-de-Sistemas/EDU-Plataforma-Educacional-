@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-export const play = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const play = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: play.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ play.definition = {
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-play.url = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+play.url = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { activity: args }
     }
@@ -52,7 +52,7 @@ play.url = (args: { activity: number | { id: number } } | [activity: number | { 
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-play.get = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+play.get = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: play.url(args, options),
     method: 'get',
 })
@@ -61,7 +61,7 @@ play.get = (args: { activity: number | { id: number } } | [activity: number | { 
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-play.head = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+play.head = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: play.url(args, options),
     method: 'head',
 })
@@ -71,7 +71,7 @@ play.head = (args: { activity: number | { id: number } } | [activity: number | {
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-    const playForm = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const playForm = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: play.url(args, options),
         method: 'get',
     })
@@ -81,7 +81,7 @@ play.head = (args: { activity: number | { id: number } } | [activity: number | {
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-        playForm.get = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        playForm.get = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: play.url(args, options),
             method: 'get',
         })
@@ -90,7 +90,7 @@ play.head = (args: { activity: number | { id: number } } | [activity: number | {
  * @see app/Http/Controllers/Student/PlayerController.php:16
  * @route '/aluno/activities/{activity}/play'
  */
-        playForm.head = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        playForm.head = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: play.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -106,7 +106,7 @@ play.head = (args: { activity: number | { id: number } } | [activity: number | {
  * @see app/Http/Controllers/Student/PlayerController.php:48
  * @route '/aluno/activities/{activity}/submit'
  */
-export const submit = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const submit = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: submit.url(args, options),
     method: 'post',
 })
@@ -121,7 +121,7 @@ submit.definition = {
  * @see app/Http/Controllers/Student/PlayerController.php:48
  * @route '/aluno/activities/{activity}/submit'
  */
-submit.url = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+submit.url = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { activity: args }
     }
@@ -154,7 +154,7 @@ submit.url = (args: { activity: number | { id: number } } | [activity: number | 
  * @see app/Http/Controllers/Student/PlayerController.php:48
  * @route '/aluno/activities/{activity}/submit'
  */
-submit.post = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+submit.post = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: submit.url(args, options),
     method: 'post',
 })
@@ -164,7 +164,7 @@ submit.post = (args: { activity: number | { id: number } } | [activity: number |
  * @see app/Http/Controllers/Student/PlayerController.php:48
  * @route '/aluno/activities/{activity}/submit'
  */
-    const submitForm = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const submitForm = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: submit.url(args, options),
         method: 'post',
     })
@@ -174,7 +174,7 @@ submit.post = (args: { activity: number | { id: number } } | [activity: number |
  * @see app/Http/Controllers/Student/PlayerController.php:48
  * @route '/aluno/activities/{activity}/submit'
  */
-        submitForm.post = (args: { activity: number | { id: number } } | [activity: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        submitForm.post = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: submit.url(args, options),
             method: 'post',
         })

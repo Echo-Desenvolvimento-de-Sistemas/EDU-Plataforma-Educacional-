@@ -79,10 +79,12 @@ class GradeCalculationService
                 [
                     'grading_period_id' => $gradingPeriodId,
                     'student_id' => $studentId,
-                    'class_room_id' => $classRoomId,
                     'subject_id' => $subjectId,
                 ],
-                ['grade' => $finalGrade]
+                [
+                    'class_room_id' => $classRoomId,
+                    'grade' => $finalGrade
+                ]
             );
 
             return $finalGrade;

@@ -82,7 +82,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-export const byClass = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const byClass = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: byClass.url(args, options),
     method: 'get',
 })
@@ -97,7 +97,7 @@ byClass.definition = {
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-byClass.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+byClass.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -130,7 +130,7 @@ byClass.url = (args: { classRoom: number | { id: number } } | [classRoom: number
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-byClass.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+byClass.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: byClass.url(args, options),
     method: 'get',
 })
@@ -139,7 +139,7 @@ byClass.get = (args: { classRoom: number | { id: number } } | [classRoom: number
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-byClass.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+byClass.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: byClass.url(args, options),
     method: 'head',
 })
@@ -149,7 +149,7 @@ byClass.head = (args: { classRoom: number | { id: number } } | [classRoom: numbe
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-    const byClassForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const byClassForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: byClass.url(args, options),
         method: 'get',
     })
@@ -159,7 +159,7 @@ byClass.head = (args: { classRoom: number | { id: number } } | [classRoom: numbe
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-        byClassForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        byClassForm.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: byClass.url(args, options),
             method: 'get',
         })
@@ -168,7 +168,7 @@ byClass.head = (args: { classRoom: number | { id: number } } | [classRoom: numbe
  * @see app/Http/Controllers/Admin/ClassScheduleController.php:32
  * @route '/admin/class-schedules/{classRoom}'
  */
-        byClassForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        byClassForm.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: byClass.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

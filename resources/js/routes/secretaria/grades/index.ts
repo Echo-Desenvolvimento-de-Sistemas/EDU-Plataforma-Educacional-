@@ -161,7 +161,7 @@ entry.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-export const gradesApi = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const gradesApi = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: gradesApi.url(args, options),
     method: 'get',
 })
@@ -176,7 +176,7 @@ gradesApi.definition = {
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-gradesApi.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+gradesApi.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -209,7 +209,7 @@ gradesApi.url = (args: { classRoom: number | { id: number } } | [classRoom: numb
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-gradesApi.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+gradesApi.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: gradesApi.url(args, options),
     method: 'get',
 })
@@ -218,7 +218,7 @@ gradesApi.get = (args: { classRoom: number | { id: number } } | [classRoom: numb
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+gradesApi.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: gradesApi.url(args, options),
     method: 'head',
 })
@@ -228,7 +228,7 @@ gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: num
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-    const gradesApiForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const gradesApiForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: gradesApi.url(args, options),
         method: 'get',
     })
@@ -238,7 +238,7 @@ gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: num
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-        gradesApiForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        gradesApiForm.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: gradesApi.url(args, options),
             method: 'get',
         })
@@ -247,7 +247,7 @@ gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: num
  * @see app/Http/Controllers/Secretaria/GradeController.php:117
  * @route '/secretaria/grades/{classRoom}/grades-api'
  */
-        gradesApiForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        gradesApiForm.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: gradesApi.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -263,7 +263,7 @@ gradesApi.head = (args: { classRoom: number | { id: number } } | [classRoom: num
  * @see app/Http/Controllers/Secretaria/GradeController.php:151
  * @route '/secretaria/grades/{classRoom}/grades-batch'
  */
-export const batch = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const batch = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: batch.url(args, options),
     method: 'post',
 })
@@ -278,7 +278,7 @@ batch.definition = {
  * @see app/Http/Controllers/Secretaria/GradeController.php:151
  * @route '/secretaria/grades/{classRoom}/grades-batch'
  */
-batch.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+batch.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -311,7 +311,7 @@ batch.url = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Secretaria/GradeController.php:151
  * @route '/secretaria/grades/{classRoom}/grades-batch'
  */
-batch.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+batch.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: batch.url(args, options),
     method: 'post',
 })
@@ -321,7 +321,7 @@ batch.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Secretaria/GradeController.php:151
  * @route '/secretaria/grades/{classRoom}/grades-batch'
  */
-    const batchForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const batchForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: batch.url(args, options),
         method: 'post',
     })
@@ -331,7 +331,7 @@ batch.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Secretaria/GradeController.php:151
  * @route '/secretaria/grades/{classRoom}/grades-batch'
  */
-        batchForm.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        batchForm.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: batch.url(args, options),
             method: 'post',
         })
@@ -342,7 +342,7 @@ batch.post = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-export const show = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -357,7 +357,7 @@ show.definition = {
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-show.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -390,7 +390,7 @@ show.url = (args: { classRoom: number | { id: number } } | [classRoom: number | 
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-show.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -399,7 +399,7 @@ show.get = (args: { classRoom: number | { id: number } } | [classRoom: number | 
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-show.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -409,7 +409,7 @@ show.head = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-    const showForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
         method: 'get',
     })
@@ -419,7 +419,7 @@ show.head = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-        showForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
             method: 'get',
         })
@@ -428,7 +428,7 @@ show.head = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Secretaria/GradeController.php:42
  * @route '/secretaria/grades/{classRoom}'
  */
-        showForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -444,7 +444,7 @@ show.head = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-export const reportCard = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const reportCard = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reportCard.url(args, options),
     method: 'get',
 })
@@ -459,7 +459,7 @@ reportCard.definition = {
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-reportCard.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+reportCard.url = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { student: args }
     }
@@ -492,7 +492,7 @@ reportCard.url = (args: { student: number | { id: number } } | [student: number 
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-reportCard.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+reportCard.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reportCard.url(args, options),
     method: 'get',
 })
@@ -501,7 +501,7 @@ reportCard.get = (args: { student: number | { id: number } } | [student: number 
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-reportCard.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+reportCard.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: reportCard.url(args, options),
     method: 'head',
 })
@@ -511,7 +511,7 @@ reportCard.head = (args: { student: number | { id: number } } | [student: number
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-    const reportCardForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const reportCardForm = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: reportCard.url(args, options),
         method: 'get',
     })
@@ -521,7 +521,7 @@ reportCard.head = (args: { student: number | { id: number } } | [student: number
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-        reportCardForm.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        reportCardForm.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reportCard.url(args, options),
             method: 'get',
         })
@@ -530,7 +530,7 @@ reportCard.head = (args: { student: number | { id: number } } | [student: number
  * @see app/Http/Controllers/Secretaria/GradeController.php:52
  * @route '/secretaria/grades/student/{student}'
  */
-        reportCardForm.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        reportCardForm.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reportCard.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

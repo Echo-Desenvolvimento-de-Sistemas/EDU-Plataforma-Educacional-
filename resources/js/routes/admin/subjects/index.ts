@@ -312,7 +312,7 @@ show.head = (args: { subject: string | number } | [subject: string | number ] | 
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-export const edit = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -327,7 +327,7 @@ edit.definition = {
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-edit.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -360,7 +360,7 @@ edit.url = (args: { subject: number | { id: number } } | [subject: number | { id
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-edit.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -369,7 +369,7 @@ edit.get = (args: { subject: number | { id: number } } | [subject: number | { id
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-edit.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -379,7 +379,7 @@ edit.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-    const editForm = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const editForm = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: edit.url(args, options),
         method: 'get',
     })
@@ -389,7 +389,7 @@ edit.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-        editForm.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        editForm.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(args, options),
             method: 'get',
         })
@@ -398,7 +398,7 @@ edit.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectController.php:40
  * @route '/admin/subjects/{subject}/edit'
  */
-        editForm.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        editForm.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -414,7 +414,7 @@ edit.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-export const update = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -429,7 +429,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-update.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -462,7 +462,7 @@ update.url = (args: { subject: number | { id: number } } | [subject: number | { 
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-update.put = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -471,7 +471,7 @@ update.put = (args: { subject: number | { id: number } } | [subject: number | { 
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-update.patch = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -481,7 +481,7 @@ update.patch = (args: { subject: number | { id: number } } | [subject: number | 
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-    const updateForm = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -496,7 +496,7 @@ update.patch = (args: { subject: number | { id: number } } | [subject: number | 
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-        updateForm.put = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -510,7 +510,7 @@ update.patch = (args: { subject: number | { id: number } } | [subject: number | 
  * @see app/Http/Controllers/Admin/SubjectController.php:47
  * @route '/admin/subjects/{subject}'
  */
-        updateForm.patch = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -526,7 +526,7 @@ update.patch = (args: { subject: number | { id: number } } | [subject: number | 
  * @see app/Http/Controllers/Admin/SubjectController.php:59
  * @route '/admin/subjects/{subject}'
  */
-export const destroy = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -541,7 +541,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/SubjectController.php:59
  * @route '/admin/subjects/{subject}'
  */
-destroy.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -574,7 +574,7 @@ destroy.url = (args: { subject: number | { id: number } } | [subject: number | {
  * @see app/Http/Controllers/Admin/SubjectController.php:59
  * @route '/admin/subjects/{subject}'
  */
-destroy.delete = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -584,7 +584,7 @@ destroy.delete = (args: { subject: number | { id: number } } | [subject: number 
  * @see app/Http/Controllers/Admin/SubjectController.php:59
  * @route '/admin/subjects/{subject}'
  */
-    const destroyForm = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -599,7 +599,7 @@ destroy.delete = (args: { subject: number | { id: number } } | [subject: number 
  * @see app/Http/Controllers/Admin/SubjectController.php:59
  * @route '/admin/subjects/{subject}'
  */
-        destroyForm.delete = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

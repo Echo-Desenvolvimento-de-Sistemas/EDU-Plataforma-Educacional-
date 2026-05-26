@@ -166,7 +166,7 @@ export const index = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-const show9fed2107bc40bed1783187dc472af8c2 = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+const show9fed2107bc40bed1783187dc472af8c2 = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show9fed2107bc40bed1783187dc472af8c2.url(args, options),
     method: 'get',
 })
@@ -181,7 +181,7 @@ show9fed2107bc40bed1783187dc472af8c2.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-show9fed2107bc40bed1783187dc472af8c2.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show9fed2107bc40bed1783187dc472af8c2.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -214,7 +214,7 @@ show9fed2107bc40bed1783187dc472af8c2.url = (args: { lessonPlan: number | { id: n
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-show9fed2107bc40bed1783187dc472af8c2.get = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show9fed2107bc40bed1783187dc472af8c2.get = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show9fed2107bc40bed1783187dc472af8c2.url(args, options),
     method: 'get',
 })
@@ -223,7 +223,7 @@ show9fed2107bc40bed1783187dc472af8c2.get = (args: { lessonPlan: number | { id: n
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show9fed2107bc40bed1783187dc472af8c2.url(args, options),
     method: 'head',
 })
@@ -233,7 +233,7 @@ show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-    const show9fed2107bc40bed1783187dc472af8c2Form = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const show9fed2107bc40bed1783187dc472af8c2Form = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show9fed2107bc40bed1783187dc472af8c2.url(args, options),
         method: 'get',
     })
@@ -243,7 +243,7 @@ show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-        show9fed2107bc40bed1783187dc472af8c2Form.get = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show9fed2107bc40bed1783187dc472af8c2Form.get = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show9fed2107bc40bed1783187dc472af8c2.url(args, options),
             method: 'get',
         })
@@ -252,7 +252,7 @@ show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/secretaria/planning/{lessonPlan}'
  */
-        show9fed2107bc40bed1783187dc472af8c2Form.head = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show9fed2107bc40bed1783187dc472af8c2Form.head = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show9fed2107bc40bed1783187dc472af8c2.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -268,7 +268,7 @@ show9fed2107bc40bed1783187dc472af8c2.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-const show21180aa5c1fc38f8b335528d570b069f = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+const show21180aa5c1fc38f8b335528d570b069f = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show21180aa5c1fc38f8b335528d570b069f.url(args, options),
     method: 'get',
 })
@@ -283,7 +283,7 @@ show21180aa5c1fc38f8b335528d570b069f.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-show21180aa5c1fc38f8b335528d570b069f.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show21180aa5c1fc38f8b335528d570b069f.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -316,7 +316,7 @@ show21180aa5c1fc38f8b335528d570b069f.url = (args: { lessonPlan: number | { id: n
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-show21180aa5c1fc38f8b335528d570b069f.get = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show21180aa5c1fc38f8b335528d570b069f.get = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show21180aa5c1fc38f8b335528d570b069f.url(args, options),
     method: 'get',
 })
@@ -325,7 +325,7 @@ show21180aa5c1fc38f8b335528d570b069f.get = (args: { lessonPlan: number | { id: n
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-show21180aa5c1fc38f8b335528d570b069f.head = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show21180aa5c1fc38f8b335528d570b069f.head = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show21180aa5c1fc38f8b335528d570b069f.url(args, options),
     method: 'head',
 })
@@ -335,7 +335,7 @@ show21180aa5c1fc38f8b335528d570b069f.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-    const show21180aa5c1fc38f8b335528d570b069fForm = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const show21180aa5c1fc38f8b335528d570b069fForm = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show21180aa5c1fc38f8b335528d570b069f.url(args, options),
         method: 'get',
     })
@@ -345,7 +345,7 @@ show21180aa5c1fc38f8b335528d570b069f.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-        show21180aa5c1fc38f8b335528d570b069fForm.get = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show21180aa5c1fc38f8b335528d570b069fForm.get = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show21180aa5c1fc38f8b335528d570b069f.url(args, options),
             method: 'get',
         })
@@ -354,7 +354,7 @@ show21180aa5c1fc38f8b335528d570b069f.head = (args: { lessonPlan: number | { id: 
  * @see app/Http/Controllers/Admin/LessonPlanController.php:49
  * @route '/admin/planning/{lessonPlan}'
  */
-        show21180aa5c1fc38f8b335528d570b069fForm.head = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show21180aa5c1fc38f8b335528d570b069fForm.head = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show21180aa5c1fc38f8b335528d570b069f.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -376,7 +376,7 @@ export const show = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/secretaria/planning/{lessonPlan}/approve'
  */
-const approve1c26d8a057ac59d7f48f54f8a2896e19 = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+const approve1c26d8a057ac59d7f48f54f8a2896e19 = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve1c26d8a057ac59d7f48f54f8a2896e19.url(args, options),
     method: 'post',
 })
@@ -391,7 +391,7 @@ approve1c26d8a057ac59d7f48f54f8a2896e19.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/secretaria/planning/{lessonPlan}/approve'
  */
-approve1c26d8a057ac59d7f48f54f8a2896e19.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+approve1c26d8a057ac59d7f48f54f8a2896e19.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -424,7 +424,7 @@ approve1c26d8a057ac59d7f48f54f8a2896e19.url = (args: { lessonPlan: number | { id
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/secretaria/planning/{lessonPlan}/approve'
  */
-approve1c26d8a057ac59d7f48f54f8a2896e19.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve1c26d8a057ac59d7f48f54f8a2896e19.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve1c26d8a057ac59d7f48f54f8a2896e19.url(args, options),
     method: 'post',
 })
@@ -434,7 +434,7 @@ approve1c26d8a057ac59d7f48f54f8a2896e19.post = (args: { lessonPlan: number | { i
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/secretaria/planning/{lessonPlan}/approve'
  */
-    const approve1c26d8a057ac59d7f48f54f8a2896e19Form = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const approve1c26d8a057ac59d7f48f54f8a2896e19Form = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: approve1c26d8a057ac59d7f48f54f8a2896e19.url(args, options),
         method: 'post',
     })
@@ -444,7 +444,7 @@ approve1c26d8a057ac59d7f48f54f8a2896e19.post = (args: { lessonPlan: number | { i
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/secretaria/planning/{lessonPlan}/approve'
  */
-        approve1c26d8a057ac59d7f48f54f8a2896e19Form.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        approve1c26d8a057ac59d7f48f54f8a2896e19Form.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: approve1c26d8a057ac59d7f48f54f8a2896e19.url(args, options),
             method: 'post',
         })
@@ -455,7 +455,7 @@ approve1c26d8a057ac59d7f48f54f8a2896e19.post = (args: { lessonPlan: number | { i
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/admin/planning/{lessonPlan}/approve'
  */
-const approve8c056704ab688403b6a8f98079063e41 = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+const approve8c056704ab688403b6a8f98079063e41 = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve8c056704ab688403b6a8f98079063e41.url(args, options),
     method: 'post',
 })
@@ -470,7 +470,7 @@ approve8c056704ab688403b6a8f98079063e41.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/admin/planning/{lessonPlan}/approve'
  */
-approve8c056704ab688403b6a8f98079063e41.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+approve8c056704ab688403b6a8f98079063e41.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -503,7 +503,7 @@ approve8c056704ab688403b6a8f98079063e41.url = (args: { lessonPlan: number | { id
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/admin/planning/{lessonPlan}/approve'
  */
-approve8c056704ab688403b6a8f98079063e41.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve8c056704ab688403b6a8f98079063e41.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve8c056704ab688403b6a8f98079063e41.url(args, options),
     method: 'post',
 })
@@ -513,7 +513,7 @@ approve8c056704ab688403b6a8f98079063e41.post = (args: { lessonPlan: number | { i
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/admin/planning/{lessonPlan}/approve'
  */
-    const approve8c056704ab688403b6a8f98079063e41Form = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const approve8c056704ab688403b6a8f98079063e41Form = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: approve8c056704ab688403b6a8f98079063e41.url(args, options),
         method: 'post',
     })
@@ -523,7 +523,7 @@ approve8c056704ab688403b6a8f98079063e41.post = (args: { lessonPlan: number | { i
  * @see app/Http/Controllers/Admin/LessonPlanController.php:58
  * @route '/admin/planning/{lessonPlan}/approve'
  */
-        approve8c056704ab688403b6a8f98079063e41Form.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        approve8c056704ab688403b6a8f98079063e41Form.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: approve8c056704ab688403b6a8f98079063e41.url(args, options),
             method: 'post',
         })
@@ -540,7 +540,7 @@ export const approve = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/secretaria/planning/{lessonPlan}/request-changes'
  */
-const requestChanges3e8a91ccfc247a5e57c895571db9271f = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+const requestChanges3e8a91ccfc247a5e57c895571db9271f = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: requestChanges3e8a91ccfc247a5e57c895571db9271f.url(args, options),
     method: 'post',
 })
@@ -555,7 +555,7 @@ requestChanges3e8a91ccfc247a5e57c895571db9271f.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/secretaria/planning/{lessonPlan}/request-changes'
  */
-requestChanges3e8a91ccfc247a5e57c895571db9271f.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+requestChanges3e8a91ccfc247a5e57c895571db9271f.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -588,7 +588,7 @@ requestChanges3e8a91ccfc247a5e57c895571db9271f.url = (args: { lessonPlan: number
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/secretaria/planning/{lessonPlan}/request-changes'
  */
-requestChanges3e8a91ccfc247a5e57c895571db9271f.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+requestChanges3e8a91ccfc247a5e57c895571db9271f.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: requestChanges3e8a91ccfc247a5e57c895571db9271f.url(args, options),
     method: 'post',
 })
@@ -598,7 +598,7 @@ requestChanges3e8a91ccfc247a5e57c895571db9271f.post = (args: { lessonPlan: numbe
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/secretaria/planning/{lessonPlan}/request-changes'
  */
-    const requestChanges3e8a91ccfc247a5e57c895571db9271fForm = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const requestChanges3e8a91ccfc247a5e57c895571db9271fForm = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: requestChanges3e8a91ccfc247a5e57c895571db9271f.url(args, options),
         method: 'post',
     })
@@ -608,7 +608,7 @@ requestChanges3e8a91ccfc247a5e57c895571db9271f.post = (args: { lessonPlan: numbe
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/secretaria/planning/{lessonPlan}/request-changes'
  */
-        requestChanges3e8a91ccfc247a5e57c895571db9271fForm.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        requestChanges3e8a91ccfc247a5e57c895571db9271fForm.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: requestChanges3e8a91ccfc247a5e57c895571db9271f.url(args, options),
             method: 'post',
         })
@@ -619,7 +619,7 @@ requestChanges3e8a91ccfc247a5e57c895571db9271f.post = (args: { lessonPlan: numbe
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/admin/planning/{lessonPlan}/request-changes'
  */
-const requestChanges46b3fb8f7d31619d036660446ddcf16f = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+const requestChanges46b3fb8f7d31619d036660446ddcf16f = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: requestChanges46b3fb8f7d31619d036660446ddcf16f.url(args, options),
     method: 'post',
 })
@@ -634,7 +634,7 @@ requestChanges46b3fb8f7d31619d036660446ddcf16f.definition = {
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/admin/planning/{lessonPlan}/request-changes'
  */
-requestChanges46b3fb8f7d31619d036660446ddcf16f.url = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+requestChanges46b3fb8f7d31619d036660446ddcf16f.url = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { lessonPlan: args }
     }
@@ -667,7 +667,7 @@ requestChanges46b3fb8f7d31619d036660446ddcf16f.url = (args: { lessonPlan: number
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/admin/planning/{lessonPlan}/request-changes'
  */
-requestChanges46b3fb8f7d31619d036660446ddcf16f.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+requestChanges46b3fb8f7d31619d036660446ddcf16f.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: requestChanges46b3fb8f7d31619d036660446ddcf16f.url(args, options),
     method: 'post',
 })
@@ -677,7 +677,7 @@ requestChanges46b3fb8f7d31619d036660446ddcf16f.post = (args: { lessonPlan: numbe
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/admin/planning/{lessonPlan}/request-changes'
  */
-    const requestChanges46b3fb8f7d31619d036660446ddcf16fForm = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const requestChanges46b3fb8f7d31619d036660446ddcf16fForm = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: requestChanges46b3fb8f7d31619d036660446ddcf16f.url(args, options),
         method: 'post',
     })
@@ -687,7 +687,7 @@ requestChanges46b3fb8f7d31619d036660446ddcf16f.post = (args: { lessonPlan: numbe
  * @see app/Http/Controllers/Admin/LessonPlanController.php:64
  * @route '/admin/planning/{lessonPlan}/request-changes'
  */
-        requestChanges46b3fb8f7d31619d036660446ddcf16fForm.post = (args: { lessonPlan: number | { id: number } } | [lessonPlan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        requestChanges46b3fb8f7d31619d036660446ddcf16fForm.post = (args: { lessonPlan: string | number | { id: string | number } } | [lessonPlan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: requestChanges46b3fb8f7d31619d036660446ddcf16f.url(args, options),
             method: 'post',
         })

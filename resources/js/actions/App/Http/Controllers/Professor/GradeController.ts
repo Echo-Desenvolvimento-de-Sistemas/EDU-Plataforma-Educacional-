@@ -82,7 +82,7 @@ entry.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-export const index = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const index = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
     method: 'get',
 })
@@ -97,7 +97,7 @@ index.definition = {
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-index.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+index.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -130,7 +130,7 @@ index.url = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-index.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+index.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
     method: 'get',
 })
@@ -139,7 +139,7 @@ index.get = (args: { classRoom: number | { id: number } } | [classRoom: number |
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-index.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+index.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(args, options),
     method: 'head',
 })
@@ -149,7 +149,7 @@ index.head = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-    const indexForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const indexForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: index.url(args, options),
         method: 'get',
     })
@@ -159,7 +159,7 @@ index.head = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-        indexForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        indexForm.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, options),
             method: 'get',
         })
@@ -168,7 +168,7 @@ index.head = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/GradeController.php:58
  * @route '/professor/classes/{classRoom}/grades'
  */
-        indexForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        indexForm.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -184,7 +184,7 @@ index.head = (args: { classRoom: number | { id: number } } | [classRoom: number 
  * @see app/Http/Controllers/Professor/GradeController.php:96
  * @route '/professor/classes/{classRoom}/grades/batch'
  */
-export const storeBatch = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const storeBatch = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeBatch.url(args, options),
     method: 'post',
 })
@@ -199,7 +199,7 @@ storeBatch.definition = {
  * @see app/Http/Controllers/Professor/GradeController.php:96
  * @route '/professor/classes/{classRoom}/grades/batch'
  */
-storeBatch.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+storeBatch.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -232,7 +232,7 @@ storeBatch.url = (args: { classRoom: number | { id: number } } | [classRoom: num
  * @see app/Http/Controllers/Professor/GradeController.php:96
  * @route '/professor/classes/{classRoom}/grades/batch'
  */
-storeBatch.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+storeBatch.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeBatch.url(args, options),
     method: 'post',
 })
@@ -242,7 +242,7 @@ storeBatch.post = (args: { classRoom: number | { id: number } } | [classRoom: nu
  * @see app/Http/Controllers/Professor/GradeController.php:96
  * @route '/professor/classes/{classRoom}/grades/batch'
  */
-    const storeBatchForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeBatchForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: storeBatch.url(args, options),
         method: 'post',
     })
@@ -252,7 +252,7 @@ storeBatch.post = (args: { classRoom: number | { id: number } } | [classRoom: nu
  * @see app/Http/Controllers/Professor/GradeController.php:96
  * @route '/professor/classes/{classRoom}/grades/batch'
  */
-        storeBatchForm.post = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeBatchForm.post = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: storeBatch.url(args, options),
             method: 'post',
         })

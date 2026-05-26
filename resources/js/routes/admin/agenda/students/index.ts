@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-export const store = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-store.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+store.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { channel: string | { id: string } } | [channel: string | { i
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-store.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ store.post = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-    const storeForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ store.post = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:121
  * @route '/admin/agenda/{channel}/students'
  */
-        storeForm.post = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -83,7 +83,7 @@ store.post = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-export const destroy = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -98,7 +98,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-destroy.url = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     channel: args[0],
@@ -128,7 +128,7 @@ destroy.url = (args: { channel: string | { id: string }, student: number | { id:
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-destroy.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -138,7 +138,7 @@ destroy.delete = (args: { channel: string | { id: string }, student: number | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-    const destroyForm = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -153,7 +153,7 @@ destroy.delete = (args: { channel: string | { id: string }, student: number | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:137
  * @route '/admin/agenda/{channel}/students/{student}'
  */
-        destroyForm.delete = (args: { channel: string | { id: string }, student: number | { id: number } } | [channel: string | { id: string }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { channel: string | number | { id: string | number }, student: string | number | { id: string | number } } | [channel: string | number | { id: string | number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

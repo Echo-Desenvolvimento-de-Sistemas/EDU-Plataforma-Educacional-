@@ -84,7 +84,7 @@ inbox.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-export const channel = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const channel = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: channel.url(args, options),
     method: 'get',
 })
@@ -99,7 +99,7 @@ channel.definition = {
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-channel.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+channel.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -132,7 +132,7 @@ channel.url = (args: { channel: string | { id: string } } | [channel: string | {
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-channel.get = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+channel.get = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: channel.url(args, options),
     method: 'get',
 })
@@ -141,7 +141,7 @@ channel.get = (args: { channel: string | { id: string } } | [channel: string | {
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-channel.head = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+channel.head = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: channel.url(args, options),
     method: 'head',
 })
@@ -151,7 +151,7 @@ channel.head = (args: { channel: string | { id: string } } | [channel: string | 
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-    const channelForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const channelForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: channel.url(args, options),
         method: 'get',
     })
@@ -161,7 +161,7 @@ channel.head = (args: { channel: string | { id: string } } | [channel: string | 
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-        channelForm.get = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        channelForm.get = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: channel.url(args, options),
             method: 'get',
         })
@@ -170,7 +170,7 @@ channel.head = (args: { channel: string | { id: string } } | [channel: string | 
  * @see app/Http/Controllers/AgendaController.php:203
  * @route '/agenda/channels/{channel}'
  */
-        channelForm.head = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        channelForm.head = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: channel.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

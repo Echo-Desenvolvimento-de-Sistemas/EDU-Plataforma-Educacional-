@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/KanbanController.php:159
  * @route '/kanban/{kanbanBoard}/users'
  */
-export const store = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { kanbanBoard: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/KanbanController.php:159
  * @route '/kanban/{kanbanBoard}/users'
  */
-store.url = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+store.url = (args: { kanbanBoard: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { kanbanBoard: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: numb
  * @see app/Http/Controllers/KanbanController.php:159
  * @route '/kanban/{kanbanBoard}/users'
  */
-store.post = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { kanbanBoard: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ store.post = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: num
  * @see app/Http/Controllers/KanbanController.php:159
  * @route '/kanban/{kanbanBoard}/users'
  */
-    const storeForm = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { kanbanBoard: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ store.post = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: num
  * @see app/Http/Controllers/KanbanController.php:159
  * @route '/kanban/{kanbanBoard}/users'
  */
-        storeForm.post = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { kanbanBoard: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -83,7 +83,7 @@ store.post = (args: { kanbanBoard: number | { id: number } } | [kanbanBoard: num
  * @see app/Http/Controllers/KanbanController.php:173
  * @route '/kanban/{kanbanBoard}/users/{user}'
  */
-export const destroy = (args: { kanbanBoard: number | { id: number }, user: number | { id: number } } | [kanbanBoard: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -98,7 +98,7 @@ destroy.definition = {
  * @see app/Http/Controllers/KanbanController.php:173
  * @route '/kanban/{kanbanBoard}/users/{user}'
  */
-destroy.url = (args: { kanbanBoard: number | { id: number }, user: number | { id: number } } | [kanbanBoard: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     kanbanBoard: args[0],
@@ -128,7 +128,7 @@ destroy.url = (args: { kanbanBoard: number | { id: number }, user: number | { id
  * @see app/Http/Controllers/KanbanController.php:173
  * @route '/kanban/{kanbanBoard}/users/{user}'
  */
-destroy.delete = (args: { kanbanBoard: number | { id: number }, user: number | { id: number } } | [kanbanBoard: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -138,7 +138,7 @@ destroy.delete = (args: { kanbanBoard: number | { id: number }, user: number | {
  * @see app/Http/Controllers/KanbanController.php:173
  * @route '/kanban/{kanbanBoard}/users/{user}'
  */
-    const destroyForm = (args: { kanbanBoard: number | { id: number }, user: number | { id: number } } | [kanbanBoard: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -153,7 +153,7 @@ destroy.delete = (args: { kanbanBoard: number | { id: number }, user: number | {
  * @see app/Http/Controllers/KanbanController.php:173
  * @route '/kanban/{kanbanBoard}/users/{user}'
  */
-        destroyForm.delete = (args: { kanbanBoard: number | { id: number }, user: number | { id: number } } | [kanbanBoard: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } } | [kanbanBoard: string | number | { id: string | number }, user: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

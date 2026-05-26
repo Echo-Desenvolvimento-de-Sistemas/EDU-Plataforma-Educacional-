@@ -382,7 +382,7 @@ settings.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => 
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-export const direct = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const direct = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: direct.url(args, options),
     method: 'get',
 })
@@ -397,7 +397,7 @@ direct.definition = {
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-direct.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+direct.url = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { student: args }
     }
@@ -430,7 +430,7 @@ direct.url = (args: { student: number | { id: number } } | [student: number | { 
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-direct.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+direct.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: direct.url(args, options),
     method: 'get',
 })
@@ -439,7 +439,7 @@ direct.get = (args: { student: number | { id: number } } | [student: number | { 
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-direct.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+direct.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: direct.url(args, options),
     method: 'head',
 })
@@ -449,7 +449,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-    const directForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const directForm = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: direct.url(args, options),
         method: 'get',
     })
@@ -459,7 +459,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-        directForm.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        directForm.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: direct.url(args, options),
             method: 'get',
         })
@@ -468,7 +468,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-        directForm.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        directForm.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: direct.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -484,7 +484,7 @@ direct.head = (args: { student: number | { id: number } } | [student: number | {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-export const update = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -499,7 +499,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+update.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -532,7 +532,7 @@ update.url = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-update.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -542,7 +542,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-    const updateForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -557,7 +557,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:76
  * @route '/admin/agenda/{channel}'
  */
-        updateForm.put = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -573,7 +573,7 @@ update.put = (args: { channel: string | { id: string } } | [channel: string | { 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-export const destroy = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -588,7 +588,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.url = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+destroy.url = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { channel: args }
     }
@@ -621,7 +621,7 @@ destroy.url = (args: { channel: string | { id: string } } | [channel: string | {
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-destroy.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -631,7 +631,7 @@ destroy.delete = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-    const destroyForm = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -646,7 +646,7 @@ destroy.delete = (args: { channel: string | { id: string } } | [channel: string 
  * @see app/Http/Controllers/Admin/AgendaSettingController.php:95
  * @route '/admin/agenda/{channel}'
  */
-        destroyForm.delete = (args: { channel: string | { id: string } } | [channel: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { channel: string | number | { id: string | number } } | [channel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

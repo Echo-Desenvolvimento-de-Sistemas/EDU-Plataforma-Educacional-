@@ -82,7 +82,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-export const show = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -97,7 +97,7 @@ show.definition = {
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -130,7 +130,7 @@ show.url = (args: { subject: number | { id: number } } | [subject: number | { id
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -139,7 +139,7 @@ show.get = (args: { subject: number | { id: number } } | [subject: number | { id
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -149,7 +149,7 @@ show.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-    const showForm = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showForm = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
         method: 'get',
     })
@@ -159,7 +159,7 @@ show.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-        showForm.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
             method: 'get',
         })
@@ -168,7 +168,7 @@ show.head = (args: { subject: number | { id: number } } | [subject: number | { i
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-        showForm.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

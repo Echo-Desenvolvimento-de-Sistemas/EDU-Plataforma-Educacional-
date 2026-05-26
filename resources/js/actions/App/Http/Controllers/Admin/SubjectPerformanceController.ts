@@ -166,7 +166,7 @@ export const index = {
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-const show09dda5aa10303b629041ec7b7463c3af = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+const show09dda5aa10303b629041ec7b7463c3af = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show09dda5aa10303b629041ec7b7463c3af.url(args, options),
     method: 'get',
 })
@@ -181,7 +181,7 @@ show09dda5aa10303b629041ec7b7463c3af.definition = {
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show09dda5aa10303b629041ec7b7463c3af.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+show09dda5aa10303b629041ec7b7463c3af.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -214,7 +214,7 @@ show09dda5aa10303b629041ec7b7463c3af.url = (args: { subject: number | { id: numb
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show09dda5aa10303b629041ec7b7463c3af.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show09dda5aa10303b629041ec7b7463c3af.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show09dda5aa10303b629041ec7b7463c3af.url(args, options),
     method: 'get',
 })
@@ -223,7 +223,7 @@ show09dda5aa10303b629041ec7b7463c3af.get = (args: { subject: number | { id: numb
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show09dda5aa10303b629041ec7b7463c3af.url(args, options),
     method: 'head',
 })
@@ -233,7 +233,7 @@ show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-    const show09dda5aa10303b629041ec7b7463c3afForm = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const show09dda5aa10303b629041ec7b7463c3afForm = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show09dda5aa10303b629041ec7b7463c3af.url(args, options),
         method: 'get',
     })
@@ -243,7 +243,7 @@ show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-        show09dda5aa10303b629041ec7b7463c3afForm.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show09dda5aa10303b629041ec7b7463c3afForm.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show09dda5aa10303b629041ec7b7463c3af.url(args, options),
             method: 'get',
         })
@@ -252,7 +252,7 @@ show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/secretaria/subject-performance/{subject}'
  */
-        show09dda5aa10303b629041ec7b7463c3afForm.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        show09dda5aa10303b629041ec7b7463c3afForm.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show09dda5aa10303b629041ec7b7463c3af.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -268,7 +268,7 @@ show09dda5aa10303b629041ec7b7463c3af.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-const showfd995f1ab3c48f55848936707eed1045 = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+const showfd995f1ab3c48f55848936707eed1045 = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: showfd995f1ab3c48f55848936707eed1045.url(args, options),
     method: 'get',
 })
@@ -283,7 +283,7 @@ showfd995f1ab3c48f55848936707eed1045.definition = {
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-showfd995f1ab3c48f55848936707eed1045.url = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+showfd995f1ab3c48f55848936707eed1045.url = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { subject: args }
     }
@@ -316,7 +316,7 @@ showfd995f1ab3c48f55848936707eed1045.url = (args: { subject: number | { id: numb
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-showfd995f1ab3c48f55848936707eed1045.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+showfd995f1ab3c48f55848936707eed1045.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: showfd995f1ab3c48f55848936707eed1045.url(args, options),
     method: 'get',
 })
@@ -325,7 +325,7 @@ showfd995f1ab3c48f55848936707eed1045.get = (args: { subject: number | { id: numb
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-showfd995f1ab3c48f55848936707eed1045.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+showfd995f1ab3c48f55848936707eed1045.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: showfd995f1ab3c48f55848936707eed1045.url(args, options),
     method: 'head',
 })
@@ -335,7 +335,7 @@ showfd995f1ab3c48f55848936707eed1045.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-    const showfd995f1ab3c48f55848936707eed1045Form = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showfd995f1ab3c48f55848936707eed1045Form = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: showfd995f1ab3c48f55848936707eed1045.url(args, options),
         method: 'get',
     })
@@ -345,7 +345,7 @@ showfd995f1ab3c48f55848936707eed1045.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-        showfd995f1ab3c48f55848936707eed1045Form.get = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showfd995f1ab3c48f55848936707eed1045Form.get = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: showfd995f1ab3c48f55848936707eed1045.url(args, options),
             method: 'get',
         })
@@ -354,7 +354,7 @@ showfd995f1ab3c48f55848936707eed1045.head = (args: { subject: number | { id: num
  * @see app/Http/Controllers/Admin/SubjectPerformanceController.php:50
  * @route '/admin/subject-performance/{subject}'
  */
-        showfd995f1ab3c48f55848936707eed1045Form.head = (args: { subject: number | { id: number } } | [subject: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showfd995f1ab3c48f55848936707eed1045Form.head = (args: { subject: string | number | { id: string | number } } | [subject: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: showfd995f1ab3c48f55848936707eed1045.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

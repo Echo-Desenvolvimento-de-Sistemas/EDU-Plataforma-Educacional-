@@ -32,7 +32,6 @@ interface Subject {
 interface ClassRoom {
     id: number;
     name: string;
-    subjects: Subject[];
 }
 
 interface GradingPeriod {
@@ -57,6 +56,7 @@ interface Assessment {
 
 interface Props {
     classes: ClassRoom[];
+    subjects: Subject[];
     gradingPeriods: GradingPeriod[];
 }
 
@@ -66,7 +66,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Lançar Notas', href: '' },
 ];
 
-export default function Entry({ classes, gradingPeriods }: Props) {
+export default function Entry({ classes, subjects, gradingPeriods }: Props) {
     // State
     const [students, setStudents] = useState<StudentGrade[]>([]);
     const [assessments, setAssessments] = useState<Assessment[]>([]);
@@ -90,8 +90,7 @@ export default function Entry({ classes, gradingPeriods }: Props) {
     const [selectedPeriodId, setSelectedPeriodId] = useState<string>('');
 
     // Derived State
-    const selectedClass = classes.find(c => c.id.toString() === selectedClassId);
-    const availableSubjects = selectedClass ? selectedClass.subjects : [];
+    const availableSubjects = selectedClassId ? subjects : [];
 
     // Pre-select classroom from URL parameter if provided
     useEffect(() => {

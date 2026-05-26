@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/AgendaController.php:294
  * @route '/agenda/messages/{message}/read'
  */
-export const read = (args: { message: number | { id: number } } | [message: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const read = (args: { message: string | number | { id: string | number } } | [message: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: read.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ read.definition = {
  * @see app/Http/Controllers/AgendaController.php:294
  * @route '/agenda/messages/{message}/read'
  */
-read.url = (args: { message: number | { id: number } } | [message: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+read.url = (args: { message: string | number | { id: string | number } } | [message: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { message: args }
     }
@@ -52,7 +52,7 @@ read.url = (args: { message: number | { id: number } } | [message: number | { id
  * @see app/Http/Controllers/AgendaController.php:294
  * @route '/agenda/messages/{message}/read'
  */
-read.post = (args: { message: number | { id: number } } | [message: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+read.post = (args: { message: string | number | { id: string | number } } | [message: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: read.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ read.post = (args: { message: number | { id: number } } | [message: number | { i
  * @see app/Http/Controllers/AgendaController.php:294
  * @route '/agenda/messages/{message}/read'
  */
-    const readForm = (args: { message: number | { id: number } } | [message: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const readForm = (args: { message: string | number | { id: string | number } } | [message: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: read.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ read.post = (args: { message: number | { id: number } } | [message: number | { i
  * @see app/Http/Controllers/AgendaController.php:294
  * @route '/agenda/messages/{message}/read'
  */
-        readForm.post = (args: { message: number | { id: number } } | [message: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        readForm.post = (args: { message: string | number | { id: string | number } } | [message: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: read.url(args, options),
             method: 'post',
         })

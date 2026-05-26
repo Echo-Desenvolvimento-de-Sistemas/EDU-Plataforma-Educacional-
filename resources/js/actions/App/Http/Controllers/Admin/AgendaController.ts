@@ -253,7 +253,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-export const startDirectMessage = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const startDirectMessage = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: startDirectMessage.url(args, options),
     method: 'get',
 })
@@ -268,7 +268,7 @@ startDirectMessage.definition = {
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-startDirectMessage.url = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+startDirectMessage.url = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { student: args }
     }
@@ -301,7 +301,7 @@ startDirectMessage.url = (args: { student: number | { id: number } } | [student:
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-startDirectMessage.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+startDirectMessage.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: startDirectMessage.url(args, options),
     method: 'get',
 })
@@ -310,7 +310,7 @@ startDirectMessage.get = (args: { student: number | { id: number } } | [student:
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-startDirectMessage.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+startDirectMessage.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: startDirectMessage.url(args, options),
     method: 'head',
 })
@@ -320,7 +320,7 @@ startDirectMessage.head = (args: { student: number | { id: number } } | [student
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-    const startDirectMessageForm = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const startDirectMessageForm = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: startDirectMessage.url(args, options),
         method: 'get',
     })
@@ -330,7 +330,7 @@ startDirectMessage.head = (args: { student: number | { id: number } } | [student
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-        startDirectMessageForm.get = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        startDirectMessageForm.get = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: startDirectMessage.url(args, options),
             method: 'get',
         })
@@ -339,7 +339,7 @@ startDirectMessage.head = (args: { student: number | { id: number } } | [student
  * @see app/Http/Controllers/Admin/AgendaController.php:317
  * @route '/admin/agenda/direct/{student}'
  */
-        startDirectMessageForm.head = (args: { student: number | { id: number } } | [student: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        startDirectMessageForm.head = (args: { student: string | number | { id: string | number } } | [student: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: startDirectMessage.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

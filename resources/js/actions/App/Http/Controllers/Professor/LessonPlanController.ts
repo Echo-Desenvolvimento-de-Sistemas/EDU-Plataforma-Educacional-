@@ -600,7 +600,7 @@ destroy.delete = (args: { planning: string | number } | [planning: string | numb
  * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
-export const submit = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const submit = (args: { plan: string | number | { id: string | number } } | [plan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: submit.url(args, options),
     method: 'post',
 })
@@ -615,7 +615,7 @@ submit.definition = {
  * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
-submit.url = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+submit.url = (args: { plan: string | number | { id: string | number } } | [plan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { plan: args }
     }
@@ -648,7 +648,7 @@ submit.url = (args: { plan: number | { id: number } } | [plan: number | { id: nu
  * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
-submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+submit.post = (args: { plan: string | number | { id: string | number } } | [plan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: submit.url(args, options),
     method: 'post',
 })
@@ -658,7 +658,7 @@ submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: n
  * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
-    const submitForm = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const submitForm = (args: { plan: string | number | { id: string | number } } | [plan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: submit.url(args, options),
         method: 'post',
     })
@@ -668,7 +668,7 @@ submit.post = (args: { plan: number | { id: number } } | [plan: number | { id: n
  * @see app/Http/Controllers/Professor/LessonPlanController.php:128
  * @route '/professor/planning/{plan}/submit'
  */
-        submitForm.post = (args: { plan: number | { id: number } } | [plan: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        submitForm.post = (args: { plan: string | number | { id: string | number } } | [plan: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: submit.url(args, options),
             method: 'post',
         })

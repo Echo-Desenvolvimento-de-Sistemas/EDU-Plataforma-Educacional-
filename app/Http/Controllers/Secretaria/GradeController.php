@@ -98,11 +98,10 @@ class GradeController extends Controller
             ];
         })->values();
 
-        $classes = ClassRoom::with(['grade', 'academicYear'])->orderBy('name')->get()->map(function ($class) use ($subjects) {
+        $classes = ClassRoom::with(['grade', 'academicYear'])->orderBy('name')->get()->map(function ($class) {
             return [
                 'id' => $class->id,
                 'name' => $class->name . ' (' . ($class->grade->name ?? '') . ')',
-                'subjects' => $subjects,
             ];
         })->values();
 
@@ -110,6 +109,7 @@ class GradeController extends Controller
 
         return Inertia::render('Secretaria/Grades/Entry', [
             'classes' => $classes,
+            'subjects' => $subjects,
             'gradingPeriods' => $gradingPeriods
         ]);
     }

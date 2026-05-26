@@ -694,7 +694,7 @@ attachStudent.post = (args: { guardian: number | { id: number } } | [guardian: n
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-export const detachStudent = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const detachStudent = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachStudent.url(args, options),
     method: 'delete',
 })
@@ -709,7 +709,7 @@ detachStudent.definition = {
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-detachStudent.url = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions) => {
+detachStudent.url = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     guardian: args[0],
@@ -739,7 +739,7 @@ detachStudent.url = (args: { guardian: number | { id: number }, student: number 
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-detachStudent.delete = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+detachStudent.delete = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: detachStudent.url(args, options),
     method: 'delete',
 })
@@ -749,7 +749,7 @@ detachStudent.delete = (args: { guardian: number | { id: number }, student: numb
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-    const detachStudentForm = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const detachStudentForm = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: detachStudent.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -764,7 +764,7 @@ detachStudent.delete = (args: { guardian: number | { id: number }, student: numb
  * @see app/Http/Controllers/Admin/GuardianController.php:132
  * @route '/admin/guardians/{guardian}/students/{student}'
  */
-        detachStudentForm.delete = (args: { guardian: number | { id: number }, student: number | { id: number } } | [guardian: number | { id: number }, student: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        detachStudentForm.delete = (args: { guardian: number | { id: number }, student: string | number | { id: string | number } } | [guardian: number | { id: number }, student: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: detachStudent.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
@@ -780,7 +780,7 @@ detachStudent.delete = (args: { guardian: number | { id: number }, student: numb
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-export const getStudentsByClass = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const getStudentsByClass = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: getStudentsByClass.url(args, options),
     method: 'get',
 })
@@ -795,7 +795,7 @@ getStudentsByClass.definition = {
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-getStudentsByClass.url = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+getStudentsByClass.url = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { classRoom: args }
     }
@@ -828,7 +828,7 @@ getStudentsByClass.url = (args: { classRoom: number | { id: number } } | [classR
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-getStudentsByClass.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+getStudentsByClass.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: getStudentsByClass.url(args, options),
     method: 'get',
 })
@@ -837,7 +837,7 @@ getStudentsByClass.get = (args: { classRoom: number | { id: number } } | [classR
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-getStudentsByClass.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+getStudentsByClass.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: getStudentsByClass.url(args, options),
     method: 'head',
 })
@@ -847,7 +847,7 @@ getStudentsByClass.head = (args: { classRoom: number | { id: number } } | [class
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-    const getStudentsByClassForm = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const getStudentsByClassForm = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: getStudentsByClass.url(args, options),
         method: 'get',
     })
@@ -857,7 +857,7 @@ getStudentsByClass.head = (args: { classRoom: number | { id: number } } | [class
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-        getStudentsByClassForm.get = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        getStudentsByClassForm.get = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: getStudentsByClass.url(args, options),
             method: 'get',
         })
@@ -866,7 +866,7 @@ getStudentsByClass.head = (args: { classRoom: number | { id: number } } | [class
  * @see app/Http/Controllers/Admin/GuardianController.php:138
  * @route '/admin/api/classes/{classRoom}/students'
  */
-        getStudentsByClassForm.head = (args: { classRoom: number | { id: number } } | [classRoom: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        getStudentsByClassForm.head = (args: { classRoom: string | number | { id: string | number } } | [classRoom: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: getStudentsByClass.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
