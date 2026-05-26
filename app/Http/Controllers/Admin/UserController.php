@@ -192,9 +192,14 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
-        return redirect()->route('admin.users.index');
+        try {
+            $user->delete();
+            return redirect()->route('admin.users.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'delete' => 'Não é possível excluir este usuário pois ele possui registros vinculados no sistema (como diários de classe, frequências ou alocações). Em vez disso, você pode desativá-lo clicando no ícone de energia.'
+            ]);
+        }
     }
 
     public function toggleStatus(User $user)

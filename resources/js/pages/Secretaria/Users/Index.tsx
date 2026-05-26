@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks/use-debounce';
+import { toast } from 'sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,12 +39,19 @@ interface Props {
         search?: string;
         role?: string;
     };
+    errors?: Record<string, string>;
 }
 
-export default function Index({ users, filters }: Props) {
+export default function Index({ users, filters, errors }: Props) {
     const [search, setSearch] = useState(filters.search || '');
     const [role, setRole] = useState(filters.role || 'all');
     const debouncedSearch = useDebounce(search, 300);
+
+    useEffect(() => {
+        if (errors?.delete) {
+            toast.error(errors.delete);
+        }
+    }, [errors]);
 
     useEffect(() => {
         router.get(
