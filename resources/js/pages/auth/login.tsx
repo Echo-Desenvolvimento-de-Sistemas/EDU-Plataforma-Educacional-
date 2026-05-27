@@ -8,7 +8,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes/index';
 import { store } from '@/routes/login/index';
 import { request } from '@/routes/password/index';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, usePage } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -27,6 +27,7 @@ export default function Login({
 }: LoginProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
+    const { csrf_token } = usePage().props;
 
     return (
         <AuthLayout
@@ -40,6 +41,7 @@ export default function Login({
                 resetOnSuccess={['password']}
                 className={cn("flex flex-col gap-6", isShaking && "animate-shake")}
             >
+                {csrf_token && <input type="hidden" name="_token" value={csrf_token as string} />}
                 {({ processing, errors }) => (
                     <LoginFormContent 
                         processing={processing} 

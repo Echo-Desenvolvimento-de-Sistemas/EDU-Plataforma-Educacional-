@@ -75,6 +75,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'gamification' => $stats,
             ],
+            'csrf_token' => csrf_token(),
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings' => \Illuminate\Support\Facades\Cache::remember('app.settings', 3600, function () {
                 // Only load specific settings keys instead of all
